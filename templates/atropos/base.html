@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<!--[if IE 8]>			<html class="ie ie8"> <![endif]-->
+<!--[if IE 9]>			<html class="ie ie9"> <![endif]-->
+<!--[if gt IE 9]><!-->	<html> <!--<![endif]-->
+	<head>
+		<meta charset="utf-8" />
+		<title>{% block title %}{% endblock %}Dance</title>
+		<meta name="keywords" content="dance, Ukraine" />
+		<meta name="description" content="" />
+
+		{% include "head-css.html" %}
+
+	</head>
+	<body>
+
+		{% include "top-nav.html" %}
+
+        {% block wrapper %} {% endblock %}
+
+        {% block footer %} {% endblock %}
+
+        {% include "javascript-files.html" %}
+
+	</body>
+</html>

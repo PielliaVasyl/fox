@@ -1,0 +1,205 @@
+{% load static %}
+        <!-- Top Bar -->
+		<header id="topHead">
+			<div class="container">
+
+				<!-- PHONE/EMAIL -->
+				<span class="quick-contact pull-left" style="color:#999">
+					<!--<i class="fa fa-phone"></i> 1800-555-1234 &bull;
+					<a class="hidden-xs" href="mailto:mail@yourdomain.com">mail@domain.com</a>-->
+
+				<!-- Logo text or image -->
+				<a class="logo" href="/">
+					<img src="{% static 'images/logo.png' %}" alt="Dance" />
+				</a>
+
+				<!-- Top Nav -->
+				<div class="pull-right">
+					<nav class="nav-main mega-menu">
+						<ul class="nav nav-pills nav-main scroll-menu" id="topMain">
+
+							<li class="dropdown">
+								<a class="dropdown-toggle" style="cursor:default">
+									Лента
+								</a>
+								<ul class="dropdown-menu">
+									<li><a class="my-sub-top-menu" href="/articles/">Статьи</a></li>
+									<li><a href="/videos/">Видео</a></li>
+									<li><a href="/audios/">Аудио</a></li>
+									<li><a href="/photos/">Фото</a></li>
+									<li><a class="my-sub-top-menu" href="/should-know/">Стоит знать</a></li>
+									<li class="divider"></li>
+									<li><a class="my-sub-top-menu" href="/dance-styles/">Стили танцев</a></li>
+								</ul>
+							</li>
+
+							<li class="dropdown">
+								<a class="dropdown-toggle my-top-menu" style="cursor:default">
+									Карта
+								</a>
+								<ul class="dropdown-menu">
+									<li><a class="my-sub-top-menu" href="/locations/?location=place">Места</a></li>
+									<li><a href="/locations/?location=studio">Школы и учителя</a></li>
+									<li><a href="/locations/?location=shop">Товары и услуги</a></li>
+									<li class="divider"></li>
+									<li><a href="/locations/?location=hall">Залы для аренды</a></li>
+								</ul>
+							</li>
+
+							<li class="dropdown">
+								<a class="dropdown-toggle my-top-menu" style="cursor:default">
+									Мероприятия
+								</a>
+								<ul class="dropdown-menu">
+									<li><a href="/events/">Мероприятия</a></li>
+									<li><a href="/classes/">Календарь</a></li>
+									<!--<li class="divider"></li>
+									<li><a class="my-sub-top-menu" href="/dance-party-calendar/">Еженедельные вечеринки</a></li>
+									<li class="divider"></li>
+									<li><a href="/classes/">Занятия</a></li> -->
+								</ul>
+							</li>
+
+						</ul>
+					</nav>
+				</div>
+
+
+				</span>
+				<!-- /PHONE/EMAIL -->
+
+				<!-- LINKS -->
+				<div class="pull-right nav hidden-xs">
+
+					<!--<a class="my-top-menu" href="/about/"><i class="fa fa-angle-right"></i> О Компании</a>-->
+					<!--<a class="my-top-menu" href="/contacts/"><i class="fa fa-angle-right"></i> Контакты</a>-->
+				</div>
+				<!-- /LINKS -->
+
+			</div>
+		</header>
+		<!-- /Top Bar -->
+
+		<!-- TOP NAV -->
+		<header id="topNav" class="topHead"><!-- remove class="topHead" if no topHead used! -->
+			<div class="container">
+
+				<!-- Mobile Menu Button -->
+				<button class="btn btn-mobile" data-toggle="collapse" data-target=".nav-main-collapse">
+					<i class="fa fa-bars"></i>
+				</button>
+
+				<!-- Logo text or image -->
+				<!--<a class="logo" href="/">
+					<img src="{% static 'images/logo.png' %}" alt="Dance" />
+				</a> -->
+
+				<!-- Top Nav -->
+				<div class="navbar-collapse nav-main-collapse collapse pull-right">
+					<nav class="nav-main mega-menu">
+						<ul class="nav nav-pills nav-main scroll-menu" id="topMain">
+							<!--<li >
+								<a class="my-top-menu" href="/">
+									Главная <i class="fa fa-circle-o"></i>
+								</a>
+							</li> -->
+
+							<li class="dropdown">
+								<a class="dropdown-toggle" style="cursor:default">
+									Лента
+								</a>
+								<ul class="dropdown-menu">
+									<li><a class="my-sub-top-menu" href="/articles/">Статьи</a></li>
+									<li><a href="/videos/">Видео</a></li>
+									<li><a href="/audios/">Аудио</a></li>
+									<li><a href="/photos/">Фото</a></li>
+									<li><a class="my-sub-top-menu" href="/should-know/">Стоит знать</a></li>
+									<li class="divider"></li>
+									<li><a class="my-sub-top-menu" href="/dance-styles/">Стили танцев</a></li>
+								</ul>
+							</li>
+
+							<li class="dropdown">
+								<a class="dropdown-toggle my-top-menu" style="cursor:default">
+									Карта
+								</a>
+								<ul class="dropdown-menu">
+									<li><a class="my-sub-top-menu" href="/locations/?location=place">Места</a></li>
+									<li><a href="/locations/?location=studio">Школы и учителя</a></li>
+									<li><a href="/locations/?location=shop">Товары и услуги</a></li>
+									<li class="divider"></li>
+									<li><a href="/locations/?location=hall">Залы для аренды</a></li>
+								</ul>
+							</li>
+
+							<li class="dropdown">
+								<a class="dropdown-toggle my-top-menu" style="cursor:default">
+									Мероприятия
+								</a>
+								<ul class="dropdown-menu">
+									<li><a href="/events/">Мероприятия</a></li>
+									<li><a href="/classes/">Календарь</a></li>
+									<!--<li class="divider"></li>
+									<li><a class="my-sub-top-menu" href="/dance-party-calendar/">Еженедельные вечеринки</a></li>
+									<li class="divider"></li>
+									<li><a href="/classes/">Занятия</a></li> -->
+								</ul>
+							</li>
+							<!--<li >
+								<a class="my-top-menu" href="/dance-party-calendar/">
+									Календарь <i class="fa fa-circle-o"></i>
+								</a>
+							</li> -->
+
+							<!--<li >
+								<a class="my-top-menu" href="/events/">
+									Мероприятия <i class="fa fa-circle-o"></i>
+								</a>
+							</li>
+							<li >
+								<a class="my-top-menu" href="/classes/">
+									Занятия <i class="fa fa-circle-o"></i>
+								</a>
+							</li> -->
+
+							<!--<li>
+								<a class="my-top-menu" href="/dance-styles/">
+									Стили танцев <i class="fa fa-circle-o"></i>
+								</a>
+							</li> -->
+							<!--<li class="dropdown">
+								<a class="dropdown-toggle my-top-menu" href="/dance-styles/">
+									Стили танцев <i class="fa fa-angle-down"></i>
+								</a>
+								<ul class="dropdown-menu">
+									<li><a href="#">Латина</a></li>
+									<li><a href="#">Бальные</a></li>
+								</ul>
+							</li>-->
+
+							<!-- GLOBAL SEARCH -->
+							<!--<li class="search">-->
+								<!--&lt;!&ndash; search form &ndash;&gt;-->
+								<!--<form method="get" action="#" class="input-group pull-right">-->
+									<!--<input type="text" class="form-control" name="k" id="k" value="" placeholder="Поиск">-->
+									<!--<span class="input-group-btn">-->
+										<!--<button class="btn btn-primary notransition"><i class="fa fa-search"></i></button>-->
+									<!--</span>-->
+								<!--</form>-->
+								<!--&lt;!&ndash; /search form &ndash;&gt;-->
+							<!--</li>-->
+							<!-- /GLOBAL SEARCH -->
+
+						</ul>
+					</nav>
+				</div>
+				<!-- /Top Nav -->
+
+			</div>
+		</header>
+
+		<span id="header_shadow"></span>
+		<!-- /TOP NAV -->
+        <!-- scrollTo Top -->
+        <a id='stt' class="toTop hidden-sm hidden-xs" href="#topNav" >Наверх <i class="fa fa-arrow-circle-up"></i></a>
+        <!-- /scrollTo Top -->
