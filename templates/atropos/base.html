@@ -4,18 +4,133 @@
 <!--[if gt IE 9]><!-->	<html> <!--<![endif]-->
 	<head>
 		<meta charset="utf-8" />
-		<title>{% block title %}{% endblock %}Dance</title>
-		<meta name="keywords" content="dance, Ukraine" />
+		<title>{% block title %}{% endblock %}Fox Knows</title>
+		<meta name="keywords" content="Ukraine" />
 		<meta name="description" content="" />
 
 		{% include "head-css.html" %}
+		<style>
+		.cont-page {
+			background-color: #fff;
+			margin: 0 auto;
+			max-width: 1400px;
+			min-width: 1000px;
+			padding-bottom: 22px;
+		}
+		#mainHeader {
+			position: relative;
+			height: 40px;
+			font-size: 14px;
+			padding: 0 2%;
+			margin: 0 0 20px;
+			background-color: #000;
+			z-index: 101;
+			top: 0;
+			left: 0;
+			right: 0;
+		}
+		#mainHeader ul {
+			position: relative;
+			top: 14px;
+
+			margin: 0;
+			padding: 0;
+			border: 0;
+			outline: 0;
+			border-collapse: collapse;
+			list-style: none;
+			vertical-align: top;
+		}
+		#mainHeader ul > li {
+			position: relative;
+			display: inline-block;
+			z-index: 101;
+			line-height: 20px;
+
+			margin: 0 16px 0 0;
+
+			padding: 0;
+			border: 0;
+			outline: 0;
+			border-collapse: collapse;
+			list-style: none;
+			vertical-align: top;
+		}
+		#mainHeader li.logo a {
+			position: relative;
+			top: -14px;
+			left: -1px;
+			display: block;
+			height: 21px;
+			width: 170px;
+			background-position: 0 0;
+			background-repeat: no-repeat;
+			opacity: .95;
+		}
+		#mainHeader li a {
+			color: #f2f2f2;
+			font-size: 14px;
+			font-family: 'PT Sans Narrow',Arial,sans-serif;
+			font-weight: 700;
+			letter-spacing: .1em;
+			text-decoration: none;
+			text-transform: uppercase;
+			display: inline-block;
+			margin-bottom: 7px;
+			vertical-align: top;
+		}
+		#mainHeader li a:hover {
+			color: #F07057;
+		}
+		#mainHeader .right-part {
+			position: absolute;
+			right: 6px;
+			top: 0;
+			white-space: nowrap;
+			z-index: 100;
+		}
+		#mainHeader .search{
+			position: relative;
+			display: inline-block;
+			vertical-align: baseline;
+			margin-right: 6px;
+			margin-top: 8px;
+		}
+		#loginLink {
+		    display: inline-block;
+			vertical-align: baseline;
+			margin-right: 12px;
+			font-size: 13px;
+			font-family: Arial,sans-serif;
+			text-decoration: none;
+			color: #fff;
+			border-bottom: 1px dashed rgba(255,255,255,.35);
+			position: relative;
+			top: 3px;
+		}
+		#secondHeader {
+			top: 40px;
+			position: fixed;
+		}
+		#secondHeader li {
+			float: left;
+		}
+		#mainHeader li a.active{
+			display: block;
+			padding: 7px 8px 11px;
+			margin: -7px -8px 0;
+			color: #000;
+			background-color: #fff;
+		}
+		</style>
 
 	</head>
 	<body>
+		<div class="cont-page">
+			{% include "top-nav.html" %}
 
-		{% include "top-nav.html" %}
-
-        {% block wrapper %} {% endblock %}
+        	{% block wrapper %} {% endblock %}
+		</div>
 
         {% block footer %} {% endblock %}
 

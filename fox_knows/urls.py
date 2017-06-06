@@ -16,6 +16,14 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
+from home_page import views as home_page_views
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^$', home_page_views.index),
+    url(r'^feed/', home_page_views.index),
+    url(r'^map/', home_page_views.index),
+    url(r'^events/', home_page_views.index),
+    url(r'^ratings/', home_page_views.index),
+
 ]

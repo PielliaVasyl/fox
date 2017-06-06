@@ -40,6 +40,9 @@ INSTALLED_APPS = [
 
     # 3d party libraries
     'crispy_forms',
+
+    # my app
+    'home_page'
 ]
 
 MIDDLEWARE = [
