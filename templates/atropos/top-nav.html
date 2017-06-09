@@ -14,7 +14,7 @@
 					<a href="/map/" {% if request.path|startswith:'/map/' %}class="active"{% endif %}>Карта</a>
 				</li>
 				<li>
-					<a href="/events/" {% if request.path|startswith:'/events/' %}class="active"{% endif %}>Мероприятия</a>
+					<a href="/events/upcoming/" {% if request.path|startswith:'/events/' %}class="active"{% endif %}>Мероприятия</a>
 				</li>
 				<li>
 					<a href="/ratings/" {% if request.path|startswith:'/ratings/' %}class="active"{% endif %}>Рейтинги</a>
@@ -31,12 +31,12 @@
 		<div id="secondHeader">
 			{% if request.path|startswith:'/feed/' %}
 			<ul class="nav" id="feed">
-				<li><a href="/articles/">Статьи</a></li>
-				<li><a href="/videos/">Видео</a></li>
-				<li><a href="/audios/">Аудио</a></li>
-				<li><a href="/photos/">Фото</a></li>
-				<li><a href="/should-know/">Стоит знать</a></li>
-				<li><a href="/dance-styles/">Стили танцев</a></li>
+				<li><a href="/feed/articles/">Статьи</a></li>
+				<li><a href="/feed/videos/">Видео</a></li>
+				<li><a href="/feed/audios/">Аудио</a></li>
+				<li><a href="/feed/photos/">Фото</a></li>
+				<li><a href="/feed/should-know/">Стоит знать</a></li>
+				<li><a href="/feed/dance-styles/">Стили танцев</a></li>
 			</ul>
 			{% endif %}
 
@@ -51,8 +51,8 @@
 
 			{% if request.path|startswith:'/events/' %}
 			<ul class="nav" id="events">
-				<li><a href="/events/calendar/">Календарь</a></li>
 				<li><a href="/events/upcoming/">Предстоящие</a></li>
+				<li><a href="/events/calendar/">Календарь</a></li>
 				<li><a href="/events/past/">Прошедшие</a></li>
 			</ul>
 			{% endif %}
