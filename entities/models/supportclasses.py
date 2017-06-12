@@ -42,6 +42,9 @@ class EventLocalClasses(models.Model):
             return "\n".join([p.title for p in self.dance_directions.all()])
         return ''
 
+    def __str__(self):
+        return '%s' % self.abstractevent
+
     class Meta:
         ordering = ('updated',)
 

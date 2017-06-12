@@ -45,7 +45,7 @@ class AbstractEvent(models.Model):
     directions = models.ManyToManyField(Direction, blank=True)
     cities = models.ManyToManyField(City, blank=True)
 
-    local_classes = models.ForeignKey(EventLocalClasses, on_delete=models.CASCADE)
+    local_classes = models.OneToOneField(EventLocalClasses, on_delete=models.CASCADE)
 
     description = models.TextField(blank=True)
     note = models.TextField(blank=True)
