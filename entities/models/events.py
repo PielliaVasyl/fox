@@ -2,6 +2,8 @@ from datetime import date
 
 from django.db import models
 from django.template.defaultfilters import truncatechars
+from django.utils.translation import activate
+from django.template.defaultfilters import date as date_filter
 
 from algoritms.get_status import get_auto_status
 from entities.models import AbstractEventLink
@@ -15,6 +17,26 @@ from entities.models import ExperienceLevel
 from entities.models import PriceType
 from entities.models import RepeatsType
 from entities.models import UserProfile
+
+
+def _get_date_show(self):
+    activate('ru')
+    if self.start_date and self.end_date:
+        if self.start_date == self.end_date:
+            return '{0} {1}'.format(self.start_date.strftime('%d'), date_filter(self.start_date, 'F').lower()[:3])
+        elif self.start_date.month == self.end_date.month:
+            return '{0} - {1} {2}'.format(self.start_date.strftime('%d'), self.end_date.strftime('%d'),
+                                          date_filter(self.start_date, 'F').lower()[:3])
+        return '{0} {1} - {2} {3}'.format(self.start_date.strftime('%d'),
+                                          date_filter(self.start_date, 'F').lower()[:3],
+                                          self.end_date.strftime('%d'),
+                                          date_filter(self.end_date, 'F').lower()[:3])
+    if self.start_date:
+        return 'c {0} {1}'.format(self.start_date.strftime('%d'),
+                                  date_filter(self.start_date, 'F').lower()[:3])
+    if self.end_date:
+        return 'по {0} {1}'.format(self.end_date.strftime('%d'),
+                                   date_filter(self.end_date, 'F').lower()[:3])
 
 
 class AbstractEvent(models.Model):
@@ -68,6 +90,65 @@ class AbstractEvent(models.Model):
     author = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now=False, auto_now_add=True)
     updated = models.DateTimeField(auto_now=True, auto_now_add=False)
+
+    def date_show(self):
+        return _get_date_show(self) or 'Неизвестно'
+
+    @staticmethod
+    def day_show(number_days):
+        return {
+            '1': 'день',
+            '2': 'дня',
+            '3': 'дня',
+            '4': 'дня',
+            '5': 'дней',
+            '6': 'дней',
+            '7': 'дней',
+            '8': 'дней',
+            '9': 'дней',
+            '10': 'дней',
+            '11': 'дней',
+            '12': 'дней',
+            '13': 'дней',
+            '14': 'дней',
+        }.get(str(number_days), 'день')
+
+    def duration_show(self):
+        if self.start_date and self.end_date:
+            number_days = int((self.end_date - self.start_date).days) + 1
+            return '%s %s' % (str(number_days),
+                              self.day_show(number_days),)
+        return 'продолжительность неизвестна'
+
+    # def get_start_date_day_of_week(self):
+    #     if self.start_date:
+    #         return ''.join(self.start_date.strftime("%A"))
+    #     return ''
+    #
+    # def get_end_date_day_of_week(self):
+    #     if self.end_date:
+    #         return ''.join(self.end_date.strftime("%A"))
+    #     return ''
+
+    def status_icon(self):
+        status_icon_dict = {
+            'Запланировано': 'fa-calendar-check-o',
+            'Отменено': 'fa-times',
+            'Перенесено': 'fa-clock-o',
+            'Проводится': 'fa-play',
+            'Завершено': 'fa-check'
+        }
+        return "%s" % status_icon_dict.get(self.status, 'fa-dot-circle-o')
+
+    def status_label_color(self):
+        status_label_color_dict = {
+            'Запланировано': 'info',
+            'Отменено': 'danger',
+            'Перенесено': 'warning',
+            'Проводится': 'success',
+            'Завершено': 'primary'
+        }
+        return "%s" % status_label_color_dict.get(self.status, 'default')
 
     @property
     def short_description(self):

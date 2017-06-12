@@ -1,5 +1,7 @@
 {% load static %}
 {% load startswith %}
+{% load get_direction_city_url %}
+
 		<header id="mainHeader">
 			<ul>
 				<li class="logo">
@@ -31,29 +33,29 @@
 		<div id="secondHeader">
 			{% if request.path|startswith:'/feed/' %}
 			<ul class="nav" id="feed">
-				<li><a href="/feed/articles/">Статьи</a></li>
-				<li><a href="/feed/videos/">Видео</a></li>
-				<li><a href="/feed/audios/">Аудио</a></li>
-				<li><a href="/feed/photos/">Фото</a></li>
-				<li><a href="/feed/should-know/">Стоит знать</a></li>
-				<li><a href="/feed/dance-styles/">Стили танцев</a></li>
+				<li><a href="/feed/articles/{{ request.path|get_direction_city_url }}">Статьи</a></li>
+				<li><a href="/feed/videos/{{ request.path|get_direction_city_url }}">Видео</a></li>
+				<li><a href="/feed/audios/{{ request.path|get_direction_city_url }}">Аудио</a></li>
+				<li><a href="/feed/photos/{{ request.path|get_direction_city_url }}">Фото</a></li>
+				<li><a href="/feed/should-know/{{ request.path|get_direction_city_url }}">Стоит знать</a></li>
+				<li><a href="/feed/dance-styles/{{ request.path|get_direction_city_url }}">Стили танцев</a></li>
 			</ul>
 			{% endif %}
 
 			{% if request.path|startswith:'/map/' %}
 			<ul class="nav" id="map">
-				<li><a href="/map/places/">Места</a></li>
-				<li><a href="/map/schools/">Школы</a></li>
-				<li><a href="/map/goods-and-services/">Товары и услуги</a></li>
-				<li><a href="/map/halls/">Залы для аренды</a></li>
+				<li><a href="/map/places/{{ request.path|get_direction_city_url }}">Места</a></li>
+				<li><a href="/map/schools/{{ request.path|get_direction_city_url }}">Школы</a></li>
+				<li><a href="/map/goods-and-services/{{ request.path|get_direction_city_url }}">Товары и услуги</a></li>
+				<li><a href="/map/halls/{{ request.path|get_direction_city_url }}">Залы для аренды</a></li>
 			</ul>
 			{% endif %}
 
 			{% if request.path|startswith:'/events/' %}
 			<ul class="nav" id="events">
-				<li><a href="/events/upcoming/">Предстоящие</a></li>
-				<li><a href="/events/calendar/">Календарь</a></li>
-				<li><a href="/events/past/">Прошедшие</a></li>
+				<li><a href="/events/upcoming/{{ request.path|get_direction_city_url }}">Предстоящие</a></li>
+				<li><a href="/events/calendar/{{ request.path|get_direction_city_url }}">Календарь</a></li>
+				<li><a href="/events/past/{{ request.path|get_direction_city_url }}">Прошедшие</a></li>
 			</ul>
 			{% endif %}
 		</div>

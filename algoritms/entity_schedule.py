@@ -24,14 +24,14 @@ def _get_filtered_instances(instances, filters=None):
         for key, value in filters.items():
             if key == 'event_types':
                 instances = [i for i in instances
-                             if not set([str(j.pk) for j in i.event_types.all()]).isdisjoint(value)]
+                             if not set([str(j.pk) for j in i.types.all()]).isdisjoint(value)]
             if key == 'cities':
                 instances = [i for i in instances
                              if not set([str(j.city.pk) for j in i.locations.all() if j.city]).isdisjoint(value)]
 
             if key == 'dance_styles':
                 instances = [i for i in instances
-                             if not set([str(j.pk) for j in i.dance_styles.all()]).isdisjoint(value)]
+                             if not set([str(j.pk) for j in i.local_classes.dance_styles.all()]).isdisjoint(value)]
 
             if key == 'price_types':
                 instances = [i for i in instances
@@ -65,7 +65,7 @@ def _get_filtered_instances(instances, filters=None):
                 instances = [i for i in instances
                              if not set([str(j.pk) for j in i.average_prices.all()]).isdisjoint(value)]
     if instances:
-        instances = set(instances)
+        instances = list(set(instances))
     return instances
 
 
@@ -74,10 +74,10 @@ def entity_schedule(entity, direction=None, filters=None, archive=False):
     if direction:
         month_year_set_start_date = \
             set((instance_date.month, instance_date.year,) for instance_date in
-                entity.objects.filter(direction=direction).dates('start_date', 'month'))
+                entity.objects.filter(directions__title__in=[direction]).dates('start_date', 'month'))
         month_year_set_end_date = \
             set((instance_date.month, instance_date.year,) for instance_date in
-                entity.objects.filter(direction=direction).dates('end_date', 'month'))
+                entity.objects.filter(directions__title__in=[direction]).dates('end_date', 'month'))
     else:
         month_year_set_start_date = \
             set((instance_date.month, instance_date.year,) for instance_date in

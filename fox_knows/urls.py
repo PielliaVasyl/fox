@@ -137,12 +137,12 @@ urlpatterns = [
         ])),
 
         url(r'^past/', include([
-            url(r'^$', home_page_views.index),
+            url(r'^$', events_views.past),
             url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
-                url(r'^$', home_page_views.index),
-                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', home_page_views.index),
+                url(r'^$', events_views.past),
+                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', events_views.past),
             ])),
-            url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', home_page_views.index),
+            url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', events_views.past),
         ])),
 
         url(r'^calendar/', include([
@@ -152,6 +152,15 @@ urlpatterns = [
                 url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', home_page_views.index),
             ])),
             url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', home_page_views.index),
+        ])),
+
+        url(r'^(?:event-(?P<event_id>\d+)/)', include([
+            url(r'^$', events_views.event),
+            url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
+                url(r'^$', events_views.event),
+                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', events_views.event),
+            ])),
+            url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', events_views.event),
         ])),
 
         url(r'^$', RedirectView.as_view(pattern_name='events_upcoming', permanent=True)),

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load get_direction_city_url %}
 {% block title %}{{ title }} - {% endblock %}
 
 {% block wrapper %}
@@ -113,8 +114,7 @@ div.mega-price-table div .pricing.popular {
                         <div class="col-md-2 hidden-sm hidden-xs">
                             <div class="pricing">
                                 <div class="pricing-head">
-                                    <h3>Стили</h3>
-                                    <small>танцев</small>
+                                    {{ local_class_title|safe }}
                                 </div>
                             </div>
                         </div>
@@ -147,7 +147,8 @@ div.mega-price-table div .pricing.popular {
                             <div class="col-md-4 col-md-height">
                                 <div class="inside pricing popular inside-full-height">
                                     <div class="dance-title inside inside-full-height{% if forloop.counter0|divisibleby:2 %} alternate{% endif %}" style="padding: 10px; color: #7e8998;">
-                                        <a href="/events/event-{{ event.pk }}">{{ event.title }}</a>
+                                        <a href="/events/event-{{ event.pk }}/{{ request.path|get_direction_city_url }}">{{ event.title }}</a>
+
                                     </div>
                                 </div>
                             </div>
@@ -155,13 +156,13 @@ div.mega-price-table div .pricing.popular {
                             <div class="col-md-2 col-md-height">
                                 <div class="pricing inside inside-full-height">
                                     <div class="inside inside-full-height{% if forloop.counter0|divisibleby:2 %} alternate{% endif %}" style="padding: 10px; text-align: center; color: #7e8998;">
-                                        {% if not event.event_types.all %}
+                                        {% if not event.types.all %}
                                         <span class="hidden-md hidden-lg"><b>Тип мероприятия: </b>Неизвестен</span>
                                         <br />
                                         {% else %}
                                         <span class="hidden-md hidden-lg"><b>Тип мероприятия: </b></span>
                                         {% endif %}
-                                        {% for event_type in event.event_types.all %}
+                                        {% for event_type in event.types.all %}
                                         {{ event_type.title_show }} <br />
                                         {% endfor %}
                                     </div>
@@ -171,13 +172,13 @@ div.mega-price-table div .pricing.popular {
                             <div class="col-md-2 col-md-height">
                                 <div class="pricing inside inside-full-height">
                                     <div class="inside inside-full-height{% if forloop.counter0|divisibleby:2 %} alternate{% endif %}" style="padding: 10px; text-align: center; color: #7e8998;">
-                                        {% if not event.dance_styles.all %}
+                                        {% if not event.local_classes.dance_styles.all %}
                                         <span class="hidden-md hidden-lg"><b>Стили:</b> Неизвестно</span>
                                         <br />
                                         {% else %}
                                         <span class="hidden-md hidden-lg"><b>Стили: </b></span>
                                         {% endif %}
-                                        {% for dance_style in event.dance_styles.all %}
+                                        {% for dance_style in event.local_classes.dance_styles.all %}
                                         {{ dance_style.title }} <br />
                                         {% endfor %}
                                     </div>
@@ -215,17 +216,12 @@ div.mega-price-table div .pricing.popular {
                         </div>
                     </div>
                     {% endfor %}
-
                     <!-- /option list -->
-
                 </div>
-
                 {% endfor %}
-
                 <!-- /Full 1 -->
                 <hr />
             </section>
         </div>
         <!-- /WRAPPER -->
-
 {% endblock %}

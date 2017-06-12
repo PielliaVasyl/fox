@@ -94,10 +94,10 @@ class EventType(AbstractType):
 
     def title_show(self):
         title_show_dict = {
-            self.FEST: 'Фестивать',
+            self.FESTIVAL: 'Фестивать',
             self.COMPETITION: 'Конкурс',
             self.MASTERCLASS: 'Мастер-класс',
-            self.OPENAIR: 'Open air',
+            self.OPEN_AIR: 'Open air',
             self.PARTY: 'Вечеринка',
             self.GROUP_CLASSES: 'Групповые занятия',
             self.OPEN_LESSON: 'Открытый урок'
