@@ -19,6 +19,7 @@ from django.views.generic.base import RedirectView
 
 from home_page import views as home_page_views
 from events import views as events_views
+from map import views as map_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -103,13 +104,13 @@ urlpatterns = [
 
     url(r'^map/', include([
         url(r'^places/', include([
-            url(r'^$', home_page_views.index, name='map_places'),
+            url(r'^$', map_views.places, name='map_places'),
             url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
-                url(r'^$', home_page_views.index, name='map_places_direction'),
-                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', home_page_views.index,
+                url(r'^$', map_views.places, name='map_places_direction'),
+                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', map_views.places,
                     name='map_places_direction_city'),
             ])),
-            url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', home_page_views.index,
+            url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', map_views.places,
                 name='map_places_city'),
         ])),
 

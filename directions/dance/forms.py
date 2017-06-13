@@ -86,3 +86,5 @@ class EventsFilterForm(forms.Form):
                 label='Танцевальные стили',
                 choices=_get_dance_styles_choices(dance_styles, events)
                 )
+
+

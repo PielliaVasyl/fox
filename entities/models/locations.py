@@ -21,21 +21,21 @@ class AbstractMapCoordinates(models.Model):
 
 class PlaceMapCoordinates(AbstractMapCoordinates):
     def __str__(self):
-        if self.placelocation:
+        if hasattr(self, 'placelocation'):
             return 'Place: %s - Lat:%s, lng: %s' % (self.placelocation.place_set.all(), self.lat, self.lng)
         return 'Place: Lat:%s, lng: %s' % (self.lat, self.lng)
 
 
 class SchoolMapCoordinates(AbstractMapCoordinates):
     def __str__(self):
-        if self.schoollocation:
+        if hasattr(self, 'schoollocation'):
             return 'School: %s - Lat:%s, lng: %s' % (self.schoollocation.school_set.all(), self.lat, self.lng)
         return 'School: Lat:%s, lng: %s' % (self.lat, self.lng)
 
 
 class OrganizationMapCoordinates(AbstractMapCoordinates):
     def __str__(self):
-        if self.organizationlocation:
+        if hasattr(self, 'organizationlocation'):
             return 'Organization: %s - Lat:%s, lng: %s' % (self.organizationlocation.organization_set.all(),
                                                            self.lat, self.lng)
         return 'Organization: Lat:%s, lng: %s' % (self.lat, self.lng)
@@ -43,14 +43,14 @@ class OrganizationMapCoordinates(AbstractMapCoordinates):
 
 class ShopMapCoordinates(AbstractMapCoordinates):
     def __str__(self):
-        if self.shoplocation:
+        if hasattr(self, 'shoplocation'):
             return 'Shop: %s - Lat:%s, lng: %s' % (self.shoplocation.shop_set.all(), self.lat, self.lng)
         return 'Shop: Lat:%s, lng: %s' % (self.lat, self.lng)
 
 
 class HallMapCoordinates(AbstractMapCoordinates):
     def __str__(self):
-        if self.halllocation:
+        if hasattr(self, 'halllocation'):
             return 'Hall: %s - Lat:%s, lng: %s' % (self.halllocation.hall_set.all(), self.lat, self.lng)
         return 'Hall: Lat:%s, lng: %s' % (self.lat, self.lng)
 
