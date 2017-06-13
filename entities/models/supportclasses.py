@@ -1,8 +1,7 @@
 from django.db import models
 
-from entities.models import DanceDirection
-from entities.models import DanceStyle
-from entities.models import UserProfile
+from entities.models.classes import DanceDirection, DanceStyle
+from entities.models.userprofile import UserProfile
 
 
 class AbstractLink(models.Model):
@@ -69,10 +68,12 @@ class PageLocalClasses(models.Model):
         return ''
 
     def __str__(self):
-        return '%s' % self.abstractpage
+        return '%s - %s' % (self.get_dance_directions(), self.get_dance_styles())
 
     class Meta:
         ordering = ('updated',)
+
+
 
 # class EventOrganizers(models.Model):
 #     pass

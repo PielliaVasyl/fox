@@ -18,3 +18,6 @@ from entities.models.contacts import AbstractSocialLink, SocialLinkFB, SocialLin
     PersonContacts, ShopContacts, HallContacts, ResourceContacts
 
 from entities.models.events import AbstractEvent, Event, PromoAction
+
+from entities.models.pages import AbstractPage, Place, EmployersPage, EmployeesPage, School, Organization, Teacher, \
+    Person, Shop, Hall, Resource

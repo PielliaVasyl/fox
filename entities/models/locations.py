@@ -1,7 +1,7 @@
 from django.db import models
 
-from entities.models import City
-from entities.models import UserProfile
+from entities.models.classes import City
+from entities.models.userprofile import UserProfile
 
 
 class AbstractMapCoordinates(models.Model):
@@ -21,27 +21,38 @@ class AbstractMapCoordinates(models.Model):
 
 class PlaceMapCoordinates(AbstractMapCoordinates):
     def __str__(self):
-        return 'Place: %s - Lat:%s, lng: %s' % (self.place, self.lat, self.lng)
+        if self.placelocation:
+            return 'Place: %s - Lat:%s, lng: %s' % (self.placelocation.place_set.all(), self.lat, self.lng)
+        return 'Place: Lat:%s, lng: %s' % (self.lat, self.lng)
 
 
 class SchoolMapCoordinates(AbstractMapCoordinates):
     def __str__(self):
-        return 'School: %s - Lat:%s, lng: %s' % (self.school, self.lat, self.lng)
+        if self.schoollocation:
+            return 'School: %s - Lat:%s, lng: %s' % (self.schoollocation.school_set.all(), self.lat, self.lng)
+        return 'School: Lat:%s, lng: %s' % (self.lat, self.lng)
 
 
 class OrganizationMapCoordinates(AbstractMapCoordinates):
     def __str__(self):
-        return 'Organization: %s - Lat:%s, lng: %s' % (self.organization, self.lat, self.lng)
+        if self.organizationlocation:
+            return 'Organization: %s - Lat:%s, lng: %s' % (self.organizationlocation.organization_set.all(),
+                                                           self.lat, self.lng)
+        return 'Organization: Lat:%s, lng: %s' % (self.lat, self.lng)
 
 
 class ShopMapCoordinates(AbstractMapCoordinates):
     def __str__(self):
-        return 'Shop: %s - Lat:%s, lng: %s' % (self.shop, self.lat, self.lng)
+        if self.shoplocation:
+            return 'Shop: %s - Lat:%s, lng: %s' % (self.shoplocation.shop_set.all(), self.lat, self.lng)
+        return 'Shop: Lat:%s, lng: %s' % (self.lat, self.lng)
 
 
 class HallMapCoordinates(AbstractMapCoordinates):
     def __str__(self):
-        return 'Hall: %s - Lat:%s, lng: %s' % (self.hall, self.lat, self.lng)
+        if self.halllocation:
+            return 'Hall: %s - Lat:%s, lng: %s' % (self.halllocation.hall_set.all(), self.lat, self.lng)
+        return 'Hall: Lat:%s, lng: %s' % (self.lat, self.lng)
 
 
 class AbstractLocation(models.Model):
@@ -77,6 +88,8 @@ class PlaceLocation(AbstractLocation):
 
 class SchoolLocation(AbstractLocation):
     coordinates = models.OneToOneField(SchoolMapCoordinates, on_delete=models.CASCADE, blank=True, null=True)
+    # school = models.ForeignKey('School', on_delete=models.CASCADE, related_name="locations",
+    #                            related_query_name="location", blank=True, null=True)
 
 
 class OrganizationLocation(AbstractLocation):

@@ -1,7 +1,7 @@
 from django.core.validators import RegexValidator
 from django.db import models
 
-from entities.models import UserProfile
+from entities.models.userprofile import UserProfile
 
 
 class AbstractSocialLink(models.Model):
@@ -35,7 +35,6 @@ class SocialLinkTwitter(AbstractSocialLink):
 
 
 class Socials(models.Model):
-    title = models.CharField(max_length=50)
     fb = models.ManyToManyField(SocialLinkFB, blank=True)
     vk = models.ManyToManyField(SocialLinkVK, blank=True)
     instagram = models.ManyToManyField(SocialLinkInstagram, blank=True)
@@ -66,10 +65,10 @@ class Socials(models.Model):
     updated = models.DateTimeField(auto_now=True, auto_now_add=False)
 
     def __str__(self):
-        return '%s' % self.title
+        return '%s' % self.abstractcontacts
 
     class Meta:
-        ordering = ('title',)
+        ordering = ('updated',)
 
 
 class PhoneNumber(models.Model):
@@ -91,16 +90,16 @@ class PhoneNumber(models.Model):
 class AbstractContacts(models.Model):
     phone_numbers = models.ManyToManyField(PhoneNumber, blank=True)
 
-    def get_phone_numbers(self):
-        if self.phone_numbers.all():
-            return "\n".join([p.phone_number for p in self.phone_numbers.all()])
-        return ''
-
-    socials = models.ForeignKey(Socials, on_delete=models.CASCADE, blank=True, null=True)
+    socials = models.OneToOneField(Socials, on_delete=models.CASCADE, blank=True, null=True)
 
     author = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now=False, auto_now_add=True)
     updated = models.DateTimeField(auto_now=True, auto_now_add=False)
+
+    def get_phone_numbers(self):
+        if self.phone_numbers.all():
+            return "\n".join([p.phone_number for p in self.phone_numbers.all()])
+        return ''
 
     class Meta:
         ordering = ('updated',)

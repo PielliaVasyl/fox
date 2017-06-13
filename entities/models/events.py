@@ -6,17 +6,11 @@ from django.utils.translation import activate
 from django.template.defaultfilters import date as date_filter
 
 from algoritms.get_status import get_auto_status
-from entities.models import AbstractEventLink
-from entities.models import City
-from entities.models import DayOfTheWeek
-from entities.models import Direction
-from entities.models import EventLocalClasses
-from entities.models import EventLocation
-from entities.models import EventType
-from entities.models import ExperienceLevel
-from entities.models import PriceType
-from entities.models import RepeatsType
-from entities.models import UserProfile
+from entities.models.supportclasses import AbstractEventLink, EventLocalClasses
+from entities.models.classes import City, Direction
+from entities.models.types import DayOfTheWeek, EventType, ExperienceLevel, PriceType, RepeatsType
+from entities.models.locations import EventLocation
+from entities.models.userprofile import UserProfile
 
 
 def _get_date_show(self):
