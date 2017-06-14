@@ -124,6 +124,26 @@ urlpatterns = [
 
         ])),
 
+        url(r'^schools/', include([
+            url(r'^$', map_views.schools, name='map_schools'),
+            url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
+                url(r'^$', map_views.schools, name='map_schools_direction'),
+                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', map_views.schools,
+                    name='map_schools_direction_city'),
+            ])),
+            url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', map_views.schools,
+                name='map_schools_city'),
+
+            url(r'^(?:school-(?P<school_id>\d+)/)', include([
+                url(r'^$', map_views.school),
+                url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
+                    url(r'^$', map_views.school),
+                    url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', map_views.school),
+                ])),
+                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', map_views.school),
+            ])),
+        ])),
+
 
         url(r'^$', RedirectView.as_view(pattern_name='map_places', permanent=True)),
         url(r'^(?:direction-(?P<direction_title>[\w-]+)/)', include([

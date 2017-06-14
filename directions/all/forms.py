@@ -4,7 +4,7 @@ from django import forms
 from entities.models import DanceStyle
 from entities.models import Event
 from entities.models import EventType
-from entities.models.pages import Place
+from entities.models.pages import Place, School
 from entities.models.types import PlaceType
 
 
@@ -141,4 +141,34 @@ class PlacesFilterForm(forms.Form):
                 required=False,
                 label='Стили танцев',
                 choices=_get_dance_styles_choices(dance_styles, places)
+                )
+
+
+class SchoolsFilterForm(forms.Form):
+    schools = School.objects.all()
+
+    city = forms.ChoiceField(
+        widget=forms.Select(attrs={'class': 'chosen-select', 'style': 'min-width: 172px; width: 100%',
+                                   'tabindex': '0',
+                                   'data-placeholder': "Выберите город..."}),
+        required=False,
+        label='Город'
+    )
+
+    def __init__(self, *args, **kwargs):
+        schools = School.objects.all()
+        self.direction = kwargs.pop('direction')
+
+        super(SchoolsFilterForm, self).__init__(*args, **kwargs)
+        self.fields['city'].choices = _get_cities_choices(schools)
+
+        if self.direction == 'dance':
+            dance_styles = DanceStyle.objects.all()
+            self.fields['dance_styles'] = forms.MultipleChoiceField(
+                widget=forms.SelectMultiple(attrs={'class': 'chosen-select', 'style': 'min-width: 172px; width: 100%',
+                                                   'tabindex': '0',
+                                                   'data-placeholder': "Выберите танцевальные стили..."}),
+                required=False,
+                label='Стили танцев',
+                choices=_get_dance_styles_choices(dance_styles, schools)
                 )
