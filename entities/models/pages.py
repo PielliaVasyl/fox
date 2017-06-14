@@ -42,6 +42,11 @@ class AbstractPage(models.Model):
             return "\n".join([p.link for p in self.links.all()])
         return ''
 
+    def get_links_list(self):
+        if self.links.all():
+            return [p.link for p in self.links.all()]
+        return []
+
     def get_owners(self):
         if self.owners.all():
             return "\n".join([p.user.username for p in self.owners.all()])
@@ -56,6 +61,11 @@ class AbstractPage(models.Model):
         if self.locations.all():
             return "\n".join([p.title_show() for p in self.locations.all()])
         return ''
+
+    def get_locations_address_list(self):
+        if self.locations.all():
+            return [p.address for p in self.locations.all()]
+        return []
 
     def get_types(self):
         if self.types.all():

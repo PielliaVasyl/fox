@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 
 from algoritms.entity_schedule import entity_schedule
-from directions.dance.forms import EventsFilterForm
+from directions.all.forms import EventsFilterForm
 from entities.models.events import Event
 
 

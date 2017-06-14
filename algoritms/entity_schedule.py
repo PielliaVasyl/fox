@@ -44,7 +44,7 @@ def _get_filtered_instances(instances, filters=None):
 
             if key == 'place_types':
                 instances = [i for i in instances
-                             if not set([str(j.pk) for j in i.place_types.all()]).isdisjoint(value)]
+                             if not set([str(j.pk) for j in i.types.all()]).isdisjoint(value)]
 
             if key == 'shop_types':
                 instances = [i for i in instances

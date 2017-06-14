@@ -1,25 +1,17 @@
 {% extends "base.html" %}
+{% load get_direction_city_url %}
+
 {% block title %}{{ title }} - {% endblock %}
 
 {% block wrapper %}
 
 		<!-- WRAPPER -->
-		<div id="wrapper">
-			<div class="container magazine top-no-header">
+		<div id="wrapper" style="padding-top:0">
+			<div class="container magazine top-no-header" style="padding-top:20px">
 				<div class="row">
-					<!-- center column -->
 					<div class="col-md-12">
-
 						<header class="page-title">
 							<h1 style="text-align: center">{{ place.title }}</h1>
-							<!--<div class="pull-right">
-								<small class="block styleCoor fsize20">
-									<span class="label label-default" title="Даты проведения и длительность мероприятия">{{ place.date_show }} | {{ place.duration_show }}</span>
-								</small>
-							</div>
-							<small class="block styleCoor fsize20">
-								<span class="label label-{{ place.status_label_color }}" title="Статус мероприятия"><i class="fa {{ place.status_icon }}"></i> {{ place.status_show }}</span>
-							</small>-->
 						</header>
 
 						<div class="divider half-margins"><!-- divider -->
@@ -31,10 +23,10 @@
 
 			<section class="container">
 				<div class="row">
-					<!-- center column -->
+
 					<div class="col-md-9">
 						<div class="white-row">
-							<!-- PROPERTY FEATURES -->
+
 							<h3 class="page-header margin-bottom40" style="text-align:center">
 								<strong class="styleColor">Основная информация</strong>
 							</h3>
@@ -42,24 +34,24 @@
 							<div class="row">
 								<!-- col 1 -->
 								<div class="col-md-5 col-sm-6 col-md-offset-1">
-									{% if place.place_types.all %}
+									{% if place.types.all %}
 									<div class="row">
 										<div class="col-md-12">
 											<small class="block styleCoor fsize20">
 												<i class="fa fa-list-alt" title="Типы мероприятий"></i>
-												{% for place_type in place.place_types.all %}
+												{% for place_type in place.types.all %}
 												<span class="label label-primary" title="Тип мероприятия">{{ place_type.title_show }}</span>
 												{% endfor %}
 											</small>
 										</div>
 									</div>
 									{% endif %}
-									{% if place.dance_styles.all %}
+									{% if place.local_classes.dance_styles.all %}
 									<div class="row">
 										<div class="col-md-12">
 											<small class="block styleCoor fsize20">
 												<i class="fa fa-reorder" title="Стиль танца"></i>
-												{% for dance_style in place.dance_styles.all %}
+												{% for dance_style in place.local_classes.dance_styles.all %}
 												<span class="label label-success" title="Стиль танца">{{ dance_style.title }}</span>
 												{% endfor %}
 											</small>
@@ -132,7 +124,7 @@
 
 					<!-- side column -->
 					<div class="col-md-3">
-						<form method="post" class="white-row" action="/locations/?location=place">
+						<form method="post" class="white-row" action="/map/places/{{ request.path|get_direction_city_url }}">
 							{% csrf_token %}
 							<!-- FILTER / SEARCH -->
 							<h3 class="page-header nomargin-top margin-bottom40">

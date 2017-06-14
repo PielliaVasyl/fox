@@ -112,6 +112,16 @@ urlpatterns = [
             ])),
             url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', map_views.places,
                 name='map_places_city'),
+
+            url(r'^(?:place-(?P<place_id>\d+)/)', include([
+                url(r'^$', map_views.place),
+                url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
+                    url(r'^$', map_views.place),
+                    url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', map_views.place),
+                ])),
+                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', map_views.place),
+            ])),
+
         ])),
 
 
