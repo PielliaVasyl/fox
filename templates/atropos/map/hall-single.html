@@ -38,21 +38,9 @@
 									<div class="row">
 										<div class="col-md-12">
 											<small class="block styleCoor fsize20">
-												<i class="fa fa-list-alt" title="Типы мероприятий"></i>
-												{% for place_type in instance.types.all %}
-												<span class="label label-primary" title="Тип мероприятия">{{ place_type.title_show }}</span>
-												{% endfor %}
-											</small>
-										</div>
-									</div>
-									{% endif %}
-									{% if instance.local_classes.dance_styles.all %}
-									<div class="row">
-										<div class="col-md-12">
-											<small class="block styleCoor fsize20">
-												<i class="fa fa-reorder" title="Стиль танца"></i>
-												{% for dance_style in instance.local_classes.dance_styles.all %}
-												<span class="label label-success" title="Стиль танца">{{ dance_style.title }}</span>
+												<i class="fa fa-list-alt" title="Типы залов"></i>
+												{% for instance_type in instance.types.all %}
+												<span class="label label-primary" title="Тип услуг">{{ instance_type.title_show }}</span>
 												{% endfor %}
 											</small>
 										</div>
@@ -73,7 +61,7 @@
 										</div>
 									</div>
 									{% endif %}
-									{% if place.note %}
+									{% if instance.note %}
 									<div class="row">
 										<div class="col-md-12">
 											<small class="block styleCoor fsize20">
@@ -98,7 +86,7 @@
 							{% endif %}
 
 							{% if instance.description %}
-							<p class="lead text-center">Описание места</p>
+							<p class="lead text-center">Описание услуг</p>
 							{{ instance.description|linebreaks }}
 							{% endif %}
 
@@ -124,11 +112,11 @@
 
 					<!-- side column -->
 					<div class="col-md-3">
-						<form method="post" class="white-row" action="/map/places/{{ request.path|get_direction_city_url }}">
+						<form method="post" class="white-row" action="/map/halls/{{ request.path|get_direction_city_url }}">
 							{% csrf_token %}
 							<!-- FILTER / SEARCH -->
 							<h3 class="page-header nomargin-top margin-bottom40">
-								Найти <strong class="styleColor">места</strong>
+								Найти <strong class="styleColor">залы</strong>
 							</h3>
 
 							<div class="row">
@@ -141,7 +129,7 @@
 												<option value="{{ x }}" {% if x == city_num %} selected{% endif %}>{{ y }}</option>
 											{% endfor %}
 										</select>
-									</div> -->
+									</div>-->
 
 									{% for field in form %}
 									<div class="col-md-12 col-sm-6">

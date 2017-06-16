@@ -3,8 +3,10 @@ from django.contrib import admin
 
 from entities.forms import AbstractPageForm, PlaceForm, EmployersPageForm, EmployeesPageForm, SchoolForm, \
     OrganizationForm, TeacherForm, PersonForm, ShopForm, HallForm, ResourceForm
+from entities.forms.pages import CustomerServicesForm
 from entities.models import AbstractPage, Place, EmployersPage, EmployeesPage, School, Organization, Teacher, \
     Person, Shop, Hall, Resource
+from entities.models.pages import CustomerServices
 
 
 class AbstractPageAdmin(admin.ModelAdmin):
@@ -81,6 +83,15 @@ class ShopAdmin(admin.ModelAdmin):
     form = ShopForm
 
 admin.site.register(Shop, ShopAdmin)
+
+
+class CustomerServicesAdmin(admin.ModelAdmin):
+    list_display = ['title', 'get_directions', 'get_cities', 'get_types', 'get_locations', 'get_employees',
+                    'description', 'image', 'get_links', 'contacts', 'get_owners', 'get_contributors',
+                    'author', 'created', 'updated']
+    form = CustomerServicesForm
+
+admin.site.register(CustomerServices, CustomerServicesAdmin)
 
 
 class HallAdmin(admin.ModelAdmin):

@@ -2,6 +2,7 @@ import datetime
 from dateutil.rrule import rrule, MONTHLY
 from django.db.models.query_utils import Q
 
+from algoritms.get_filtered_instances import get_filtered_instances
 
 MONTH_INT_TO_STR = {
     '1': 'Январь',
@@ -17,56 +18,6 @@ MONTH_INT_TO_STR = {
     '11': 'Ноябрь',
     '12': 'Декабрь'
 }
-
-
-def _get_filtered_instances(instances, filters=None):
-    if filters is not None:
-        for key, value in filters.items():
-            if key == 'event_types':
-                instances = [i for i in instances
-                             if not set([str(j.pk) for j in i.types.all()]).isdisjoint(value)]
-            if key == 'cities':
-                instances = [i for i in instances
-                             if not set([str(j.city.pk) for j in i.locations.all() if j.city]).isdisjoint(value)]
-
-            if key == 'dance_styles':
-                instances = [i for i in instances
-                             if not set([str(j.pk) for j in i.local_classes.dance_styles.all()]).isdisjoint(value)]
-
-            if key == 'price_types':
-                instances = [i for i in instances
-                             if not set([str(j.pk) for j in i.price_types.all()]).isdisjoint(value)]
-            if key == 'dance_studios':
-                instances = [i for i in instances if i.dance_studio and str(i.dance_studio.pk) in value]
-            if key == 'experience_levels':
-                instances = [i for i in instances
-                             if not set([str(j.pk) for j in i.experience_levels.all()]).isdisjoint(value)]
-
-            if key == 'place_types':
-                instances = [i for i in instances
-                             if not set([str(j.pk) for j in i.types.all()]).isdisjoint(value)]
-
-            if key == 'shop_types':
-                instances = [i for i in instances
-                             if not set([str(j.pk) for j in i.shop_types.all()]).isdisjoint(value)]
-
-            if key == 'titles':
-                instances = [i for i in instances if i.pk and str(i.pk) in value]
-            if key == 'directions':
-                instances = [i for i in instances
-                             if i.dance_style.direction and str(i.dance_style.direction.pk) in value]
-            if key == 'count_types':
-                instances = [i for i in instances
-                             if not set([str(j.pk) for j in i.count_types.all()]).isdisjoint(value)]
-            if key == 'between_partners_distances':
-                instances = [i for i in instances
-                             if not set([str(j.pk) for j in i.between_partners_distances.all()]).isdisjoint(value)]
-            if key == 'average_prices':
-                instances = [i for i in instances
-                             if not set([str(j.pk) for j in i.average_prices.all()]).isdisjoint(value)]
-    if instances:
-        instances = list(set(instances))
-    return instances
 
 
 def entity_schedule(entity, direction=None, filters=None, archive=False):
@@ -120,7 +71,7 @@ def entity_schedule(entity, direction=None, filters=None, archive=False):
                       start_date__lt=datetime.datetime(year, month + 1, 1)))
             ]
 
-            instances = _get_filtered_instances(instances, filters)
+            instances = get_filtered_instances(instances, filters)
 
             if instances:
                 instances_months.append({'month': '%s %s' % (MONTH_INT_TO_STR[str(month)], year),

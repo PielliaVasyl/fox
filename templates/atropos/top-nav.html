@@ -46,7 +46,8 @@
 			<ul class="nav" id="map">
 				<li><a href="/map/places/{{ request.path|get_direction_city_url }}">Места</a></li>
 				<li><a href="/map/schools/{{ request.path|get_direction_city_url }}">Школы</a></li>
-				<li><a href="/map/goods-and-services/{{ request.path|get_direction_city_url }}">Товары и услуги</a></li>
+				<li><a href="/map/shops/{{ request.path|get_direction_city_url }}">Магазины</a></li>
+				<li><a href="/map/services/{{ request.path|get_direction_city_url }}">Услуги</a></li>
 				<li><a href="/map/halls/{{ request.path|get_direction_city_url }}">Залы для аренды</a></li>
 			</ul>
 			{% endif %}

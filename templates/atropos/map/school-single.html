@@ -128,27 +128,27 @@
 							{% csrf_token %}
 							<!-- FILTER / SEARCH -->
 							<h3 class="page-header nomargin-top margin-bottom40">
-								Найти <strong class="styleColor">места</strong>
+								Найти <strong class="styleColor">школы</strong>
 							</h3>
 
 							<div class="row">
 								<div class="form-group">
 
-									<div class="col-md-12 col-sm-6">
+									<!--<div class="col-md-12 col-sm-6">
 										<label>{{ form.city.label }}</label>
 										<select class="chosen-select" data-placeholder="Выберите города..." id="id_city" name="city" style="min-width: 172px; width: 100%;" tabindex="0" required="">
 											{% for x,y in form.fields.city.choices %}
 												<option value="{{ x }}" {% if x == city_num %} selected{% endif %}>{{ y }}</option>
 											{% endfor %}
 										</select>
-									</div>
+									</div> -->
 
-									{% if form.dance_styles %}
+									{% for field in form %}
 									<div class="col-md-12 col-sm-6">
-										<label>{{ form.dance_styles.label }}</label>
-										{{ form.dance_styles }}
+										<label>{{ field.label }}</label>
+										{{ field }}
 									</div>
-									{% endif %}
+									{% endfor %}
 
 									<div class="col-md-12">
 										<label>&nbsp;</label>

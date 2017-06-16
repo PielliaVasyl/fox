@@ -236,3 +236,25 @@ class ShopType(AbstractType):
             self.INTERNET_SHOP: 'Интернет-магазин',
         }
         return "%s" % title_show_dict.get(str(self.title), str(self.title))
+
+
+class CustomerServicesType(AbstractType):
+    BARBERSHOP = 'BARBERSHOP'
+    ATELIER = 'ATELIER'
+
+    TITLE_CHOICES = (
+        (BARBERSHOP, 'Парикмахерская'),
+        (ATELIER, 'Ателье'),
+    )
+    TITLE_DICT = {
+        BARBERSHOP: 'Парикмахерская',
+        ATELIER: 'Ателье'
+    }
+    title = models.CharField(max_length=20, choices=TITLE_CHOICES, default=BARBERSHOP)
+
+    def title_show(self):
+        title_show_dict = {
+            self.BARBERSHOP: 'Парикмахерская',
+            self.ATELIER: 'Ателье',
+        }
+        return "%s" % title_show_dict.get(str(self.title), str(self.title))

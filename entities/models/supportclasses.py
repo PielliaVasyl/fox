@@ -62,6 +62,11 @@ class PageLocalClasses(models.Model):
             return "\n".join([p.title for p in self.dance_styles.all()])
         return ''
 
+    def get_dance_styles_list(self):
+        if self.dance_styles.all():
+            return [p.title for p in self.dance_styles.all()]
+        return []
+
     def get_dance_directions(self):
         if self.dance_directions.all():
             return "\n".join([p.title for p in self.dance_directions.all()])

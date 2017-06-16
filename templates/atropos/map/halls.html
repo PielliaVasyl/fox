@@ -1,25 +1,25 @@
 {% extends "map/map.html" %}
 {% load get_direction_city_url %}
-{% block title %}Танцевальные школы на карте - {% endblock %}
+{% block title %}Магазины на карте - {% endblock %}
 
 {% block map_content %}
 				<div class="row">
 					<div class="col-md-9">
 						<h3 class="page-header nomargin-top">
-							<strong class="styleColor">Школы танцев</strong> на карте
+							<strong class="styleColor">Залы</strong> на карте
 						</h3>
 					</div>
 					<div class="col-md-3">
 						<!-- AJAX MODAL -->
 						<a href="/locations/{{ request.GET.location }}-modal-ajax/" class="btn btn-default fullwidth" data-toggle="modal" data-target=".ajax_modal_container" style="overflow: hidden">
-							<i class="fa fa-plus"></i> Добавить школу
+							<i class="fa fa-plus"></i> Добавить залы
 						</a>
 						<div class="modal fade ajax_modal_container" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
 							<div class="modal-dialog modal-md">
 								<div class="modal-content"></div>
 							</div>
 						</div>
-						<!--<button class="btn btn-default fullwidth" style="overflow: hidden" title="Добавить школу"><i class="fa fa-plus"></i> Добавить школу</button>-->
+						<!--<button class="btn btn-default fullwidth" style="overflow: hidden" title="Добавить залы"><i class="fa fa-plus"></i> Добавить залы</button>-->
 					</div>
 				</div>
 				<div class="row">
@@ -34,7 +34,7 @@
 							<div class="col-md-9">
 								 <div class="row">
 									 <div class="col-sm-5">
-									 	<h4><a class="styleColor" href="/map/schools/school-{{ instance.pk }}/{{ request.path|get_direction_city_url }}">{{ instance.title }}</a></h4>
+									 	<h4><a class="styleColor" href="/map/halls/hall-{{ instance.pk }}/{{ request.path|get_direction_city_url }}">{{ instance.title }}</a></h4>
 									 </div>
 									 <div class="col-sm-4">
 										 {% for address in instance.get_locations_address_list %}{{ address }} <br />{% endfor %}
@@ -49,7 +49,7 @@
 								 </div>
 								<div class="row">
 									<div class="col-sm-6">
-										{% for dance_style in instance.local_classes.get_dance_styles_list %}{{ dance_style }}{% if not forloop.last %}, {% endif %}{% endfor %}
+										{% for dance_style in instance.get_dance_styles_list %}{{ dance_style }}{% if not forloop.last %}, {% endif %}{% endfor %}
 									</div>
 									<div class="col-sm-6">
 										<p>
@@ -98,7 +98,7 @@
 							{% csrf_token %}
 							<!-- FILTER / SEARCH -->
 							<h3 class="page-header nomargin-top margin-bottom40">
-								Найти <strong class="styleColor">школы</strong>
+								Найти <strong class="styleColor">залы</strong>
 							</h3>
 
 							<input type="hidden" name="city" value="{{ select_city_form.city.value }}">

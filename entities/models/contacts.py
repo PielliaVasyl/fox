@@ -106,35 +106,42 @@ class AbstractContacts(models.Model):
 
 
 class SchoolContacts(AbstractContacts):
-    def __str__(self):
-        return '%s' % self.school
+    pass
+    # def __str__(self):
+    #     return '%s' % self.school
 
 
 class OrganizationContacts(AbstractContacts):
-    def __str__(self):
-        return '%s' % self.organization
+    pass
+    # def __str__(self):
+    #     return '%s' % self.organization
 
 
 class TeacherContacts(AbstractContacts):
-    def __str__(self):
-        return '%s' % self.teacher
+    pass
+    # def __str__(self):
+    #     return '%s' % self.teacher
 
 
 class PersonContacts(AbstractContacts):
-    def __str__(self):
-        return '%s' % self.person
+    pass
+    # def __str__(self):
+    #     return '%s' % self.person
 
 
 class ShopContacts(AbstractContacts):
-    def __str__(self):
-        return '%s' % self.shop
+    pass
+    # def __str__(self):
+    #     return '%s' % self.shop
 
 
 class HallContacts(AbstractContacts):
-    def __str__(self):
-        return '%s' % self.hall
+    pass
+    # def __str__(self):
+    #     return '%s' % self.hall
 
 
 class ResourceContacts(AbstractContacts):
-    def __str__(self):
-        return '%s' % self.resource
+    pass
+    # def __str__(self):
+    #     return '%s' % self.resource

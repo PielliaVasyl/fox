@@ -52,3 +52,9 @@ class ShopTypeForm(forms.ModelForm):
     class Meta:
         model = ShopType
         fields = ['title', 'description']
+
+
+class CustomerServicesTypeForm(forms.ModelForm):
+    class Meta:
+        model = ShopType
+        fields = ['title', 'description']

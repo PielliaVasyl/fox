@@ -7,7 +7,7 @@ from entities.models.supportclasses import AbstractLink, AbstractEventLink, Abst
     PageLocalClasses
 
 from entities.models.types import AbstractType, EventType, PriceType, ExperienceLevel, RepeatsType, DayOfTheWeek, \
-    PlaceType, ShopType
+    PlaceType, ShopType, CustomerServicesType
 
 from entities.models.locations import AbstractMapCoordinates, PlaceMapCoordinates, SchoolMapCoordinates, \
     OrganizationMapCoordinates, ShopMapCoordinates, HallMapCoordinates, AbstractLocation, EventLocation, \
@@ -20,4 +20,4 @@ from entities.models.contacts import AbstractSocialLink, SocialLinkFB, SocialLin
 from entities.models.events import AbstractEvent, Event, PromoAction
 
 from entities.models.pages import AbstractPage, Place, EmployersPage, EmployeesPage, School, Organization, Teacher, \
-    Person, Shop, Hall, Resource
+    Person, Shop, CustomerServices, Hall, Resource

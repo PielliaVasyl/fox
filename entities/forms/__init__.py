@@ -7,7 +7,7 @@ from entities.forms.supportclasses import AbstractLinkForm, AbstractEventLinkFor
     EventLocalClassesForm, PageLocalClassesForm
 
 from entities.forms.types import AbstractTypeForm, EventTypeForm, PriceTypeForm, ExperienceLevelForm, \
-    RepeatsTypeForm, DayOfTheWeekForm, PlaceTypeForm, ShopTypeForm
+    RepeatsTypeForm, DayOfTheWeekForm, PlaceTypeForm, ShopTypeForm, CustomerServicesTypeForm
 
 from entities.forms.locations import AbstractMapCoordinatesForm, PlaceMapCoordinatesForm, SchoolMapCoordinatesForm, \
     OrganizationMapCoordinatesForm, ShopMapCoordinatesForm, HallMapCoordinatesForm, AbstractLocationForm, \
@@ -22,4 +22,4 @@ from entities.forms.contacts import AbstractSocialLinkForm, SocialLinkFBForm, So
 from entities.forms.events import AbstractEventForm, EventForm, PromoActionForm
 
 from entities.forms.pages import AbstractPageForm, PlaceForm, EmployersPageForm, EmployeesPageForm, SchoolForm, \
-    OrganizationForm, TeacherForm, PersonForm, ShopForm, HallForm, ResourceForm
+    OrganizationForm, TeacherForm, PersonForm, ShopForm, CustomerServicesForm, HallForm, ResourceForm

@@ -66,6 +66,13 @@ class ShopForm(forms.ModelForm):
                   'image', 'links', 'contacts', 'owners', 'contributors', 'author']
 
 
+class CustomerServicesForm(forms.ModelForm):
+    class Meta:
+        model = Shop
+        fields = ['title', 'directions', 'cities', 'types', 'locations', 'employees', 'description',
+                  'image', 'links', 'contacts', 'owners', 'contributors', 'author']
+
+
 class HallForm(forms.ModelForm):
     class Meta:
         model = Hall

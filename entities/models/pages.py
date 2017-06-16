@@ -3,9 +3,8 @@ from django.db import models
 from entities.models.classes import Direction, City
 from entities.models.userprofile import UserProfile
 from entities.models.supportclasses import AbstractPageLink, PageLocalClasses
-from entities.models.types import PlaceType, ShopType
-from entities.models.locations import PlaceLocation, OrganizationLocation, ShopLocation, HallLocation
-from entities.models import SchoolLocation
+from entities.models.types import PlaceType, ShopType, CustomerServicesType
+from entities.models.locations import PlaceLocation, OrganizationLocation, ShopLocation, HallLocation, SchoolLocation
 from entities.models.contacts import SchoolContacts, OrganizationContacts, TeacherContacts, PersonContacts, \
     ShopContacts, HallContacts, ResourceContacts
 
@@ -145,6 +144,17 @@ class Person(EmployeesPage):
 
 class Shop(EmployersPage):
     types = models.ManyToManyField(ShopType, blank=True)
+
+    locations = models.ManyToManyField(ShopLocation, blank=True)
+    employees = models.ManyToManyField(EmployeesPage, blank=True)
+
+    contacts = models.OneToOneField(ShopContacts, on_delete=models.CASCADE, null=True, blank=True)
+
+    # events = models.ManyToManyField(AbstractEvent, blank=True)
+
+
+class CustomerServices(EmployersPage):
+    types = models.ManyToManyField(CustomerServicesType, blank=True)
 
     locations = models.ManyToManyField(ShopLocation, blank=True)
     employees = models.ManyToManyField(EmployeesPage, blank=True)

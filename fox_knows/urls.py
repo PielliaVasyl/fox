@@ -144,6 +144,66 @@ urlpatterns = [
             ])),
         ])),
 
+        url(r'^shops/', include([
+            url(r'^$', map_views.shops, name='map_shops'),
+            url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
+                url(r'^$', map_views.shops, name='map_shops_direction'),
+                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', map_views.shops,
+                    name='map_shops_direction_city'),
+            ])),
+            url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', map_views.shops,
+                name='map_shops_city'),
+
+            url(r'^(?:shop-(?P<shop_id>\d+)/)', include([
+                url(r'^$', map_views.shop),
+                url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
+                    url(r'^$', map_views.shop),
+                    url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', map_views.shop),
+                ])),
+                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', map_views.shop),
+            ])),
+        ])),
+
+        url(r'^services/', include([
+            url(r'^$', map_views.services, name='map_services'),
+            url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
+                url(r'^$', map_views.services, name='map_services_direction'),
+                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', map_views.services,
+                    name='map_services_direction_city'),
+            ])),
+            url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', map_views.services,
+                name='map_services_city'),
+
+            url(r'^(?:service-(?P<service_id>\d+)/)', include([
+                url(r'^$', map_views.service),
+                url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
+                    url(r'^$', map_views.service),
+                    url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', map_views.service),
+                ])),
+                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', map_views.service),
+            ])),
+        ])),
+
+        url(r'^halls/', include([
+            url(r'^$', map_views.halls, name='map_halls'),
+            url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
+                url(r'^$', map_views.halls, name='map_halls_direction'),
+                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', map_views.halls,
+                    name='map_halls_direction_city'),
+            ])),
+            url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', map_views.halls,
+                name='map_halls_city'),
+
+            url(r'^(?:hall-(?P<hall_id>\d+)/)', include([
+                url(r'^$', map_views.hall),
+                url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
+                    url(r'^$', map_views.hall),
+                    url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', map_views.hall),
+                ])),
+                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', map_views.hall),
+            ])),
+        ])),
+
 
         url(r'^$', RedirectView.as_view(pattern_name='map_places', permanent=True)),
         url(r'^(?:direction-(?P<direction_title>[\w-]+)/)', include([

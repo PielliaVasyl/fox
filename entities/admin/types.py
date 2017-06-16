@@ -2,8 +2,10 @@ from django.contrib import admin
 
 from entities.forms import AbstractTypeForm, EventTypeForm, PriceTypeForm, ExperienceLevelForm, RepeatsTypeForm, \
     DayOfTheWeekForm, ShopTypeForm, PlaceTypeForm
+from entities.forms.types import CustomerServicesTypeForm
 from entities.models import AbstractType, EventType, PriceType, ExperienceLevel, RepeatsType, DayOfTheWeek, \
     ShopType, PlaceType
+from entities.models.types import CustomerServicesType
 
 
 class AbstractTypeAdmin(admin.ModelAdmin):
@@ -60,3 +62,10 @@ class ShopTypeAdmin(admin.ModelAdmin):
     form = ShopTypeForm
 
 admin.site.register(ShopType, ShopTypeAdmin)
+
+
+class CustomerServicesTypeAdmin(admin.ModelAdmin):
+    list_display = ['title', 'description', 'created', 'updated']
+    form = CustomerServicesTypeForm
+
+admin.site.register(CustomerServicesType, CustomerServicesTypeAdmin)
