@@ -2,28 +2,7 @@
 
 from django import forms
 
-from entities.models import AbstractEventLink
-from entities.models import AbstractLink
-from entities.models import EventLocalClasses
-from entities.models import AbstractPageLink, PageLocalClasses
-
-
-class AbstractLinkForm(forms.ModelForm):
-    class Meta:
-        model = AbstractLink
-        fields = ['link', 'author']
-
-
-class AbstractEventLinkForm(forms.ModelForm):
-    class Meta:
-        model = AbstractEventLink
-        fields = ['link', 'author']
-
-
-class AbstractPageLinkForm(forms.ModelForm):
-    class Meta:
-        model = AbstractPageLink
-        fields = ['link', 'author']
+from entities.models import EventLocalClasses, PageLocalClasses
 
 
 class EventLocalClassesForm(forms.ModelForm):

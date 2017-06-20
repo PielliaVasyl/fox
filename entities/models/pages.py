@@ -1,12 +1,13 @@
 from django.db import models
 
 from entities.models.classes import Direction, City
-from entities.models.userprofile import UserProfile
-from entities.models.supportclasses import AbstractPageLink, PageLocalClasses
-from entities.models.types import PlaceType, ShopType, CustomerServicesType
-from entities.models.locations import PlaceLocation, OrganizationLocation, ShopLocation, HallLocation, SchoolLocation
 from entities.models.contacts import SchoolContacts, OrganizationContacts, TeacherContacts, PersonContacts, \
     ShopContacts, HallContacts, ResourceContacts
+from entities.models.links import AbstractPageLink
+from entities.models.locations import PlaceLocation, OrganizationLocation, ShopLocation, HallLocation, SchoolLocation
+from entities.models.supportclasses import PageLocalClasses
+from entities.models.types import PlaceType, ShopType, CustomerServicesType
+from entities.models.userprofile import UserProfile
 
 
 class AbstractPage(models.Model):
