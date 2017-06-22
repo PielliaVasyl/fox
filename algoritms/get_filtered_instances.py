@@ -40,12 +40,12 @@ def get_filtered_instances(instances, filters=None):
             if key == 'count_types':
                 instances = [i for i in instances
                              if not set([str(j.pk) for j in i.count_types.all()]).isdisjoint(value)]
-            if key == 'between_partners_distances':
+            if key == 'distance_types':
                 instances = [i for i in instances
-                             if not set([str(j.pk) for j in i.between_partners_distances.all()]).isdisjoint(value)]
-            if key == 'average_prices':
-                instances = [i for i in instances
-                             if not set([str(j.pk) for j in i.average_prices.all()]).isdisjoint(value)]
+                             if not set([str(j.pk) for j in i.distance_types.all()]).isdisjoint(value)]
+            # if key == 'average_prices':
+            #     instances = [i for i in instances
+            #                  if not set([str(j.pk) for j in i.average_prices.all()]).isdisjoint(value)]
     if instances:
         instances = list(set(instances))
     return instances

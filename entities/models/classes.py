@@ -39,17 +39,17 @@ class AbstractLocalClass(AbstractClass):
         return ''
 
 
-class DanceDirection(AbstractLocalClass):
+class DanceDirectionClass(AbstractLocalClass):
     pass
 
 
-class DanceStyle(AbstractLocalClass):
-    dance_direction = models.ForeignKey('DanceDirection', blank=True)
+class DanceStyleClass(AbstractLocalClass):
+    dance_direction = models.ForeignKey('DanceDirectionClass', blank=True, null=True)
 
 
-@receiver(post_save, sender=DanceStyle)
-def create_initial_data_dance_style(sender, instance, created, **kwargs):
-    if created and sender == 'DanceStyle':
+@receiver(post_save, sender=DanceStyleClass)
+def create_initial_data_dance_style_class(sender, instance, created, **kwargs):
+    if created and sender == 'DanceStyleClass':
         if Direction.objects.filter(title='Dance'):
             if Direction.objects.filter(title='Dance') not in instance.directions:
                 instance.directions.add(Direction.objects.get(title='Dance'))
@@ -61,9 +61,9 @@ def create_initial_data_dance_style(sender, instance, created, **kwargs):
             instance.save()
 
 
-@receiver(post_save, sender=DanceDirection)
-def create_initial_data_dance_direction(sender, instance, created, **kwargs):
-    if created and sender == 'DanceDirection':
+@receiver(post_save, sender=DanceDirectionClass)
+def create_initial_data_dance_direction_class(sender, instance, created, **kwargs):
+    if created and sender == 'DanceDirectionClass':
         if Direction.objects.filter(title='Dance'):
             if Direction.objects.filter(title='Dance') not in instance.directions:
                 instance.directions.add(Direction.objects.get(title='Dance'))
@@ -73,3 +73,6 @@ def create_initial_data_dance_direction(sender, instance, created, **kwargs):
             direction.save()
             instance.directions.add(direction)
             instance.save()
+
+
+

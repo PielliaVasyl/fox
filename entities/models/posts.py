@@ -1,9 +1,10 @@
 from django.db import models
 
 from entities.models.classes import Direction
-from entities.models.links import ArticleLink, AudioLink, PhotoLink, PlaylistLink, VideoLink
+from entities.models.links import ArticleLink, AudioLink, PhotoLink, PlaylistLink, VideoLink, DanceStyleAuthorLink
 from entities.models.tags import ChapterTag, AlbumTag, PlaylistTag, TracklistTag, ArticleTag, PhotoTag, \
-    VideoTag, AudioTag
+    VideoTag, AudioTag, DanceStyleTag, DanceDirectionTag
+from entities.models.types import DanceStyleCountType, DanceStyleDistanceType
 from entities.models.userprofile import UserProfile
 
 
@@ -56,6 +57,10 @@ class Playlist(AbstractPostGroup):
 
 class Tracklist(AbstractPostGroup):
     tags = models.ManyToManyField(TracklistTag, default=True)
+
+
+class DanceDirection(AbstractPostGroup):
+    tags = models.ManyToManyField(DanceDirectionTag, blank=True)
 
 
 class AbstractPost(models.Model):
@@ -129,3 +134,41 @@ class Audio(AbstractPost):
     tags = models.ManyToManyField(AudioTag, blank=True)
     link = models.OneToOneField(AudioLink, blank=True, null=True)
     groups = models.ManyToManyField(Tracklist, blank=True)
+
+
+class DanceStyle(AbstractPost):
+    tags = models.ManyToManyField(DanceStyleTag, blank=True)
+    image = models.ImageField(blank=True)
+    author_of_post = models.CharField(max_length=100, blank=True)
+    link_to_author = models.OneToOneField(DanceStyleAuthorLink, blank=True, null=True)
+    group = models.ForeignKey(DanceDirection, blank=True)
+
+    count_types = models.ManyToManyField(DanceStyleCountType, blank=True)
+    distance_types = models.ManyToManyField(DanceStyleDistanceType, blank=True)
+    # average_prices = models.ManyToManyField(DanceStyleAveragePrice, blank=True)
+    # attendee_ages = models.ManyToManyField(DanceStyleInSectionAttendeeAge, blank=True)
+
+    def get_count_types(self):
+        if self.count_types.all():
+            return "\n".join([p.title for p in self.count_types.all()])
+        return ''
+
+    COUNT_TYPE_CHOICES = DanceStyleCountType.TITLE_CHOICES
+
+    def get_count_types_list(self):
+        if self.count_types.all():
+            return [{k: v for k, v in self.COUNT_TYPE_CHOICES}.get(p.title, p.title) for p in self.count_types.all()]
+        return []
+
+    def get_distance_types(self):
+        if self.distance_types.all():
+            return "\n".join([p.title for p in self.distance_types.all()])
+        return ''
+
+    DISTANCE_CHOICES = DanceStyleDistanceType.TITLE_CHOICES
+
+    def get_distance_types_list(self):
+        if self.distance_types.all():
+            return [{k: v for k, v in self.DISTANCE_CHOICES}.get(p.title, p.title) for p in self.distance_types.all()]
+        return []
+

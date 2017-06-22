@@ -1,19 +1,9 @@
 from django.contrib import admin
 
-from entities.forms import AbstractClassForm
-from entities.forms import AbstractGlobalClassForm
-from entities.forms import AbstractLocalClassForm
-from entities.forms import CityForm
-from entities.forms import DanceDirectionForm
-from entities.forms import DanceStyleForm
-from entities.forms import DirectionForm
-from entities.models import AbstractClass
-from entities.models import AbstractGlobalClass
-from entities.models import AbstractLocalClass
-from entities.models import City
-from entities.models import DanceDirection
-from entities.models import DanceStyle
-from entities.models import Direction
+from entities.forms.classes import AbstractClassForm, AbstractGlobalClassForm, AbstractLocalClassForm, CityForm, \
+    DirectionForm, DanceDirectionClassForm, DanceStyleClassForm
+from entities.models.classes import AbstractClass, AbstractGlobalClass, AbstractLocalClass, City, \
+    DanceDirectionClass, DanceStyleClass, Direction
 
 
 class AbstractClassAdmin(admin.ModelAdmin):
@@ -51,15 +41,15 @@ class AbstractLocalClassAdmin(admin.ModelAdmin):
 admin.site.register(AbstractLocalClass, AbstractLocalClassAdmin)
 
 
-class DanceDirectionAdmin(admin.ModelAdmin):
+class DanceDirectionClassAdmin(admin.ModelAdmin):
     list_display = ['title', 'get_directions', 'created', 'updated']
-    form = DanceDirectionForm
+    form = DanceDirectionClassForm
 
-admin.site.register(DanceDirection, DanceDirectionAdmin)
+admin.site.register(DanceDirectionClass, DanceDirectionClassAdmin)
 
 
-class DanceStyleAdmin(admin.ModelAdmin):
+class DanceStyleClassAdmin(admin.ModelAdmin):
     list_display = ['title', 'get_directions', 'dance_direction', 'created', 'updated']
-    form = DanceStyleForm
+    form = DanceStyleClassForm
 
-admin.site.register(DanceStyle, DanceStyleAdmin)
+admin.site.register(DanceStyleClass, DanceStyleClassAdmin)

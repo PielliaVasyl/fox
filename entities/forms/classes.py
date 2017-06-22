@@ -6,8 +6,8 @@ from entities.models import AbstractClass
 from entities.models import AbstractGlobalClass
 from entities.models import AbstractLocalClass
 from entities.models import City
-from entities.models import DanceDirection
-from entities.models import DanceStyle
+from entities.models import DanceDirectionClass
+from entities.models import DanceStyleClass
 from entities.models import Direction
 
 
@@ -41,13 +41,13 @@ class AbstractLocalClassForm(forms.ModelForm):
         fields = ['title', 'directions']
 
 
-class DanceDirectionForm(forms.ModelForm):
+class DanceDirectionClassForm(forms.ModelForm):
     class Meta:
-        model = DanceDirection
+        model = DanceDirectionClass
         fields = ['title', 'directions']
 
 
-class DanceStyleForm(forms.ModelForm):
+class DanceStyleClassForm(forms.ModelForm):
     class Meta:
-        model = DanceStyle
+        model = DanceStyleClass
         fields = ['title', 'directions', 'dance_direction']

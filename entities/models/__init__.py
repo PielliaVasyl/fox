@@ -1,7 +1,7 @@
 from entities.models.userprofile import UserProfile
 
 from entities.models.classes import AbstractClass, AbstractGlobalClass, City, Direction, AbstractLocalClass, \
-    DanceDirection, DanceStyle
+    DanceDirectionClass, DanceStyleClass
 
 from entities.models.tags import AbstractTag, GlobalTag, CityTag, DirectionTag, LocalTag, DanceTag, DanceStyleTag, \
     DanceStyleCountTag, DanceStyleDistanceTag, DanceDirectionTag, PostTag, ArticleTag, VideoTag, AudioTag, PhotoTag, \
@@ -29,4 +29,4 @@ from entities.models.pages import AbstractPage, Place, EmployersPage, EmployeesP
     Person, Shop, CustomerServices, Hall, Resource
 
 from entities.models.posts import AbstractPostGroup, Chapter, Album, Playlist, Tracklist, AbstractPost, Article, \
-    Photo, Video, Audio
+    Photo, Video, Audio, DanceStyle, DanceDirection

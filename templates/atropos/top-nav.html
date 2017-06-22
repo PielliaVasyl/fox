@@ -37,8 +37,10 @@
 				<li><a href="/feed/videos/{{ request.path|get_direction_city_url }}">Видео</a></li>
 				<li><a href="/feed/audios/{{ request.path|get_direction_city_url }}">Аудио</a></li>
 				<li><a href="/feed/photos/{{ request.path|get_direction_city_url }}">Фото</a></li>
-				<li><a href="/feed/should-know/{{ request.path|get_direction_city_url }}">Стоит знать</a></li>
-				<li><a href="/feed/dance-styles/{{ request.path|get_direction_city_url }}">Стили танцев</a></li>
+				<li><a href="/feed/links/{{ request.path|get_direction_city_url }}">Ссылки</a></li>
+				<li><a href="/feed/organizations/{{ request.path|get_direction_city_url }}">Организации</a></li>
+				<li><a href="/feed/persons/{{ request.path|get_direction_city_url }}">Персоны</a></li>
+				{% if '/direction-dance/' in request.path %}<li><a href="/feed/dance-styles/{{ request.path|get_direction_city_url }}">Стили танцев</a></li>{% endif %}
 			</ul>
 			{% endif %}
 

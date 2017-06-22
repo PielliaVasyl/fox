@@ -1,11 +1,11 @@
 from django.db import models
 
-from entities.models.classes import DanceDirection, DanceStyle
+from entities.models.classes import DanceDirectionClass, DanceStyleClass
 
 
 class EventLocalClasses(models.Model):
-    dance_styles = models.ManyToManyField(DanceStyle)
-    dance_directions = models.ManyToManyField(DanceDirection)
+    dance_styles = models.ManyToManyField(DanceStyleClass)
+    dance_directions = models.ManyToManyField(DanceDirectionClass)
 
     created = models.DateTimeField(auto_now=False, auto_now_add=True)
     updated = models.DateTimeField(auto_now=True, auto_now_add=False)
@@ -28,8 +28,8 @@ class EventLocalClasses(models.Model):
 
 
 class PageLocalClasses(models.Model):
-    dance_styles = models.ManyToManyField(DanceStyle)
-    dance_directions = models.ManyToManyField(DanceDirection)
+    dance_styles = models.ManyToManyField(DanceStyleClass)
+    dance_directions = models.ManyToManyField(DanceDirectionClass)
 
     created = models.DateTimeField(auto_now=False, auto_now_add=True)
     updated = models.DateTimeField(auto_now=True, auto_now_add=False)

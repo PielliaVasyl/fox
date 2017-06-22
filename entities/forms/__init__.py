@@ -1,7 +1,7 @@
 # coding: utf-8
 
 from entities.forms.classes import AbstractClassForm, AbstractGlobalClassForm, CityForm, DirectionForm, \
-    AbstractLocalClassForm, DanceDirectionForm, DanceStyleForm
+    AbstractLocalClassForm, DanceDirectionClassForm, DanceDirectionClassForm
 
 from entities.forms.tags import AbstractTagForm, GlobalTagForm, CityTagForm, DirectionTagForm, LocalTagForm, \
     DanceTagForm, DanceStyleTagForm, DanceStyleCountTagForm, DanceStyleDistanceTagForm, DanceDirectionTagForm, \
@@ -32,4 +32,4 @@ from entities.forms.pages import AbstractPageForm, PlaceForm, EmployersPageForm,
     OrganizationForm, TeacherForm, PersonForm, ShopForm, CustomerServicesForm, HallForm, ResourceForm
 
 from entities.forms.posts import AbstractPostForm, AbstractPostGroupForm, AlbumForm, ArticleForm, AudioForm, \
-    ChapterForm, PhotoForm, PlaylistForm, TracklistForm, VideoForm
+    ChapterForm, PhotoForm, PlaylistForm, TracklistForm, VideoForm, DanceDirectionForm, DanceStyleForm

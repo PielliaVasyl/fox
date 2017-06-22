@@ -3,7 +3,7 @@
 from django import forms
 
 from entities.models.posts import AbstractPost, AbstractPostGroup, Album, Article, Audio, Chapter, Photo, Playlist, \
-    Tracklist, Video
+    Tracklist, Video, DanceDirection, DanceStyle
 
 
 class AbstractPostGroupForm(forms.ModelForm):
@@ -33,6 +33,12 @@ class PlaylistForm(forms.ModelForm):
 class TracklistForm(forms.ModelForm):
     class Meta:
         model = Tracklist
+        fields = ['title', 'directions', 'description', 'tags', 'owners', 'contributors', 'author']
+
+
+class DanceDirectionForm(forms.ModelForm):
+    class Meta:
+        model = DanceDirection
         fields = ['title', 'directions', 'description', 'tags', 'owners', 'contributors', 'author']
 
 
@@ -66,3 +72,10 @@ class AudioForm(forms.ModelForm):
     class Meta:
         model = Audio
         fields = ['title', 'directions', 'description', 'tags', 'link', 'groups', 'owners', 'contributors', 'author']
+
+
+class DanceStyleForm(forms.ModelForm):
+    class Meta:
+        model = DanceStyle
+        fields = ['title', 'directions', 'description', 'tags', 'image', 'author_of_post', 'link_to_author', 'group',
+                  'count_types', 'distance_types', 'owners', 'contributors', 'author']

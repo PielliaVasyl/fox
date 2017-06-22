@@ -258,3 +258,57 @@ class CustomerServicesType(AbstractType):
             self.ATELIER: 'Ателье',
         }
         return "%s" % title_show_dict.get(str(self.title), str(self.title))
+
+
+class DanceStyleCountType(AbstractType):
+    SOLO = 'SOLO'
+    PARTNER = 'PARTNER'
+    GROUP = 'GROUP'
+
+    TITLE_SHOW = {
+        SOLO: 'Одиночный',
+        PARTNER: 'Парный',
+        GROUP: 'Групповой'
+    }
+
+    TITLE_CHOICES = (
+        (SOLO, 'Одиночный'),
+        (PARTNER, 'Парный'),
+        (GROUP, 'Групповой')
+    )
+
+    title = models.CharField(max_length=10, choices=TITLE_CHOICES, blank=True)
+
+    def title_show(self):
+        title_show_dict = {k: v for k, v in self.TITLE_CHOICES}
+        return "%s" % title_show_dict.get(self.title, self.title)
+
+    def __str__(self):
+        return '%s' % self.title
+
+
+class DanceStyleDistanceType(AbstractType):
+    CLOSE = 'CLOSE'
+    AVERAGE = 'AVERAGE'
+    DISTANT = 'DISTANT'
+
+    TITLE_SHOW = {
+        CLOSE: 'Близкая',
+        AVERAGE: 'Средняя',
+        DISTANT: 'Далекая'
+    }
+
+    TITLE_CHOICES = (
+        (CLOSE, 'Близкая'),
+        (AVERAGE, 'Средняя'),
+        (DISTANT, 'Далекая')
+    )
+
+    title = models.CharField(max_length=10, choices=TITLE_CHOICES, blank=True)
+
+    def title_show(self):
+        title_choices_dict = {k: v for k, v in self.TITLE_CHOICES}
+        return "%s" % title_choices_dict.get(self.title, self.title)
+
+    def __str__(self):
+        return '%s' % self.title

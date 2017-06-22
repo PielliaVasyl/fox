@@ -20,6 +20,7 @@ from django.views.generic.base import RedirectView
 from home_page import views as home_page_views
 from events import views as events_views
 from map import views as map_views
+from feed import views as feed_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -35,14 +36,23 @@ urlpatterns = [
     ])),
     url(r'^feed/', include([
         url(r'^articles/', include([
-            url(r'^$', home_page_views.index, name='feed_articles'),
+            url(r'^$', feed_views.articles, name='feed_articles'),
             url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
-                url(r'^$', home_page_views.index, name='feed_articles_direction'),
-                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', home_page_views.index,
+                url(r'^$', feed_views.articles, name='feed_articles_direction'),
+                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', feed_views.articles,
                     name='feed_articles_direction_city'),
             ])),
-            url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', home_page_views.index,
+            url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', feed_views.articles,
                 name='feed_articles_city'),
+
+            url(r'^(?:article-(?P<article_id>\d+)/)', include([
+                url(r'^$', feed_views.article),
+                url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
+                    url(r'^$', feed_views.article),
+                    url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', feed_views.article),
+                ])),
+                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', feed_views.article),
+            ])),
         ])),
 
         url(r'^videos/', include([
@@ -72,24 +82,50 @@ urlpatterns = [
             url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', home_page_views.index),
         ])),
 
-        url(r'^should-know/', include([
-            url(r'^$', home_page_views.index),
+        url(r'^links/', include([
+            url(r'^$', feed_views.links),
             url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
-                url(r'^$', home_page_views.index),
-                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', home_page_views.index),
+                url(r'^$', feed_views.links),
+                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', feed_views.links),
             ])),
-            url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', home_page_views.index),
+            url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', feed_views.links),
+        ])),
+
+        url(r'^organizations/', include([
+            url(r'^$', feed_views.organizations),
+            url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
+                url(r'^$', feed_views.organizations),
+                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', feed_views.organizations),
+            ])),
+            url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', feed_views.organizations),
+        ])),
+
+        url(r'^persons/', include([
+            url(r'^$', feed_views.persons),
+            url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
+                url(r'^$', feed_views.persons),
+                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', feed_views.persons),
+            ])),
+            url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', feed_views.persons),
         ])),
 
         url(r'^dance-styles/', include([
-            url(r'^$', home_page_views.index),
+            url(r'^$', feed_views.dance_styles),
             url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
-                url(r'^$', home_page_views.index),
-                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', home_page_views.index),
+                url(r'^$', feed_views.dance_styles),
+                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', feed_views.dance_styles),
             ])),
-            url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', home_page_views.index),
-        ])),
+            url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', feed_views.dance_styles),
 
+            url(r'^(?:dance-style-(?P<dance_style_id>\d+)/)', include([
+                url(r'^$', feed_views.dance_style),
+                url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
+                    url(r'^$', feed_views.dance_style),
+                    url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', feed_views.dance_style),
+                ])),
+                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', feed_views.dance_style),
+            ])),
+        ])),
 
         url(r'^$', RedirectView.as_view(pattern_name='feed_articles', permanent=True)),
         url(r'^(?:direction-(?P<direction_title>[\w-]+)/)', include([

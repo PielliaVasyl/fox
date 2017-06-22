@@ -1,7 +1,7 @@
 from django import forms
 
-# from entities.models import DanceDirection
-from entities.models import DanceStyle
+# from entities.models import DanceDirectionClass
+from entities.models import DanceStyleClass
 from entities.models import Event
 from entities.models import EventType
 from entities.models.pages import Place, School, Shop, CustomerServices, Hall
@@ -86,7 +86,7 @@ class EventsFilterForm(forms.Form):
         self.fields['cities'].choices = _get_cities_choices(events)
 
         if self.direction == 'dance':
-            dance_styles = DanceStyle.objects.all()
+            dance_styles = DanceStyleClass.objects.all()
             self.fields['dance_styles'] = forms.MultipleChoiceField(
                 widget=forms.SelectMultiple(attrs={'class': 'chosen-select', 'style': 'min-width: 172px; width: 100%',
                                                    'tabindex': '0',
@@ -181,7 +181,7 @@ class PlacesFilterForm(forms.Form):
         self.fields['place_types'].choices = _get_place_types_choices(current_places)
 
         if self.direction == 'dance':
-            dance_styles = DanceStyle.objects.all()
+            dance_styles = DanceStyleClass.objects.all()
             self.fields['dance_styles'] = forms.MultipleChoiceField(
                 widget=forms.SelectMultiple(attrs={'class': 'chosen-select', 'style': 'min-width: 172px; width: 100%',
                                                    'tabindex': '0',
@@ -221,7 +221,7 @@ class SchoolsFilterForm(forms.Form):
         self.fields['schools'].choices = _get_instances_choices(current_schools)
 
         if self.direction == 'dance':
-            dance_styles = DanceStyle.objects.all()
+            dance_styles = DanceStyleClass.objects.all()
             self.fields['dance_styles'] = forms.MultipleChoiceField(
                 widget=forms.SelectMultiple(attrs={'class': 'chosen-select', 'style': 'min-width: 172px; width: 100%',
                                                    'tabindex': '0',

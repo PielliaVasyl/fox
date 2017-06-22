@@ -2,8 +2,8 @@
 
 from django import forms
 
-from entities.models import AbstractType, EventType, PriceType, ExperienceLevel, RepeatsType, DayOfTheWeek, \
-    ShopType, PlaceType
+from entities.models.types import AbstractType, EventType, PriceType, ExperienceLevel, RepeatsType, DayOfTheWeek, \
+    ShopType, PlaceType, DanceStyleCountType, DanceStyleDistanceType
 
 
 class AbstractTypeForm(forms.ModelForm):
@@ -57,4 +57,16 @@ class ShopTypeForm(forms.ModelForm):
 class CustomerServicesTypeForm(forms.ModelForm):
     class Meta:
         model = ShopType
+        fields = ['title', 'description']
+
+
+class DanceStyleCountTypeForm(forms.ModelForm):
+    class Meta:
+        model = DanceStyleCountType
+        fields = ['title', 'description']
+
+
+class DanceStyleDistanceTypeForm(forms.ModelForm):
+    class Meta:
+        model = DanceStyleDistanceType
         fields = ['title', 'description']

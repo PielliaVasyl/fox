@@ -2,10 +2,10 @@ from django.contrib import admin
 
 from entities.forms import AbstractTypeForm, EventTypeForm, PriceTypeForm, ExperienceLevelForm, RepeatsTypeForm, \
     DayOfTheWeekForm, ShopTypeForm, PlaceTypeForm
-from entities.forms.types import CustomerServicesTypeForm
+from entities.forms.types import CustomerServicesTypeForm, DanceStyleCountTypeForm, DanceStyleDistanceTypeForm
 from entities.models import AbstractType, EventType, PriceType, ExperienceLevel, RepeatsType, DayOfTheWeek, \
     ShopType, PlaceType
-from entities.models.types import CustomerServicesType
+from entities.models.types import CustomerServicesType, DanceStyleCountType, DanceStyleDistanceType
 
 
 class AbstractTypeAdmin(admin.ModelAdmin):
@@ -69,3 +69,17 @@ class CustomerServicesTypeAdmin(admin.ModelAdmin):
     form = CustomerServicesTypeForm
 
 admin.site.register(CustomerServicesType, CustomerServicesTypeAdmin)
+
+
+class DanceStyleCountTypeAdmin(admin.ModelAdmin):
+    list_display = ['title', 'description', 'created', 'updated']
+    form = DanceStyleCountTypeForm
+
+admin.site.register(DanceStyleCountType, DanceStyleCountTypeAdmin)
+
+
+class DanceStyleDistanceTypeAdmin(admin.ModelAdmin):
+    list_display = ['title', 'description', 'created', 'updated']
+    form = DanceStyleDistanceTypeForm
+
+admin.site.register(DanceStyleDistanceType, DanceStyleDistanceTypeAdmin)

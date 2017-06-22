@@ -43,3 +43,7 @@ class VideoLink(AbstractLink):
 
 class AudioLink(AbstractLink):
     pass
+
+
+class DanceStyleAuthorLink(AbstractLink):
+    pass

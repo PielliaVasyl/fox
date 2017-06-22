@@ -1,9 +1,9 @@
 from django.contrib import admin
 
 from entities.forms.posts import AbstractPostGroupForm, ChapterForm, AlbumForm, PlaylistForm, TracklistForm, \
-    AbstractPostForm, ArticleForm, PhotoForm, VideoForm, AudioForm
+    AbstractPostForm, ArticleForm, PhotoForm, VideoForm, AudioForm, DanceDirectionForm, DanceStyleForm
 from entities.models.posts import AbstractPostGroup, Chapter, Album, Playlist, Tracklist, AbstractPost, Article, Photo, \
-    Video, Audio
+    Video, Audio, DanceDirection, DanceStyle
 
 
 class AbstractPostGroupAdmin(admin.ModelAdmin):
@@ -46,6 +46,14 @@ class TracklistAdmin(admin.ModelAdmin):
 admin.site.register(Tracklist, TracklistAdmin)
 
 
+class DanceDirectionAdmin(admin.ModelAdmin):
+    list_display = ['title', 'get_directions', 'description', 'get_tags', 'get_owners', 'get_contributors',
+                    'author', 'created', 'updated']
+    form = DanceDirectionForm
+
+admin.site.register(DanceDirection, DanceDirectionAdmin)
+
+
 class AbstractPostAdmin(admin.ModelAdmin):
     list_display = ['title', 'get_directions', 'description', 'get_owners', 'get_contributors',
                     'author', 'created', 'updated']
@@ -84,3 +92,12 @@ class AudioAdmin(admin.ModelAdmin):
     form = AudioForm
 
 admin.site.register(Audio, AudioAdmin)
+
+
+class DanceStyleAdmin(admin.ModelAdmin):
+    list_display = ['title', 'get_directions', 'description', 'get_tags', 'image', 'author_of_post',
+                    'link_to_author', 'group', 'get_count_types', 'get_distance_types', 'get_owners',
+                    'get_contributors', 'author', 'created', 'updated']
+    form = DanceStyleForm
+
+admin.site.register(DanceStyle, DanceStyleAdmin)
