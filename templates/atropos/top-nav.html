@@ -58,7 +58,16 @@
 			<ul class="nav" id="events">
 				<li><a href="/events/upcoming/{{ request.path|get_direction_city_url }}">Предстоящие</a></li>
 				<li><a href="/events/calendar/{{ request.path|get_direction_city_url }}">Календарь</a></li>
+				<li><a href="/events/promo-actions/{{ request.path|get_direction_city_url }}">Акции и розыгрыши</a></li>
 				<li><a href="/events/past/{{ request.path|get_direction_city_url }}">Прошедшие</a></li>
+			</ul>
+			{% endif %}
+
+			{% if request.path|startswith:'/profiles/' %}
+			<ul class="nav" id="profiles">
+				<li><a href="/profiles/{{ request.path|get_direction_city_url }}">Моя страница</a></li>
+				<li><a href="/profiles/edit/{{ request.path|get_direction_city_url }}">Редактировать</a></li>
+				<li><a href="/profiles/settings/{{ request.path|get_direction_city_url }}">Настройки</a></li>
 			</ul>
 			{% endif %}
 		</div>

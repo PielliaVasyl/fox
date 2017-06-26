@@ -14,13 +14,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic.base import RedirectView
 
+from fox_knows import settings
 from home_page import views as home_page_views
 from events import views as events_views
 from map import views as map_views
 from feed import views as feed_views
+from profiles import views as profiles_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -263,6 +266,24 @@ urlpatterns = [
                 name='events_upcoming_city'),
         ])),
 
+        url(r'^calendar/', include([
+            url(r'^$', home_page_views.index),
+            url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
+                url(r'^$', home_page_views.index),
+                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', home_page_views.index),
+            ])),
+            url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', home_page_views.index),
+        ])),
+
+        url(r'^promo-actions/', include([
+            url(r'^$', home_page_views.index),
+            url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
+                url(r'^$', home_page_views.index),
+                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', home_page_views.index),
+            ])),
+            url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', home_page_views.index),
+        ])),
+
         url(r'^past/', include([
             url(r'^$', events_views.past),
             url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
@@ -272,14 +293,6 @@ urlpatterns = [
             url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', events_views.past),
         ])),
 
-        url(r'^calendar/', include([
-            url(r'^$', home_page_views.index),
-            url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
-                url(r'^$', home_page_views.index),
-                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', home_page_views.index),
-            ])),
-            url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', home_page_views.index),
-        ])),
 
         url(r'^(?:event-(?P<event_id>\d+)/)', include([
             url(r'^$', events_views.event),
@@ -300,6 +313,7 @@ urlpatterns = [
             RedirectView.as_view(pattern_name='events_upcoming_city', permanent=True)),
 
     ])),
+
     url(r'^ratings/', include([
         url(r'^$', home_page_views.index),
         url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
@@ -310,4 +324,26 @@ urlpatterns = [
 
     ])),
 
-]
+    url(r'^profiles/', include([
+        url(r'^(?:profile-(?P<profile_id>\d+)/)', include([
+            url(r'^$', profiles_views.profile, name='profiles_profile'),
+            url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
+                url(r'^$', profiles_views.profile),
+                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', profiles_views.profile),
+            ])),
+            url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', profiles_views.profile),
+        ])),
+
+        url(r'^$', RedirectView.as_view(pattern_name='profiles_upcoming', permanent=True)),
+        url(r'^(?:direction-(?P<direction_title>[\w-]+)/)', include([
+            url(r'^$', RedirectView.as_view(pattern_name='events_upcoming_direction', permanent=True)),
+            url(r'^(?:city-(?P<city_title>[\w-]+)/)$',
+                RedirectView.as_view(pattern_name='events_upcoming_direction_city', permanent=True)),
+        ])),
+        url(r'^(?:city-(?P<city_title>[\w-]+)/)?$',
+            RedirectView.as_view(pattern_name='events_upcoming_city', permanent=True)),
+
+    ])),
+
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + \
+              static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

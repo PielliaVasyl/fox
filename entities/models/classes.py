@@ -16,10 +16,13 @@ class AbstractClass(models.Model):
 
     class Meta:
         ordering = ('title',)
+        # abstract = True
 
 
 class AbstractGlobalClass(AbstractClass):
     pass
+    # class Meta:
+    #     abstract = True
 
 
 class City(AbstractGlobalClass):
@@ -37,6 +40,9 @@ class AbstractLocalClass(AbstractClass):
         if self.directions.all():
             return "\n".join([p.title for p in self.directions.all()])
         return ''
+
+    # class Meta:
+    #     abstract = True
 
 
 class DanceDirectionClass(AbstractLocalClass):
@@ -73,6 +79,3 @@ def create_initial_data_dance_direction_class(sender, instance, created, **kwarg
             direction.save()
             instance.directions.add(direction)
             instance.save()
-
-
-
