@@ -8,11 +8,11 @@ from entities.models import AbstractType, EventType, PriceType, ExperienceLevel,
 from entities.models.types import CustomerServicesType, DanceStyleCountType, DanceStyleDistanceType
 
 
-class AbstractTypeAdmin(admin.ModelAdmin):
-    list_display = ['description', 'created', 'updated']
-    form = AbstractTypeForm
-
-admin.site.register(AbstractType, AbstractTypeAdmin)
+# class AbstractTypeAdmin(admin.ModelAdmin):
+#     list_display = ['description', 'created', 'updated']
+#     form = AbstractTypeForm
+#
+# admin.site.register(AbstractType, AbstractTypeAdmin)
 
 
 class EventTypeAdmin(admin.ModelAdmin):

@@ -9,11 +9,11 @@ from entities.models import AbstractSocialLink, SocialLinkFB, SocialLinkVK, Soci
     PersonContacts, ShopContacts, HallContacts, ResourceContacts
 
 
-class AbstractSocialLinkAdmin(admin.ModelAdmin):
-    list_display = ['link', 'author', 'created', 'updated']
-    form = AbstractSocialLinkForm
-
-admin.site.register(AbstractSocialLink, AbstractSocialLinkAdmin)
+# class AbstractSocialLinkAdmin(admin.ModelAdmin):
+#     list_display = ['link', 'author', 'created', 'updated']
+#     form = AbstractSocialLinkForm
+#
+# admin.site.register(AbstractSocialLink, AbstractSocialLinkAdmin)
 
 
 class SocialLinkFBAdmin(admin.ModelAdmin):
@@ -58,11 +58,11 @@ class PhoneNumberAdmin(admin.ModelAdmin):
 admin.site.register(PhoneNumber, PhoneNumberAdmin)
 
 
-class AbstractContactsAdmin(admin.ModelAdmin):
-    list_display = ['get_phone_numbers', 'socials', 'author', 'created', 'updated']
-    form = AbstractContactsForm
-
-admin.site.register(AbstractContacts, AbstractContactsAdmin)
+# class AbstractContactsAdmin(admin.ModelAdmin):
+#     list_display = ['get_phone_numbers', 'socials', 'author', 'created', 'updated']
+#     form = AbstractContactsForm
+#
+# admin.site.register(AbstractContacts, AbstractContactsAdmin)
 
 
 class SchoolContactsAdmin(admin.ModelAdmin):

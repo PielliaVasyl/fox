@@ -9,11 +9,11 @@ from entities.models import AbstractMapCoordinates, PlaceMapCoordinates, SchoolM
     EventLocation, PlaceLocation, SchoolLocation, OrganizationLocation, ShopLocation, HallLocation
 
 
-class AbstractMapCoordinatesAdmin(admin.ModelAdmin):
-    list_display = ['lat', 'lng', 'author', 'created', 'updated']
-    form = AbstractMapCoordinatesForm
-
-admin.site.register(AbstractMapCoordinates, AbstractMapCoordinatesAdmin)
+# class AbstractMapCoordinatesAdmin(admin.ModelAdmin):
+#     list_display = ['lat', 'lng', 'author', 'created', 'updated']
+#     form = AbstractMapCoordinatesForm
+#
+# admin.site.register(AbstractMapCoordinates, AbstractMapCoordinatesAdmin)
 
 
 class PlaceMapCoordinatesAdmin(admin.ModelAdmin):
@@ -51,11 +51,11 @@ class HallMapCoordinatesAdmin(admin.ModelAdmin):
 admin.site.register(HallMapCoordinates, HallMapCoordinatesAdmin)
 
 
-class AbstractLocationAdmin(admin.ModelAdmin):
-    list_display = ['city', 'address', 'note', 'author', 'created', 'updated']
-    form = AbstractLocationForm
-
-admin.site.register(AbstractLocation, AbstractLocationAdmin)
+# class AbstractLocationAdmin(admin.ModelAdmin):
+#     list_display = ['city', 'address', 'note', 'author', 'created', 'updated']
+#     form = AbstractLocationForm
+#
+# admin.site.register(AbstractLocation, AbstractLocationAdmin)
 
 
 class EventLocationAdmin(admin.ModelAdmin):

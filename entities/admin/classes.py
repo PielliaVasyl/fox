@@ -6,18 +6,18 @@ from entities.models.classes import AbstractClass, AbstractGlobalClass, Abstract
     DanceDirectionClass, DanceStyleClass, Direction
 
 
-class AbstractClassAdmin(admin.ModelAdmin):
-    list_display = ['title', 'created', 'updated']
-    form = AbstractClassForm
+# class AbstractClassAdmin(admin.ModelAdmin):
+#     list_display = ['title', 'created', 'updated']
+#     form = AbstractClassForm
+#
+# admin.site.register(AbstractClass, AbstractClassAdmin)
 
-admin.site.register(AbstractClass, AbstractClassAdmin)
 
-
-class AbstractGlobalClassAdmin(admin.ModelAdmin):
-    list_display = ['title', 'created', 'updated']
-    form = AbstractGlobalClassForm
-
-admin.site.register(AbstractGlobalClass, AbstractGlobalClassAdmin)
+# class AbstractGlobalClassAdmin(admin.ModelAdmin):
+#     list_display = ['title', 'created', 'updated']
+#     form = AbstractGlobalClassForm
+#
+# admin.site.register(AbstractGlobalClass, AbstractGlobalClassAdmin)
 
 
 class CityAdmin(admin.ModelAdmin):
@@ -34,11 +34,11 @@ class DirectionAdmin(admin.ModelAdmin):
 admin.site.register(Direction, DirectionAdmin)
 
 
-class AbstractLocalClassAdmin(admin.ModelAdmin):
-    list_display = ['title', 'get_directions', 'created', 'updated']
-    form = AbstractLocalClassForm
-
-admin.site.register(AbstractLocalClass, AbstractLocalClassAdmin)
+# class AbstractLocalClassAdmin(admin.ModelAdmin):
+#     list_display = ['title', 'get_directions', 'created', 'updated']
+#     form = AbstractLocalClassForm
+#
+# admin.site.register(AbstractLocalClass, AbstractLocalClassAdmin)
 
 
 class DanceDirectionClassAdmin(admin.ModelAdmin):

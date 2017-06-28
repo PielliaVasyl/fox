@@ -17,6 +17,7 @@ class AbstractType(models.Model):
 
     class Meta:
         ordering = ('created',)
+        abstract = True
 
 
 class EventType(AbstractType):

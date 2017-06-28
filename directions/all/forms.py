@@ -174,7 +174,7 @@ class PlacesFilterForm(forms.Form):
             current_places = Place.objects.filter(directions__title=self.direction)
         else:
             current_places = Place.objects.all()
-        print(self.direction)
+
         super(PlacesFilterForm, self).__init__(*args, **kwargs)
         self.fields['city'].choices = _get_cities_choices(current_places)
         self.fields['places'].choices = _get_instances_choices(current_places)

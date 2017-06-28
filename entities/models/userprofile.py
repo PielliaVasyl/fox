@@ -5,8 +5,6 @@ from django.dispatch import receiver
 from django.db.models.signals import post_save
 
 
-
-
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
     description = models.TextField(blank=True)
@@ -14,10 +12,10 @@ class UserProfile(models.Model):
 
     role = models.CharField(max_length=50, blank=True)
 
-    # def article_count(self):
-    #     from entities.models.posts import Article
-    #     # return len([i for i in self.abstractpost_set.all() if isinstance(i, (Article,))])
-    #     return [i for i in self.abstractpost_set.all()]
+    def articles_count(self):
+        return len(set(self.articles_contributor.all())
+                   | set(self.articles_owner.all())
+                   | set(self.articles_author.all()))
 
     def name(self):
         return self.user.name

@@ -9,7 +9,7 @@ from entities.models.posts import AbstractPost, AbstractPostGroup, Album, Articl
 class AbstractPostGroupForm(forms.ModelForm):
     class Meta:
         model = AbstractPostGroup
-        fields = ['title', 'directions', 'description', 'owners', 'contributors', 'author']
+        fields = ['title', 'directions', 'description']
 
 
 class ChapterForm(forms.ModelForm):
@@ -45,7 +45,7 @@ class DanceDirectionForm(forms.ModelForm):
 class AbstractPostForm(forms.ModelForm):
     class Meta:
         model = AbstractPost
-        fields = ['title', 'directions', 'description', 'owners', 'contributors', 'author']
+        fields = ['title', 'directions', 'description']
 
 
 class ArticleForm(forms.ModelForm):

@@ -15,13 +15,57 @@ class AbstractLink(models.Model):
 
     class Meta:
         ordering = ('link',)
+        abstract = True
 
 
-class AbstractEventLink(AbstractLink):
+# class AbstractEventLink(AbstractLink):
+#     pass
+
+
+class EventLink(AbstractLink):
     pass
 
 
-class AbstractPageLink(AbstractLink):
+class PromoActionLink(AbstractLink):
+    pass
+
+# class AbstractPageLink(AbstractLink):
+#     pass
+
+
+class PlaceLink(AbstractLink):
+    pass
+
+
+class SchoolLink(AbstractLink):
+    pass
+
+
+class OrganizationLink(AbstractLink):
+    pass
+
+
+class TeacherLink(AbstractLink):
+    pass
+
+
+class PersonLink(AbstractLink):
+    pass
+
+
+class ShopLink(AbstractLink):
+    pass
+
+
+class CustomerServicesLink(AbstractLink):
+    pass
+
+
+class HallLink(AbstractLink):
+    pass
+
+
+class ResourceLink(AbstractLink):
     pass
 
 

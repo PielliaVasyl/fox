@@ -6,12 +6,12 @@ from entities.models.posts import AbstractPostGroup, Chapter, Album, Playlist, T
     Video, Audio, DanceDirection, DanceStyle
 
 
-class AbstractPostGroupAdmin(admin.ModelAdmin):
-    list_display = ['title', 'get_directions', 'description', 'get_owners', 'get_contributors',
-                    'author', 'created', 'updated']
-    form = AbstractPostGroupForm
-
-admin.site.register(AbstractPostGroup, AbstractPostGroupAdmin)
+# class AbstractPostGroupAdmin(admin.ModelAdmin):
+#     list_display = ['title', 'get_directions', 'description', 'get_owners', 'get_contributors',
+#                     'author', 'created', 'updated']
+#     form = AbstractPostGroupForm
+#
+# admin.site.register(AbstractPostGroup, AbstractPostGroupAdmin)
 
 
 class ChapterAdmin(admin.ModelAdmin):
@@ -54,12 +54,12 @@ class DanceDirectionAdmin(admin.ModelAdmin):
 admin.site.register(DanceDirection, DanceDirectionAdmin)
 
 
-class AbstractPostAdmin(admin.ModelAdmin):
-    list_display = ['title', 'get_directions', 'description', 'get_owners', 'get_contributors',
-                    'author', 'created', 'updated']
-    form = AbstractPostForm
-
-admin.site.register(AbstractPost, AbstractPostAdmin)
+# class AbstractPostAdmin(admin.ModelAdmin):
+#     list_display = ['title', 'get_directions', 'description', 'get_owners', 'get_contributors',
+#                     'author', 'created', 'updated']
+#     form = AbstractPostForm
+#
+# admin.site.register(AbstractPost, AbstractPostAdmin)
 
 
 class ArticleAdmin(admin.ModelAdmin):

@@ -17,6 +17,7 @@ class AbstractMapCoordinates(models.Model):
 
     class Meta:
         ordering = ('created',)
+        abstract = True
 
 
 class PlaceMapCoordinates(AbstractMapCoordinates):
@@ -76,6 +77,7 @@ class AbstractLocation(models.Model):
 
     class Meta:
         ordering = ('created',)
+        abstract = True
 
 
 class EventLocation(AbstractLocation):

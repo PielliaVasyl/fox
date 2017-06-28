@@ -1,20 +1,18 @@
 from django.contrib import admin
 
 
-from entities.forms import AbstractPageForm, PlaceForm, EmployersPageForm, EmployeesPageForm, SchoolForm, \
-    OrganizationForm, TeacherForm, PersonForm, ShopForm, HallForm, ResourceForm
-from entities.forms.pages import CustomerServicesForm
-from entities.models import AbstractPage, Place, EmployersPage, EmployeesPage, School, Organization, Teacher, \
-    Person, Shop, Hall, Resource
-from entities.models.pages import CustomerServices
+from entities.forms.pages import PlaceForm, EmployersPageForm, EmployeesPageForm, SchoolForm, \
+    OrganizationForm, TeacherForm, PersonForm, ShopForm, HallForm, ResourceForm, CustomerServicesForm
+from entities.models.pages import Place, EmployersPage, EmployeesPage, School, Organization, Teacher, \
+    Person, Shop, Hall, Resource, CustomerServices
 
 
-class AbstractPageAdmin(admin.ModelAdmin):
-    list_display = ['title', 'get_directions', 'get_cities', 'description', 'image', 'get_links',
-                    'get_owners', 'get_contributors', 'author', 'created', 'updated']
-    form = AbstractPageForm
-
-admin.site.register(AbstractPage, AbstractPageAdmin)
+# class AbstractPageAdmin(admin.ModelAdmin):
+#     list_display = ['title', 'get_directions', 'get_cities', 'description', 'image', 'get_links',
+#                     'get_owners', 'get_contributors', 'author', 'created', 'updated']
+#     form = AbstractPageForm
+#
+# admin.site.register(AbstractPage, AbstractPageAdmin)
 
 
 class PlaceAdmin(admin.ModelAdmin):
@@ -28,7 +26,7 @@ admin.site.register(Place, PlaceAdmin)
 
 class EmployersPageAdmin(admin.ModelAdmin):
     list_display = ['title', 'get_directions', 'get_cities', 'description', 'image', 'get_links', 'get_owners',
-                    'get_contributors', 'author', 'created', 'updated']
+                    'get_contributors', 'created', 'updated']
     form = EmployersPageForm
 
 admin.site.register(EmployersPage, EmployersPageAdmin)
@@ -36,7 +34,7 @@ admin.site.register(EmployersPage, EmployersPageAdmin)
 
 class EmployeesPageAdmin(admin.ModelAdmin):
     list_display = ['title', 'get_directions', 'get_cities', 'description', 'image', 'get_links', 'get_owners',
-                    'get_contributors', 'author', 'created', 'updated']
+                    'get_contributors', 'created', 'updated']
     form = EmployeesPageForm
 
 admin.site.register(EmployeesPage, EmployeesPageAdmin)

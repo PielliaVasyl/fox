@@ -10,11 +10,11 @@ from entities.models.tags import AbstractTag, AlbumTag, ArticleTag, AudioTag, Ch
     PlaylistTag, PostGroupTag, PostTag, TracklistTag, VideoTag
 
 
-class AbstractTagAdmin(admin.ModelAdmin):
-    list_display = ['title', 'created', 'updated']
-    form = AbstractTagForm
-
-admin.site.register(AbstractTag, AbstractTagAdmin)
+# class AbstractTagAdmin(admin.ModelAdmin):
+#     list_display = ['title', 'created', 'updated']
+#     form = AbstractTagForm
+#
+# admin.site.register(AbstractTag, AbstractTagAdmin)
 
 
 class GlobalTagAdmin(admin.ModelAdmin):

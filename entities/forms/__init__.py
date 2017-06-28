@@ -8,8 +8,9 @@ from entities.forms.tags import AbstractTagForm, GlobalTagForm, CityTagForm, Dir
     PostTagForm, ArticleTagForm, VideoTagForm, AudioTagForm, PhotoTagForm, PostGroupTagForm, ChapterTagForm, \
     PlaylistTagForm, TracklistTagForm, AlbumTagForm
 
-from entities.forms.links import AbstractLinkForm, AbstractEventLinkForm, AbstractPageLinkForm, PlaylistLinkForm, \
-    ArticleLinkForm, PhotoLinkForm, VideoLinkForm, AudioLinkForm
+from entities.forms.links import AbstractLinkForm, EventLinkForm, PromoActionLinkForm, PlaceLinkForm, SchoolLinkForm, \
+    OrganizationLinkForm, TeacherLinkForm, PersonLinkForm, ShopLinkForm, CustomerServicesLinkForm, HallLinkForm, \
+    ResourceLinkForm, PlaylistLinkForm, ArticleLinkForm, PhotoLinkForm, VideoLinkForm, AudioLinkForm
 
 from entities.forms.supportclasses import EventLocalClassesForm, PageLocalClassesForm
 
@@ -26,9 +27,9 @@ from entities.forms.contacts import AbstractSocialLinkForm, SocialLinkFBForm, So
     SchoolContactsForm, OrganizationContactsForm, TeacherContactsForm, PersonContactsForm, ShopContactsForm, \
     HallContactsForm, ResourceContactsForm
 
-from entities.forms.events import AbstractEventForm, EventForm, PromoActionForm
+from entities.forms.events import EventForm, PromoActionForm
 
-from entities.forms.pages import AbstractPageForm, PlaceForm, EmployersPageForm, EmployeesPageForm, SchoolForm, \
+from entities.forms.pages import PlaceForm, EmployersPageForm, EmployeesPageForm, SchoolForm, \
     OrganizationForm, TeacherForm, PersonForm, ShopForm, CustomerServicesForm, HallForm, ResourceForm
 
 from entities.forms.posts import AbstractPostForm, AbstractPostGroupForm, AlbumForm, ArticleForm, AudioForm, \

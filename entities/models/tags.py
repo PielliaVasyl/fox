@@ -14,6 +14,7 @@ class AbstractTag(models.Model):
 
     class Meta:
         ordering = ('title',)
+        abstract = True
 
 
 class GlobalTag(AbstractTag):

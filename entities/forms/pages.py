@@ -6,10 +6,10 @@ from entities.models import AbstractPage, Place, EmployersPage, EmployeesPage, S
     Person, Shop, Hall, Resource
 
 
-class AbstractPageForm(forms.ModelForm):
-    class Meta:
-        model = AbstractPage
-        fields = ['title', 'directions', 'cities', 'description', 'image', 'links', 'owners', 'contributors', 'author']
+# class AbstractPageForm(forms.ModelForm):
+#     class Meta:
+#         model = AbstractPage
+#         fields = ['title', 'directions', 'cities', 'description', 'image', 'links']
 
 
 class PlaceForm(forms.ModelForm):
@@ -22,13 +22,13 @@ class PlaceForm(forms.ModelForm):
 class EmployersPageForm(forms.ModelForm):
     class Meta:
         model = EmployersPage
-        fields = ['title', 'directions', 'cities', 'description', 'image', 'links', 'owners', 'contributors', 'author']
+        fields = ['title', 'directions', 'cities', 'description', 'image']
 
 
 class EmployeesPageForm(forms.ModelForm):
     class Meta:
         model = EmployeesPage
-        fields = ['title', 'directions', 'cities', 'description', 'image', 'links', 'owners', 'contributors', 'author']
+        fields = ['title', 'directions', 'cities', 'description', 'image']
 
 
 class SchoolForm(forms.ModelForm):

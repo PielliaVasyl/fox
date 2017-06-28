@@ -15,9 +15,6 @@ class AbstractPostGroup(models.Model):
 
     description = models.TextField(blank=True)
 
-    owners = models.ManyToManyField(UserProfile, blank=True, related_name='abstract_post_group_owners')
-    contributors = models.ManyToManyField(UserProfile, blank=True, related_name='abstract_post_group_contributors')
-    author = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now=False, auto_now_add=True)
     updated = models.DateTimeField(auto_now=True, auto_now_add=False)
 
@@ -41,26 +38,50 @@ class AbstractPostGroup(models.Model):
             return "\n".join([p.title for p in self.contributors.all()])
         return ''
 
+    class Meta:
+        ordering = ('updated',)
+        abstract = True
+
 
 class Chapter(AbstractPostGroup):
-    tags = models.ManyToManyField(ChapterTag, default=True)
+    tags = models.ManyToManyField(ChapterTag, blank=True)
+
+    owners = models.ManyToManyField(UserProfile, blank=True, related_name='chapter_owners')
+    contributors = models.ManyToManyField(UserProfile, blank=True, related_name='chapter_contributors')
+    author = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
 
 
 class Album(AbstractPostGroup):
-    tags = models.ManyToManyField(AlbumTag, default=True)
+    tags = models.ManyToManyField(AlbumTag, blank=True)
+
+    owners = models.ManyToManyField(UserProfile, blank=True, related_name='album_owners')
+    contributors = models.ManyToManyField(UserProfile, blank=True, related_name='album_contributors')
+    author = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
 
 
 class Playlist(AbstractPostGroup):
     link = models.OneToOneField(PlaylistLink, blank=True, null=True)
-    tags = models.ManyToManyField(PlaylistTag, default=True)
+    tags = models.ManyToManyField(PlaylistTag, blank=True)
+
+    owners = models.ManyToManyField(UserProfile, blank=True, related_name='playlist_owners')
+    contributors = models.ManyToManyField(UserProfile, blank=True, related_name='playlist_contributors')
+    author = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
 
 
 class Tracklist(AbstractPostGroup):
-    tags = models.ManyToManyField(TracklistTag, default=True)
+    tags = models.ManyToManyField(TracklistTag, blank=True)
+
+    owners = models.ManyToManyField(UserProfile, blank=True, related_name='tracklist_owners')
+    contributors = models.ManyToManyField(UserProfile, blank=True, related_name='tracklist_contributors')
+    author = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
 
 
 class DanceDirection(AbstractPostGroup):
     tags = models.ManyToManyField(DanceDirectionTag, blank=True)
+
+    owners = models.ManyToManyField(UserProfile, blank=True, related_name='dance_direction_owners')
+    contributors = models.ManyToManyField(UserProfile, blank=True, related_name='dance_direction_contributors')
+    author = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
 
 
 class AbstractPost(models.Model):
@@ -70,9 +91,6 @@ class AbstractPost(models.Model):
 
     description = models.TextField(blank=True)
 
-    owners = models.ManyToManyField(UserProfile, blank=True, related_name='abstract_post_owners')
-    contributors = models.ManyToManyField(UserProfile, blank=True, related_name='abstract_post_contributors')
-    author = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now=False, auto_now_add=True)
     updated = models.DateTimeField(auto_now=True, auto_now_add=False)
 
@@ -106,6 +124,7 @@ class AbstractPost(models.Model):
 
     class Meta:
         ordering = ('updated',)
+        abstract = True
 
 
 class Article(AbstractPost):
@@ -116,6 +135,10 @@ class Article(AbstractPost):
     author_of_post = models.CharField(max_length=100, blank=True)
     groups = models.ManyToManyField(Chapter, blank=True)
 
+    owners = models.ManyToManyField(UserProfile, blank=True, related_name='articles_owner')
+    contributors = models.ManyToManyField(UserProfile, blank=True, related_name='articles_contributor')
+    author = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='articles_author')
+
 
 class Photo(AbstractPost):
     tags = models.ManyToManyField(PhotoTag, blank=True)
@@ -123,17 +146,29 @@ class Photo(AbstractPost):
     image = models.ImageField(blank=True)
     groups = models.ManyToManyField(Album, blank=True)
 
+    owners = models.ManyToManyField(UserProfile, blank=True, related_name='photos_owner')
+    contributors = models.ManyToManyField(UserProfile, blank=True, related_name='photos_contributor')
+    author = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='photos_author')
+
 
 class Video(AbstractPost):
     tags = models.ManyToManyField(VideoTag, blank=True)
     link = models.OneToOneField(VideoLink, blank=True, null=True)
     groups = models.ManyToManyField(Playlist, blank=True)
 
+    owners = models.ManyToManyField(UserProfile, blank=True, related_name='videos_owner')
+    contributors = models.ManyToManyField(UserProfile, blank=True, related_name='videos_contributor')
+    author = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='videos_author')
+
 
 class Audio(AbstractPost):
     tags = models.ManyToManyField(AudioTag, blank=True)
     link = models.OneToOneField(AudioLink, blank=True, null=True)
     groups = models.ManyToManyField(Tracklist, blank=True)
+
+    owners = models.ManyToManyField(UserProfile, blank=True, related_name='audios_owner')
+    contributors = models.ManyToManyField(UserProfile, blank=True, related_name='audios_contributor')
+    author = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='audios_author')
 
 
 class DanceStyle(AbstractPost):
@@ -172,3 +207,6 @@ class DanceStyle(AbstractPost):
             return [{k: v for k, v in self.DISTANCE_CHOICES}.get(p.title, p.title) for p in self.distance_types.all()]
         return []
 
+    owners = models.ManyToManyField(UserProfile, blank=True, related_name='dance_styles_owner')
+    contributors = models.ManyToManyField(UserProfile, blank=True, related_name='dance_styles_contributor')
+    author = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='dance_styles_author')

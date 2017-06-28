@@ -88,7 +88,9 @@ tabcontent = document.getElementsByClassName("tabcontent");
 				<!-- Who Am I -->
 				<article class="row">
 					<div class="col-md-3">
+						{% if instance.image %}
 						<img class="img-responsive" src="{{ instance.image.url }}" style="max-width:200px; max-height=400px" alt="">
+						{% endif %}
 					</div>
 					<div class="col-md-9">
 						<h3>{{ instance.user.username }}</h3>
@@ -114,21 +116,21 @@ tabcontent = document.getElementsByClassName("tabcontent");
 				<!-- SKILLS -->
 				<div class="row" style="padding-top:10px">
 					<div class="tab">
-					    <button class="tablinks" onclick="openTab(event, 'Articles')">Статьи ({{ instance.article_count }})</button>
-					    <button class="tablinks" onclick="openTab(event, 'Photos')">Фото</button>
-					    <button class="tablinks" onclick="openTab(event, 'Videos')">Видео</button>
-						<button class="tablinks" onclick="openTab(event, 'Audios')">Аудио</button>
-						<button class="tablinks" onclick="openTab(event, 'Links')">Ссылки</button>
-						<button class="tablinks" onclick="openTab(event, 'Places')">Места</button>
-						<button class="tablinks" onclick="openTab(event, 'Organizations')">Организации</button>
-						<button class="tablinks" onclick="openTab(event, 'Persons')">Персоны</button>
-						<button class="tablinks" onclick="openTab(event, 'Schools')">Школы</button>
-						<button class="tablinks" onclick="openTab(event, 'Teachers')">Учителя</button>
-						<button class="tablinks" onclick="openTab(event, 'Shops')">Магазины</button>
-						<button class="tablinks" onclick="openTab(event, 'Services')">Услуги</button>
-						<button class="tablinks" onclick="openTab(event, 'Halls')">Залы</button>
-						<button class="tablinks" onclick="openTab(event, 'Events')">Мероприятия</button>
-						<button class="tablinks" onclick="openTab(event, 'PromoActions')">Акции</button>
+					    <button class="tablinks" onclick="openTab(event, 'Articles')">Статьи ({{ instance.articles_count }})</button>
+					    <button class="tablinks" onclick="openTab(event, 'Photos')">Фото ({{ instance.photos_count }})</button>
+					    <button class="tablinks" onclick="openTab(event, 'Videos')">Видео ({{ instance.videos_count }})</button>
+						<button class="tablinks" onclick="openTab(event, 'Audios')">Аудио ({{ instance.audios_count }})</button>
+						<button class="tablinks" onclick="openTab(event, 'Links')">Ссылки ({{ instance.resources_count }})</button>
+						<button class="tablinks" onclick="openTab(event, 'Places')">Места ({{ instance.places_count }})</button>
+						<button class="tablinks" onclick="openTab(event, 'Organizations')">Организации ({{ instance.organizations_count }})</button>
+						<button class="tablinks" onclick="openTab(event, 'Persons')">Персоны ({{ instance.persons_count }})</button>
+						<button class="tablinks" onclick="openTab(event, 'Schools')">Школы ({{ instance.schools_count }})</button>
+						<button class="tablinks" onclick="openTab(event, 'Teachers')">Учителя ({{ instance.teachers_count }})</button>
+						<button class="tablinks" onclick="openTab(event, 'Shops')">Магазины ({{ instance.shops_count }})</button>
+						<button class="tablinks" onclick="openTab(event, 'Services')">Услуги ({{ instance.customer_services_count }})</button>
+						<button class="tablinks" onclick="openTab(event, 'Halls')">Залы ({{ instance.halls_count }})</button>
+						<button class="tablinks" onclick="openTab(event, 'Events')">Мероприятия ({{ instance.events_count }})</button>
+						<button class="tablinks" onclick="openTab(event, 'PromoActions')">Акции ({{ instance.promo_action_count }})</button>
 					</div>
 
 					<div id="Articles" class="tabcontent">

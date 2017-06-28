@@ -7,7 +7,8 @@ from entities.models.tags import AbstractTag, GlobalTag, CityTag, DirectionTag, 
     DanceStyleCountTag, DanceStyleDistanceTag, DanceDirectionTag, PostTag, ArticleTag, VideoTag, AudioTag, PhotoTag, \
     PostGroupTag, ChapterTag, PlaylistTag, TracklistTag, AlbumTag
 
-from entities.models.links import AbstractLink, AbstractEventLink, AbstractPageLink, PlaylistLink, ArticleLink, \
+from entities.models.links import AbstractLink, EventLink, PromoActionLink, PlaceLink, SchoolLink, OrganizationLink, \
+    TeacherLink, PersonLink, ShopLink, CustomerServicesLink, HallLink, ResourceLink, PlaylistLink, ArticleLink, \
     PhotoLink, VideoLink, AudioLink
 
 from entities.models.supportclasses import EventLocalClasses, PageLocalClasses

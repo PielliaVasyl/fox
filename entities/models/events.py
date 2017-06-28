@@ -7,7 +7,7 @@ from django.template.defaultfilters import date as date_filter
 
 from algoritms.get_status import get_auto_status
 from entities.models.classes import City, Direction
-from entities.models.links import AbstractEventLink
+from entities.models.links import PromoActionLink, EventLink
 from entities.models.locations import EventLocation
 from entities.models.supportclasses import EventLocalClasses
 from entities.models.types import DayOfTheWeek, EventType, ExperienceLevel, PriceType, RepeatsType
@@ -76,13 +76,10 @@ class AbstractEvent(models.Model):
     def status(self, value):
         self._status = value
 
-    links = models.ManyToManyField(AbstractEventLink, blank=True)
+    # links = models.ManyToManyField(AbstractEventLink, blank=True)
 
     # organizers = models.ForeignKey(EventOrganizers, on_delete=models.CASCADE)
 
-    owners = models.ManyToManyField(UserProfile, blank=True, related_name='abstract_event_owners')
-    contributors = models.ManyToManyField(UserProfile, blank=True, related_name='abstract_event_contributors')
-    author = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now=False, auto_now_add=True)
     updated = models.DateTimeField(auto_now=True, auto_now_add=False)
 
@@ -179,17 +176,24 @@ class AbstractEvent(models.Model):
 
     class Meta:
         ordering = ('updated',)
+        abstract = True
 
 
 class Event(AbstractEvent):
     types = models.ManyToManyField(EventType, blank=True)
     locations = models.ManyToManyField(EventLocation, blank=True)
 
+    links = models.ManyToManyField(EventLink, blank=True)
+
     price_types = models.ManyToManyField(PriceType, blank=True)
     experience_levels = models.ManyToManyField(ExperienceLevel, blank=True)
 
     repeats_type = models.ForeignKey(RepeatsType, on_delete=models.CASCADE)
     schedule = models.ManyToManyField(DayOfTheWeek, blank=True)
+
+    owners = models.ManyToManyField(UserProfile, blank=True, related_name='events_owner')
+    contributors = models.ManyToManyField(UserProfile, blank=True, related_name='events_contributor')
+    author = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='events_author')
 
     def get_types(self):
         if self.types.all():
@@ -218,4 +222,8 @@ class Event(AbstractEvent):
 
 
 class PromoAction(AbstractEvent):
-    pass
+    links = models.ManyToManyField(PromoActionLink, blank=True)
+
+    owners = models.ManyToManyField(UserProfile, blank=True, related_name='promo_actions_owner')
+    contributors = models.ManyToManyField(UserProfile, blank=True, related_name='promo_actions_contributor')
+    author = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='promo_actions_author')

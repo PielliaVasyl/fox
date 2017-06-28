@@ -1,31 +1,103 @@
 from django.contrib import admin
 
-from entities.forms.links import AbstractLinkForm, AbstractEventLinkForm, AbstractPageLinkForm, ArticleLinkForm, \
-    AudioLinkForm, PhotoLinkForm, PlaylistLinkForm, VideoLinkForm
+from entities.forms.links import AbstractLinkForm, ArticleLinkForm, \
+    AudioLinkForm, PhotoLinkForm, PlaylistLinkForm, VideoLinkForm, PlaceLinkForm, SchoolLinkForm, OrganizationLinkForm, \
+    TeacherLinkForm, PersonLinkForm, ShopLinkForm, CustomerServicesLinkForm, HallLinkForm, ResourceLinkForm, \
+    EventLinkForm, PromoActionLinkForm
 
-from entities.models.links import AbstractEventLink, AbstractLink, AbstractPageLink, ArticleLink, AudioLink, \
-    PhotoLink, PlaylistLink, VideoLink
+from entities.models.links import AbstractLink, ArticleLink, AudioLink, \
+    PhotoLink, PlaylistLink, VideoLink, PlaceLink, SchoolLink, OrganizationLink, TeacherLink, PersonLink, ShopLink, \
+    CustomerServicesLink, HallLink, ResourceLink, EventLink, PromoActionLink
 
 
-class AbstractLinkAdmin(admin.ModelAdmin):
+# class AbstractLinkAdmin(admin.ModelAdmin):
+#     list_display = ['link', 'created', 'updated']
+#     form = AbstractLinkForm
+#
+# admin.site.register(AbstractLink, AbstractLinkAdmin)
+
+
+class EventLinkAdmin(admin.ModelAdmin):
     list_display = ['link', 'created', 'updated']
-    form = AbstractLinkForm
+    form = EventLinkForm
 
-admin.site.register(AbstractLink, AbstractLinkAdmin)
+admin.site.register(EventLink, EventLinkAdmin)
 
 
-class AbstractEventLinkAdmin(admin.ModelAdmin):
+class PromoActionLinkAdmin(admin.ModelAdmin):
     list_display = ['link', 'created', 'updated']
-    form = AbstractEventLinkForm
+    form = PromoActionLinkForm
 
-admin.site.register(AbstractEventLink, AbstractEventLinkAdmin)
+admin.site.register(PromoActionLink, PromoActionLinkAdmin)
+
+# class AbstractPageLinkAdmin(admin.ModelAdmin):
+#     list_display = ['link', 'created', 'updated']
+#     form = AbstractPageLinkForm
+#
+# admin.site.register(AbstractPageLink, AbstractPageLinkAdmin)
 
 
-class AbstractPageLinkAdmin(admin.ModelAdmin):
+class PlaceLinkAdmin(admin.ModelAdmin):
     list_display = ['link', 'created', 'updated']
-    form = AbstractPageLinkForm
+    form = PlaceLinkForm
 
-admin.site.register(AbstractPageLink, AbstractPageLinkAdmin)
+admin.site.register(PlaceLink, PlaceLinkAdmin)
+
+
+class SchoolLinkAdmin(admin.ModelAdmin):
+    list_display = ['link', 'created', 'updated']
+    form = SchoolLinkForm
+
+admin.site.register(SchoolLink, SchoolLinkAdmin)
+
+
+class OrganizationLinkAdmin(admin.ModelAdmin):
+    list_display = ['link', 'created', 'updated']
+    form = OrganizationLinkForm
+
+admin.site.register(OrganizationLink, OrganizationLinkAdmin)
+
+
+class TeacherLinkAdmin(admin.ModelAdmin):
+    list_display = ['link', 'created', 'updated']
+    form = TeacherLinkForm
+
+admin.site.register(TeacherLink, TeacherLinkAdmin)
+
+
+class PersonLinkAdmin(admin.ModelAdmin):
+    list_display = ['link', 'created', 'updated']
+    form = PersonLinkForm
+
+admin.site.register(PersonLink, PersonLinkAdmin)
+
+
+class ShopLinkAdmin(admin.ModelAdmin):
+    list_display = ['link', 'created', 'updated']
+    form = ShopLinkForm
+
+admin.site.register(ShopLink, ShopLinkAdmin)
+
+
+class CustomerServicesLinkAdmin(admin.ModelAdmin):
+    list_display = ['link', 'created', 'updated']
+    form = CustomerServicesLinkForm
+
+admin.site.register(CustomerServicesLink, CustomerServicesLinkAdmin)
+
+
+class HallLinkAdmin(admin.ModelAdmin):
+    list_display = ['link', 'created', 'updated']
+    form = HallLinkForm
+
+admin.site.register(HallLink, HallLinkAdmin)
+
+
+class ResourceLinkAdmin(admin.ModelAdmin):
+    list_display = ['link', 'created', 'updated']
+    form = ResourceLinkForm
+
+admin.site.register(ResourceLink, ResourceLinkAdmin)
 
 
 class PlaylistLinkAdmin(admin.ModelAdmin):

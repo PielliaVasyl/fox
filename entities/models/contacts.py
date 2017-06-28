@@ -16,6 +16,7 @@ class AbstractSocialLink(models.Model):
 
     class Meta:
         ordering = ('created',)
+        abstract = True
 
 
 class SocialLinkFB(AbstractSocialLink):
@@ -103,6 +104,7 @@ class AbstractContacts(models.Model):
 
     class Meta:
         ordering = ('updated',)
+        abstract = True
 
 
 class SchoolContacts(AbstractContacts):

@@ -16,13 +16,13 @@ class AbstractClass(models.Model):
 
     class Meta:
         ordering = ('title',)
-        # abstract = True
+        abstract = True
 
 
 class AbstractGlobalClass(AbstractClass):
-    pass
-    # class Meta:
-    #     abstract = True
+    # pass
+    class Meta:
+        abstract = True
 
 
 class City(AbstractGlobalClass):
@@ -41,8 +41,8 @@ class AbstractLocalClass(AbstractClass):
             return "\n".join([p.title for p in self.directions.all()])
         return ''
 
-    # class Meta:
-    #     abstract = True
+    class Meta:
+        abstract = True
 
 
 class DanceDirectionClass(AbstractLocalClass):

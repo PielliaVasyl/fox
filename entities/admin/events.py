@@ -1,6 +1,5 @@
 from django.contrib import admin
 
-from entities.forms import AbstractEventForm
 from entities.forms import EventForm
 from entities.forms import PromoActionForm
 from entities.models import AbstractEvent
@@ -8,13 +7,13 @@ from entities.models import Event
 from entities.models import PromoAction
 
 
-class AbstractEventAdmin(admin.ModelAdmin):
-    list_display = ['title', 'get_directions', 'get_cities', 'local_classes', 'short_description', 'note', 'image',
-                    'video', 'start_date', 'end_date', 'status', 'get_links', 'get_owners', 'get_contributors',
-                    'author', 'created', 'updated']
-    form = AbstractEventForm
-
-admin.site.register(AbstractEvent, AbstractEventAdmin)
+# class AbstractEventAdmin(admin.ModelAdmin):
+#     list_display = ['title', 'get_directions', 'get_cities', 'local_classes', 'short_description', 'note', 'image',
+#                     'video', 'start_date', 'end_date', 'status', 'get_links', 'get_owners', 'get_contributors',
+#                     'author', 'created', 'updated']
+#     form = AbstractEventForm
+#
+# admin.site.register(AbstractEvent, AbstractEventAdmin)
 
 
 class EventAdmin(admin.ModelAdmin):
