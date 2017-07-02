@@ -24,6 +24,7 @@ from events import views as events_views
 from map import views as map_views
 from feed import views as feed_views
 from profiles import views as profiles_views
+from create import views as create_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -334,14 +335,33 @@ urlpatterns = [
             url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', profiles_views.profile),
         ])),
 
-        url(r'^$', RedirectView.as_view(pattern_name='profiles_upcoming', permanent=True)),
+        url(r'^$', RedirectView.as_view(pattern_name='profiles_profile', permanent=True)),
         url(r'^(?:direction-(?P<direction_title>[\w-]+)/)', include([
-            url(r'^$', RedirectView.as_view(pattern_name='events_upcoming_direction', permanent=True)),
+            url(r'^$', RedirectView.as_view(pattern_name='profiles_profile_direction', permanent=True)),
             url(r'^(?:city-(?P<city_title>[\w-]+)/)$',
-                RedirectView.as_view(pattern_name='events_upcoming_direction_city', permanent=True)),
+                RedirectView.as_view(pattern_name='profiles_profile_direction_city', permanent=True)),
         ])),
         url(r'^(?:city-(?P<city_title>[\w-]+)/)?$',
-            RedirectView.as_view(pattern_name='events_upcoming_city', permanent=True)),
+            RedirectView.as_view(pattern_name='profiles_profile_city', permanent=True)),
+
+    ])),
+
+    url(r'^create/', include([
+        url(r'^event/', include([
+            url(r'^$', create_views.create_event, name='create_event'),
+            url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
+                url(r'^$', create_views.create_event),
+                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', create_views.create_event),
+            ])),
+            url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', create_views.create_event),
+        ])),
+
+        url(r'^$', create_views.create),
+        url(r'^(?:direction-(?P<direction_title>[\w-]+)/)', include([
+            url(r'^$', create_views.create),
+            url(r'^(?:city-(?P<city_title>[\w-]+)/)$', create_views.create),
+        ])),
+        url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', create_views.create),
 
     ])),
 

@@ -81,6 +81,7 @@ tabcontent = document.getElementsByClassName("tabcontent");
 
 }
 </script>
+
 		<!-- WRAPPER -->
 		<div id="wrapper" style="padding-top:10px">
 			<section class="container">
@@ -93,7 +94,14 @@ tabcontent = document.getElementsByClassName("tabcontent");
 						{% endif %}
 					</div>
 					<div class="col-md-9">
+						<div class="col-md-9">
 						<h3>{{ instance.user.username }}</h3>
+						</div>
+						<div class="col-md-3">
+							<a href="/create/{{ request.path|get_direction_city_url }}" type="button" class="btn btn-primary">
+								<i class="fa fa-plus" aria-hidden="true"></i> Добавить информацию
+							</a>
+						</div>
 
 						{{ instance.description|linebreaks }}
 
