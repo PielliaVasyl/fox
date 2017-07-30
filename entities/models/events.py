@@ -40,7 +40,7 @@ class AbstractEvent(models.Model):
     directions = models.ManyToManyField(Direction, blank=True)
     cities = models.ManyToManyField(City, blank=True)
 
-    local_classes = models.OneToOneField(EventLocalClasses, on_delete=models.CASCADE)
+    local_classes = models.OneToOneField(EventLocalClasses, on_delete=models.CASCADE, null=True)
 
     description = models.TextField(blank=True)
     note = models.TextField(blank=True)
@@ -63,7 +63,8 @@ class AbstractEvent(models.Model):
         (DENIED, 'Отменено'),
         (POSTPONED, 'Перенесено'),
     )
-    _status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=AUTO, blank=True, db_column='status')
+    _status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=AUTO, blank=True, null=True,
+                               db_column='status')
 
     @property
     def status(self):
@@ -188,12 +189,12 @@ class Event(AbstractEvent):
     price_types = models.ManyToManyField(PriceType, blank=True)
     experience_levels = models.ManyToManyField(ExperienceLevel, blank=True)
 
-    repeats_type = models.ForeignKey(RepeatsType, on_delete=models.CASCADE)
+    repeats_type = models.ForeignKey(RepeatsType, on_delete=models.CASCADE, null=True)
     schedule = models.ManyToManyField(DayOfTheWeek, blank=True)
 
     owners = models.ManyToManyField(UserProfile, blank=True, related_name='events_owner')
     contributors = models.ManyToManyField(UserProfile, blank=True, related_name='events_contributor')
-    author = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='events_author')
+    author = models.ForeignKey(UserProfile, on_delete=models.CASCADE, null=True, related_name='events_author')
 
     def get_types(self):
         if self.types.all():
@@ -226,4 +227,4 @@ class PromoAction(AbstractEvent):
 
     owners = models.ManyToManyField(UserProfile, blank=True, related_name='promo_actions_owner')
     contributors = models.ManyToManyField(UserProfile, blank=True, related_name='promo_actions_contributor')
-    author = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='promo_actions_author')
+    author = models.ForeignKey(UserProfile, on_delete=models.CASCADE, null=True, related_name='promo_actions_author')

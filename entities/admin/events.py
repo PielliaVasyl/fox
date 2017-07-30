@@ -23,6 +23,10 @@ class EventAdmin(admin.ModelAdmin):
                     'get_contributors', 'author', 'created', 'updated']
     form = EventForm
 
+    def __init__(self, model, admin_site):
+        self.form.admin_site = admin_site
+        super(EventAdmin, self).__init__(model, admin_site)
+
 admin.site.register(Event, EventAdmin)
 
 

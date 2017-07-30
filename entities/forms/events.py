@@ -1,6 +1,8 @@
 # coding: utf-8
 
 from django import forms
+from django.db.models.fields.reverse_related import ManyToOneRel, ManyToManyRel
+from django.contrib import admin
 
 from entities.models import AbstractEvent
 from entities.models import Event
@@ -27,9 +29,27 @@ from entities.models import PromoAction
 #                 raise forms.ValidationError("End date cannot be earlier than start date!")
 #
 #         return cleaned_data
+from entities.models.classes import Direction
 
 
 class EventForm(forms.ModelForm):
+    # directions = forms.ModelMultipleChoiceField(queryset=Direction.objects.all(), required=False)
+
+    def __init__(self, *args, **kwargs):
+        super(EventForm, self).__init__(*args, **kwargs)
+        # RelatedFieldWidgetWrapper wants a widget to wrap, a relationship, and an admin site.
+        # The widget is easy. I build the relationship manually and use the admin_site I added when the
+        #  ModelAdmin was created.
+
+        # rel = ManyToOneRel(None, Direction, 'id')
+        # rel = ManyToManyRel(Event, Direction)
+        # self.fields['directions'].widget = admin.widgets.RelatedFieldWidgetWrapper(self.fields['directions'].widget,
+        #                                                                            Event._meta.get_field('directions').rel,
+        #                                                                            self.admin_site,
+        #                                                                            can_add_related=True)
+        # self.fields['directions'].queryset = Direction.objects.filter(event=self.instance.pk)
+        # self.fields['directions'].empty_label = None
+
     class Meta:
         model = Event
         fields = ['title', 'directions', 'cities', 'local_classes', 'types', 'description', 'note', 'image', 'video',
@@ -50,6 +70,12 @@ class EventForm(forms.ModelForm):
                 raise forms.ValidationError("End date cannot be earlier than start date!")
 
         return cleaned_data
+
+
+class CutEventForm(forms.ModelForm):
+    class Meta:
+        model = Event
+        fields = ['title', 'author']
 
 
 class PromoActionForm(forms.ModelForm):
