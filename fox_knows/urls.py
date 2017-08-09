@@ -311,22 +311,13 @@ urlpatterns = [
                 ])),
                 url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', events_views.edit_event),
 
-                url(r'^(?:edit-title/)', include([
-                    url(r'^$', events_views.edit_title),
+                url(r'^(?:edit-(?P<attribute>[\w-]+)/)?', include([
+                    url(r'^$', events_views.edit_attr),
                     url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
-                        url(r'^$', events_views.edit_title),
-                        url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', events_views.edit_title),
+                        url(r'^$', events_views.edit_attr),
+                        url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', events_views.edit_attr),
                     ])),
-                    url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', events_views.edit_title),
-                ])),
-
-                url(r'^(?:edit-directions/)', include([
-                    url(r'^$', events_views.edit_directions),
-                    url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
-                        url(r'^$', events_views.edit_directions),
-                        url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', events_views.edit_directions),
-                    ])),
-                    url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', events_views.edit_directions),
+                    url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', events_views.edit_attr),
                 ])),
             ])),
         ])),
@@ -384,15 +375,14 @@ urlpatterns = [
         ])),
 
         url(r'^attributes/', include([
-            url(r'^create-direction/', include([
-                url(r'^', create_views.create_attr_direction),
+            url(r'^create-(?P<attribute>[\w-]+)/', include([
+                url(r'^$', create_views.create_attr),
                 url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
-                    url(r'^$', create_views.create_attr_direction),
-                    url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', create_views.create_attr_direction),
+                    url(r'^$', create_views.create_attr),
+                    url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', create_views.create_attr),
                 ])),
-                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', create_views.create_attr_direction),
+                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', create_views.create_attr),
             ])),
-
         ])),
 
         url(r'^$', create_views.create),

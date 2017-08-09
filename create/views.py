@@ -2,18 +2,14 @@ from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 
 from algoritms.get_direction_city_parameter import get_direction_city_parameter
-from entities.forms.classes import DirectionForm
+from entities.forms import EventLocationForm
+from entities.forms.classes import DirectionForm, CityForm
 from entities.forms.events import CutEventForm
-from entities.models.classes import Direction
-from entities.models.events import Event
+from entities.forms.links import EventLinkForm
 
 
 def create(request, city_title=None, direction_title=None):
-    # user_profile = get_object_or_404(UserProfile, pk=profile_id)
-    # title = '%s' % (user_profile.user.username,)
     context = {
-        # 'title': title,
-        # 'instance': user_profile,
     }
     return render(request, 'create/create.html', context)
 
@@ -22,7 +18,7 @@ def create_event(request, city_title=None, direction_title=None):
     form = CutEventForm(request.POST or None)
     if form.is_valid():
         instance = form.save()
-        return HttpResponseRedirect('/events/event-%s/%s' %
+        return HttpResponseRedirect('/events/event-%s/edit/%s' %
                                     (instance.pk, get_direction_city_parameter(city_title, direction_title)))
     context = {
         'form': form,
@@ -31,10 +27,19 @@ def create_event(request, city_title=None, direction_title=None):
     return render(request, 'create/create-event.html', context)
 
 
-def create_attr_direction(request, city_title=None, direction_title=None):
-    form = DirectionForm(request.POST or None)
+def create_attr(request, attribute=None, city_title=None, direction_title=None):
+    html_template_path = 'create/create-attr-' + attribute + '.html'
+    if attribute == 'direction':
+        form = DirectionForm(request.POST or None)
+    if attribute == 'city':
+        form = CityForm(request.POST or None)
+    if attribute == 'event-link':
+        form = EventLinkForm(request.POST or None)
+    if attribute == 'event-location':
+        form = EventLocationForm(request.POST or None)
+
     if form.is_valid():
-        instance = form.save()
+        form.save()
         return HttpResponseRedirect('/events/%s/edit/%s' %
                                     (request.GET.get('instance'),
                                      get_direction_city_parameter(city_title, direction_title)
@@ -44,4 +49,4 @@ def create_attr_direction(request, city_title=None, direction_title=None):
         'incoming_instance': request.GET.get('instance')
 
     }
-    return render(request, 'create/create-attr-direction.html', context)
+    return render(request, html_template_path, context)

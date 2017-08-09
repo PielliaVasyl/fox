@@ -16,9 +16,9 @@
 	<!--</div>&lt;!&ndash; /modal header &ndash;&gt;-->
  	  	<div class="modal-header">
  	  		<button type="button" class="close" data-dismiss="modal">&times;</button>
- 	  		<h4 class="modal-title">Изменить направления</h4>
+ 	  		<h4 class="modal-title">Изменить города</h4>
    		</div>
-		<form action="/events/event-{{ event.pk }}/edit/edit-directions/" method="post">
+		<form action="/events/event-{{ event.pk }}/edit/edit-cities/" method="post">
 			<!-- modal body -->
 			<div class="modal-body">
 				<div class="row">
@@ -29,9 +29,9 @@
 					<div class="col-md-6">
 						<a 	id="newDirection"
 							data-toggle="modal"
-						   	href="/create/attributes/create-direction/{{ request.path|get_direction_city_url }}?instance={{ request.path|get_instance_id }}"
+						   	href="/create/attributes/create-city/{{ request.path|get_direction_city_url }}?instance={{ request.path|get_instance_id }}"
 						   	data-instance-id="event-{{ event.pk }}"
-						   	data-target="#myModal2" class="btn btn-primary">Добавить новое направление</a>
+						   	data-target="#myModal2" class="btn btn-primary">Добавить новый город</a>
 
 					</div>
 				</div>

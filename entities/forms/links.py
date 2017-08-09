@@ -13,12 +13,6 @@ class AbstractLinkForm(forms.ModelForm):
         fields = ['link', 'author']
 
 
-# class AbstractEventLinkForm(forms.ModelForm):
-#     class Meta:
-#         model = AbstractEventLink
-#         fields = ['link', 'author']
-
-
 class EventLinkForm(forms.ModelForm):
     class Meta:
         model = EventLink
@@ -29,12 +23,6 @@ class PromoActionLinkForm(forms.ModelForm):
     class Meta:
         model = PromoActionLink
         fields = ['link', 'author']
-
-
-# class AbstractPageLinkForm(forms.ModelForm):
-#     class Meta:
-#         model = AbstractPageLink
-#         fields = ['link', 'author']
 
 
 class PlaceLinkForm(forms.ModelForm):
