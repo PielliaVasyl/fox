@@ -40,14 +40,14 @@
 					<div class="col-md-12">
 
 						<header class="page-title">
-							<h1 style="text-align: center">{{ event.title }}</h1>
+							<h1 style="text-align: center">{{ promo_action.title }}</h1>
 							<div class="pull-right">
 								<small class="block styleCoor fsize20">
-									<span class="label label-default" title="Даты проведения и длительность мероприятия">{{ event.date_show }} | {{ event.duration_show }}</span>
+									<span class="label label-default" title="Даты проведения и длительность мероприятия">{{ promo_action.date_show }} | {{ promo_action.duration_show }}</span>
 								</small>
 							</div>
 							<small class="block styleCoor fsize20">
-								<span class="label label-{{ event.status_label_color }}" title="Статус мероприятия"><i class="fa {{ event.status_icon }}"></i> {{ event.status }}</span>
+								<span class="label label-{{ promo_action.status_label_color }}" title="Статус мероприятия"><i class="fa {{ promo_action.status_icon }}"></i> {{ promo_action.status }}</span>
 							</small>
 						</header>
 
@@ -71,24 +71,24 @@
 							<div class="row">
 								<!-- col 1 -->
 								<div class="col-md-5 col-sm-6 col-md-offset-1">
-									{% if event.types.all %}
+									{% if promo_action.types.all %}
 									<div class="row">
 										<div class="col-md-12">
 											<small class="block styleCoor fsize20">
 												<i class="fa fa-list-alt" title="Типы мероприятий"></i>
-												{% for event_type in event.types.all %}
-												<span class="label label-primary" title="{{ event_type.title_show }}">{{ event_type.title_show|truncatechars:30 }}</span>
+												{% for promo_action_type in promo_action.types.all %}
+												<span class="label label-primary" title="{{ promo_action_type.title_show }}">{{ promo_action_type.title_show|truncatechars:30 }}</span>
 												{% endfor %}
 											</small>
 										</div>
 									</div>
 									{% endif %}
-									{% if event.local_classes.dance_styles.all %}
+									{% if promo_action.local_classes.dance_styles.all %}
 									<div class="row">
 										<div class="col-md-12">
 											<small class="block styleCoor fsize20">
 												<i class="fa fa-reorder" title="Стиль танца"></i>
-												{% for dance_style in event.local_classes.dance_styles.all %}
+												{% for dance_style in promo_action.local_classes.dance_styles.all %}
 												<span class="label label-success" title="{{ dance_style.title }}">{{ dance_style.title|truncatechars:30 }}</span>
 												{% endfor %}
 											</small>
@@ -98,24 +98,24 @@
 								</div>
 								<!-- col 2 -->
 								<div class="col-md-5 col-sm-6 col-md-offset-1">
-									{% if event.locations.all %}
+									{% if promo_action.locations.all %}
 									<div class="row">
 										<div class="col-md-12">
 											<small class="block styleCoor fsize20">
 												<i class="fa fa-globe" title="Места проведения"></i>
-												{% for location in event.locations.all %}
+												{% for location in promo_action.locations.all %}
 												<span class="label label-info" title="{{ location.title_show }}">{{ location.title_show|truncatechars:30 }}</span>
 												{% endfor %}
 											</small>
 										</div>
 									</div>
 									{% endif %}
-									{% if event.note %}
+									{% if promo_action.note %}
 									<div class="row">
 										<div class="col-md-12">
 											<small class="block styleCoor fsize20">
 												<i class="fa fa-exclamation-circle" title="Обратите внимание"></i>
-												<span class="label label-default" title="{{ event.note }}">{{ event.note|truncatechars:30 }}</span>
+												<span class="label label-default" title="{{ promo_action.note }}">{{ promo_action.note|truncatechars:30 }}</span>
 											</small>
 										</div>
 									</div>
@@ -125,33 +125,33 @@
 
 							<hr style="margin: 20px 0"/><!-- divider -->
 
-							{% if event.image %}
+							{% if promo_action.image %}
 							<div class="row">
 								<div class="col-md-10 col-md-offset-1" style="margin-bottom: 10px; text-align: left;">
-									<img src="{{ event.image.url }}" class="img-responsive" style="width: 100%; height: auto; display: block; margin-bottom: 10px;">
+									<img src="{{ promo_action.image.url }}" class="img-responsive" style="width: 100%; height: auto; display: block; margin-bottom: 10px;">
 								</div>
 							</div>
 							<hr style="margin: 20px 0"/><!-- divider -->
 							{% endif %}
 
-							{% if event.description %}
+							{% if promo_action.description %}
 							<p class="lead text-center">Описание</p>
-							{{ event.description|linebreaks }}
+							{{ promo_action.description|linebreaks }}
 							{% endif %}
 
-							{% if event.links.all %}
+							{% if promo_action.links.all %}
 							<p>Источник:
-								{% for link in event.links.all %}
+								{% for link in promo_action.links.all %}
 								<a href="{{ link.link }}">Перейти</a>
 								{% endfor %}
 							</p>
 							{% endif %}
 
-							{% if event.video %}
+							{% if promo_action.video %}
 							<div class="row">
 								<div class="col-md-10 col-md-offset-1">
 									<div style="width: 100%; position: relative; padding: 0;">
-										<iframe src="{{ event.video }}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; margin: 0; padding: 0;" width="800" height="450"></iframe>
+										<iframe src="{{ promo_action.video }}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; margin: 0; padding: 0;" width="800" height="450"></iframe>
 									</div>
 								</div>
 							</div>
@@ -168,75 +168,51 @@
 							<div class="row">
 								<div class="form-group">
 									<div class="col-md-12 col-sm-6">
-										<a data-toggle="modal" href="/events/event-{{ event.pk }}/edit/edit-title/{{ request.path|get_direction_city_url }}"
+										<a data-toggle="modal" href="/events/promo-action-{{ promo_action.pk }}/edit/edit-title/{{ request.path|get_direction_city_url }}"
 										   data-target="#myModal" class="btn btn-primary">Название</a>
 
 										<br />
-										<a data-toggle="modal" href="/events/event-{{ event.pk }}/edit/edit-directions/{{ request.path|get_direction_city_url }}"
+										<a data-toggle="modal" href="/events/promo-action-{{ promo_action.pk }}/edit/edit-directions/{{ request.path|get_direction_city_url }}"
 										   data-target="#myModal" class="btn btn-primary">Направления</a>
 
 										<br />
-										<a data-toggle="modal" href="/events/event-{{ event.pk }}/edit/edit-cities/{{ request.path|get_direction_city_url }}"
+										<a data-toggle="modal" href="/events/promo-action-{{ promo_action.pk }}/edit/edit-cities/{{ request.path|get_direction_city_url }}"
 										   data-target="#myModal" class="btn btn-primary">Города</a>
 
 										<br />
-										<a data-toggle="modal" href="/events/event-{{ event.pk }}/edit/edit-types/{{ request.path|get_direction_city_url }}"
-										   data-target="#myModal" class="btn btn-primary">Типы мероприятия</a>
+										<a data-toggle="modal" href="/events/promo-action-{{ promo_action.pk }}/edit/edit-event-dance-classes/{{ request.path|get_direction_city_url }}"
+										   data-target="#myModal" class="btn btn-primary">Танцевальное стили и направления</a>
 
 										<br />
-										<a data-toggle="modal" href="/events/event-{{ event.pk }}/edit/edit-description/{{ request.path|get_direction_city_url }}"
-										   data-target="#myModal" class="btn btn-primary">local_classes!!</a>
-
-										<br />
-										<a data-toggle="modal" href="/events/event-{{ event.pk }}/edit/edit-description/{{ request.path|get_direction_city_url }}"
+										<a data-toggle="modal" href="/events/promo-action-{{ promo_action.pk }}/edit/edit-description/{{ request.path|get_direction_city_url }}"
 										   data-target="#myModal" class="btn btn-primary">Описание</a>
 
 										<br />
-										<a data-toggle="modal" href="/events/event-{{ event.pk }}/edit/edit-note/{{ request.path|get_direction_city_url }}"
+										<a data-toggle="modal" href="/events/promo-action-{{ promo_action.pk }}/edit/edit-note/{{ request.path|get_direction_city_url }}"
 										   data-target="#myModal" class="btn btn-primary">Примечание</a>
 
 										<br />
-										<a data-toggle="modal" href="/events/event-{{ event.pk }}/edit/edit-image/{{ request.path|get_direction_city_url }}"
+										<a data-toggle="modal" href="/events/promo-action-{{ promo_action.pk }}/edit/edit-image/{{ request.path|get_direction_city_url }}"
 										   data-target="#myModal" class="btn btn-primary">Изображение</a>
 
 										<br />
-										<a data-toggle="modal" href="/events/event-{{ event.pk }}/edit/edit-video/{{ request.path|get_direction_city_url }}"
+										<a data-toggle="modal" href="/events/promo-action-{{ promo_action.pk }}/edit/edit-video/{{ request.path|get_direction_city_url }}"
 										   data-target="#myModal" class="btn btn-primary">Видео</a>
 
 										<br />
-										<a data-toggle="modal" href="/events/event-{{ event.pk }}/edit/edit-dates/{{ request.path|get_direction_city_url }}"
+										<a data-toggle="modal" href="/events/promo-action-{{ promo_action.pk }}/edit/edit-dates/{{ request.path|get_direction_city_url }}"
 										   data-target="#myModal" class="btn btn-primary">Даты проведения</a>
 
 										<br />
-										<a data-toggle="modal" href="/events/event-{{ event.pk }}/edit/edit-status/{{ request.path|get_direction_city_url }}"
+										<a data-toggle="modal" href="/events/promo-action-{{ promo_action.pk }}/edit/edit-status/{{ request.path|get_direction_city_url }}"
 										   data-target="#myModal" class="btn btn-primary">Статус</a>
 
 										<br />
-										<a data-toggle="modal" href="/events/event-{{ event.pk }}/edit/edit-event-locations/{{ request.path|get_direction_city_url }}"
-										   data-target="#myModal" class="btn btn-primary">Места проведения</a>
-
-										<br />
-										<a data-toggle="modal" href="/events/event-{{ event.pk }}/edit/edit-event-links/{{ request.path|get_direction_city_url }}"
+										<a data-toggle="modal" href="/events/promo-action-{{ promo_action.pk }}/edit/edit-promo-action-links/{{ request.path|get_direction_city_url }}"
 										   data-target="#myModal" class="btn btn-primary">Ссылки</a>
 
 										<br />
-										<a data-toggle="modal" href="/events/event-{{ event.pk }}/edit/edit-price-types/{{ request.path|get_direction_city_url }}"
-										   data-target="#myModal" class="btn btn-primary">Типы цен</a>
-
-										<br />
-										<a data-toggle="modal" href="/events/event-{{ event.pk }}/edit/edit-experience-levels/{{ request.path|get_direction_city_url }}"
-										   data-target="#myModal" class="btn btn-primary">Уровни опыта</a>
-
-										<br />
-										<a data-toggle="modal" href="/events/event-{{ event.pk }}/edit/edit-repeats-type/{{ request.path|get_direction_city_url }}"
-										   data-target="#myModal" class="btn btn-primary">Частота проведения</a>
-
-										<br />
-										<a data-toggle="modal" href="/events/event-{{ event.pk }}/edit/edit-schedule/{{ request.path|get_direction_city_url }}"
-										   data-target="#myModal" class="btn btn-primary">Расписание</a>
-
-										<br />
-										<a data-toggle="modal" href="/events/event-{{ event.pk }}/edit/edit-policy/{{ request.path|get_direction_city_url }}"
+										<a data-toggle="modal" href="/events/promo-action-{{ promo_action.pk }}/edit/edit-policy/{{ request.path|get_direction_city_url }}"
 										   data-target="#myModal" class="btn btn-primary">Права пользователей</a>
 
 										<!-- Modal -->

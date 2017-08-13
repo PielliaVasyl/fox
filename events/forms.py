@@ -1,96 +1,179 @@
 from django import forms
+
+from entities.models import EventLocalClasses
 from entities.models.types import EventType, PriceType, ExperienceLevel, RepeatsType, DayOfTheWeek
 
-from entities.models.events import Event
+from entities.models.events import Event, PromoAction
 
 
-class EditTitleForm(forms.ModelForm):
+class EditEventTitleForm(forms.ModelForm):
     class Meta:
         model = Event
         fields = ['title']
 
 
-class EditDirectionsForm(forms.ModelForm):
+class EditEventDirectionsForm(forms.ModelForm):
     class Meta:
         model = Event
         fields = ['directions']
 
 
-class EditCitiesForm(forms.ModelForm):
+class EditEventCitiesForm(forms.ModelForm):
     class Meta:
         model = Event
         fields = ['cities']
 
 
-class EditDescriptionForm(forms.ModelForm):
+class EditEventDescriptionForm(forms.ModelForm):
     class Meta:
         model = Event
         fields = ['description']
 
 
-class EditNoteForm(forms.ModelForm):
+class EditEventNoteForm(forms.ModelForm):
     class Meta:
         model = Event
         fields = ['note']
 
 
-class EditImageForm(forms.ModelForm):
+class EditEventImageForm(forms.ModelForm):
     class Meta:
         model = Event
         fields = ['image']
 
 
-class EditVideoForm(forms.ModelForm):
+class EditEventVideoForm(forms.ModelForm):
     class Meta:
         model = Event
         fields = ['video']
 
 
-class EditDatesForm(forms.ModelForm):
+class EditEventDatesForm(forms.ModelForm):
     class Meta:
         model = Event
         fields = ['start_date', 'end_date']
 
 
-class EditStatusForm(forms.ModelForm):
+class EditEventStatusForm(forms.ModelForm):
     class Meta:
         model = Event
         fields = ['_status']
 
 
-class EditEventLocationForm(forms.ModelForm):
+class EditEventEventLocationForm(forms.ModelForm):
     class Meta:
         model = Event
         fields = ['locations']
 
 
-class EditTypesForm(forms.Form):
+class EditEventEventDanceClassesForm(forms.ModelForm):
+    class Meta:
+        model = EventLocalClasses
+        fields = ['dance_styles', 'dance_directions']
+
+
+class EditEventTypesForm(forms.Form):
     types = forms.MultipleChoiceField(choices=EventType.TITLE_CHOICES)
 
 
-class EditLinksForm(forms.ModelForm):
+class EditEventLinksForm(forms.ModelForm):
     class Meta:
         model = Event
         fields = ['links']
 
 
-class EditPriceTypesForm(forms.Form):
+class EditEventPriceTypesForm(forms.Form):
     price_types = forms.MultipleChoiceField(choices=PriceType.TITLE_CHOICES)
 
 
-class EditExperienceLevelsForm(forms.Form):
+class EditEventExperienceLevelsForm(forms.Form):
     experience_levels = forms.MultipleChoiceField(choices=ExperienceLevel.TITLE_CHOICES)
 
 
-class EditRepeatsTypeForm(forms.Form):
+class EditEventRepeatsTypeForm(forms.Form):
     repeats_type = forms.ChoiceField(choices=RepeatsType.TITLE_CHOICES)
 
 
-class EditScheduleForm(forms.Form):
+class EditEventScheduleForm(forms.Form):
     schedule = forms.MultipleChoiceField(choices=DayOfTheWeek.TITLE_CHOICES)
 
 
-class EditPolicyForm(forms.ModelForm):
+class EditEventPolicyForm(forms.ModelForm):
     class Meta:
         model = Event
+        fields = ['owners', 'contributors', 'author']
+
+
+# ============================
+
+
+class EditPromoActionTitleForm(forms.ModelForm):
+    class Meta:
+        model = PromoAction
+        fields = ['title']
+
+
+class EditPromoActionDirectionsForm(forms.ModelForm):
+    class Meta:
+        model = PromoAction
+        fields = ['directions']
+
+
+class EditPromoActionCitiesForm(forms.ModelForm):
+    class Meta:
+        model = PromoAction
+        fields = ['cities']
+
+
+class EditPromoActionDescriptionForm(forms.ModelForm):
+    class Meta:
+        model = PromoAction
+        fields = ['description']
+
+
+class EditPromoActionNoteForm(forms.ModelForm):
+    class Meta:
+        model = PromoAction
+        fields = ['note']
+
+
+class EditPromoActionImageForm(forms.ModelForm):
+    class Meta:
+        model = PromoAction
+        fields = ['image']
+
+
+class EditPromoActionVideoForm(forms.ModelForm):
+    class Meta:
+        model = PromoAction
+        fields = ['video']
+
+
+class EditPromoActionDatesForm(forms.ModelForm):
+    class Meta:
+        model = PromoAction
+        fields = ['start_date', 'end_date']
+
+
+class EditPromoActionStatusForm(forms.ModelForm):
+    class Meta:
+        model = PromoAction
+        fields = ['_status']
+
+
+class EditPromoActionEventDanceClassesForm(forms.ModelForm):
+    class Meta:
+        model = EventLocalClasses
+        fields = ['dance_styles', 'dance_directions']
+
+
+class EditPromoActionLinksForm(forms.ModelForm):
+    class Meta:
+        model = PromoAction
+        fields = ['links']
+
+
+class EditPromoActionPolicyForm(forms.ModelForm):
+    class Meta:
+        model = PromoAction
         fields = ['owners', 'contributors', 'author']

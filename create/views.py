@@ -4,8 +4,8 @@ from django.shortcuts import render
 from algoritms.get_direction_city_parameter import get_direction_city_parameter
 from entities.forms import EventLocationForm
 from entities.forms.classes import DirectionForm, CityForm
-from entities.forms.events import CutEventForm
-from entities.forms.links import EventLinkForm
+from entities.forms.events import CutEventForm, CutPromoActionForm
+from entities.forms.links import EventLinkForm, PromoActionLinkForm
 
 
 def create(request, city_title=None, direction_title=None):
@@ -27,6 +27,19 @@ def create_event(request, city_title=None, direction_title=None):
     return render(request, 'create/create-event.html', context)
 
 
+def create_promo_action(request, city_title=None, direction_title=None):
+    form = CutPromoActionForm(request.POST or None)
+    if form.is_valid():
+        instance = form.save()
+        return HttpResponseRedirect('/events/promo-action-%s/edit/%s' %
+                                    (instance.pk, get_direction_city_parameter(city_title, direction_title)))
+    context = {
+        'form': form,
+
+    }
+    return render(request, 'create/create-promo-action.html', context)
+
+
 def create_attr(request, attribute=None, city_title=None, direction_title=None):
     html_template_path = 'create/create-attr-' + attribute + '.html'
     if attribute == 'direction':
@@ -35,6 +48,8 @@ def create_attr(request, attribute=None, city_title=None, direction_title=None):
         form = CityForm(request.POST or None)
     if attribute == 'event-link':
         form = EventLinkForm(request.POST or None)
+    if attribute == 'promo-action-link':
+        form = PromoActionLinkForm(request.POST or None)
     if attribute == 'event-location':
         form = EventLocationForm(request.POST or None)
 

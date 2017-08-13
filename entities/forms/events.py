@@ -78,6 +78,12 @@ class CutEventForm(forms.ModelForm):
         fields = ['title', 'author']
 
 
+class CutPromoActionForm(forms.ModelForm):
+    class Meta:
+        model = PromoAction
+        fields = ['title', 'author']
+
+
 class PromoActionForm(forms.ModelForm):
     class Meta:
         model = PromoAction

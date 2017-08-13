@@ -294,7 +294,6 @@ urlpatterns = [
             url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', events_views.past),
         ])),
 
-
         url(r'^(?:event-(?P<event_id>\d+)/)', include([
             url(r'^$', events_views.event),
             url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
@@ -312,15 +311,44 @@ urlpatterns = [
                 url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', events_views.edit_event),
 
                 url(r'^(?:edit-(?P<attribute>[\w-]+)/)?', include([
-                    url(r'^$', events_views.edit_attr),
+                    url(r'^$', events_views.edit_event_attr),
                     url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
-                        url(r'^$', events_views.edit_attr),
-                        url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', events_views.edit_attr),
+                        url(r'^$', events_views.edit_event_attr),
+                        url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', events_views.edit_event_attr),
                     ])),
-                    url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', events_views.edit_attr),
+                    url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', events_views.edit_event_attr),
                 ])),
             ])),
         ])),
+
+        url(r'^(?:promo-action-(?P<promo_action_id>\d+)/)', include([
+            url(r'^$', events_views.promo_action),
+            url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
+                url(r'^$', events_views.promo_action),
+                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', events_views.promo_action),
+            ])),
+            url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', events_views.promo_action),
+
+            url(r'^(?:edit/)', include([
+                url(r'^$', events_views.edit_promo_action),
+                url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
+                    url(r'^$', events_views.edit_promo_action),
+                    url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', events_views.edit_promo_action),
+                ])),
+                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', events_views.edit_promo_action),
+
+                url(r'^(?:edit-(?P<attribute>[\w-]+)/)?', include([
+                    url(r'^$', events_views.edit_promo_action_attr),
+                    url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
+                        url(r'^$', events_views.edit_promo_action_attr),
+                        url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', events_views.edit_promo_action_attr),
+                    ])),
+                    url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', events_views.edit_promo_action_attr),
+                ])),
+            ])),
+        ])),
+
+
 
         url(r'^$', RedirectView.as_view(pattern_name='events_upcoming', permanent=True)),
         url(r'^(?:direction-(?P<direction_title>[\w-]+)/)', include([
@@ -372,6 +400,15 @@ urlpatterns = [
                 url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', create_views.create_event),
             ])),
             url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', create_views.create_event),
+        ])),
+
+        url(r'^promo-action/', include([
+            url(r'^$', create_views.create_promo_action, name='create_event'),
+            url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
+                url(r'^$', create_views.create_promo_action),
+                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', create_views.create_promo_action),
+            ])),
+            url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', create_views.create_promo_action),
         ])),
 
         url(r'^attributes/', include([

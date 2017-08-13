@@ -4,6 +4,7 @@ from django import forms
 from entities.models import DanceStyleClass
 from entities.models import Event
 from entities.models import EventType
+from entities.models import PromoAction
 from entities.models.pages import Place, School, Shop, CustomerServices, Hall
 from entities.models.types import PlaceType, ShopType, CustomerServicesType
 
@@ -95,6 +96,45 @@ class EventsFilterForm(forms.Form):
                 label='Танцевальные стили',
                 choices=_get_dance_styles_choices(dance_styles, events)
                 )
+
+
+class PromoActionFilterForm(forms.Form):
+    promo_actions = PromoAction.objects.all()
+
+    cities = forms.MultipleChoiceField(
+        widget=forms.SelectMultiple(attrs={'class': 'chosen-select', 'style': 'min-width: 172px; width: 100%',
+                                           'tabindex': '0',
+                                           'data-placeholder': "Выберите города..."}),
+        required=False,
+        label='Города'
+    )
+
+    # event_types = forms.MultipleChoiceField(
+    #     widget=forms.SelectMultiple(attrs={'class': 'chosen-select', 'style': 'min-width: 172px; width: 100%',
+    #                                        'tabindex': '0',
+    #                                        'data-placeholder': "Выберите типы..."}),
+    #     required=False,
+    #     label='Типы мероприятий'
+    # )
+
+    def __init__(self, *args, **kwargs):
+        promo_actions = PromoAction.objects.all()
+        self.direction = kwargs.pop('direction')
+
+        super(PromoActionFilterForm, self).__init__(*args, **kwargs)
+        # self.fields['event_types'].choices = _get_event_types_choices(events)
+        # self.fields['cities'].choices = _get_cities_choices(promo_actions)
+
+        if self.direction == 'dance':
+            dance_styles = DanceStyleClass.objects.all()
+            # self.fields['dance_styles'] = forms.MultipleChoiceField(
+            #     widget=forms.SelectMultiple(attrs={'class': 'chosen-select', 'style': 'min-width: 172px; width: 100%',
+            #                                        'tabindex': '0',
+            #                                        'data-placeholder': "Выберите танцевальные стили..."}),
+            #     required=False,
+            #     label='Танцевальные стили',
+            #     choices=_get_dance_styles_choices(dance_styles, promo_actions)
+            #     )
 
 
 def _get_place_types_choices(places):

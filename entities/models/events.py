@@ -1,6 +1,8 @@
 from datetime import date
 
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.template.defaultfilters import truncatechars
 from django.utils.translation import activate
 from django.template.defaultfilters import date as date_filter
@@ -9,7 +11,7 @@ from algoritms.get_status import get_auto_status
 from entities.models.classes import City, Direction
 from entities.models.links import PromoActionLink, EventLink
 from entities.models.locations import EventLocation
-from entities.models.supportclasses import EventLocalClasses
+from entities.models.supportclasses import EventLocalClasses, PromoActionLocalClasses
 from entities.models.types import DayOfTheWeek, EventType, ExperienceLevel, PriceType, RepeatsType
 from entities.models.userprofile import UserProfile
 
@@ -39,8 +41,6 @@ class AbstractEvent(models.Model):
 
     directions = models.ManyToManyField(Direction, blank=True)
     cities = models.ManyToManyField(City, blank=True)
-
-    local_classes = models.OneToOneField(EventLocalClasses, on_delete=models.CASCADE, null=True)
 
     description = models.TextField(blank=True)
     note = models.TextField(blank=True)
@@ -181,6 +181,8 @@ class AbstractEvent(models.Model):
 
 
 class Event(AbstractEvent):
+    local_classes = models.OneToOneField(EventLocalClasses, on_delete=models.CASCADE, null=True)
+
     types = models.ManyToManyField(EventType, blank=True)
     locations = models.ManyToManyField(EventLocation, blank=True)
 
@@ -222,9 +224,27 @@ class Event(AbstractEvent):
         return ''
 
 
+@receiver(post_save, sender=Event)
+def create_event_local_classes(sender, instance, created, **kwargs):
+    if created:
+        event_local_classes = EventLocalClasses.objects.create(event=instance)
+        instance.local_classes = event_local_classes
+        instance.save()
+
+
 class PromoAction(AbstractEvent):
+    local_classes = models.OneToOneField(PromoActionLocalClasses, on_delete=models.CASCADE, null=True)
+
     links = models.ManyToManyField(PromoActionLink, blank=True)
 
     owners = models.ManyToManyField(UserProfile, blank=True, related_name='promo_actions_owner')
     contributors = models.ManyToManyField(UserProfile, blank=True, related_name='promo_actions_contributor')
     author = models.ForeignKey(UserProfile, on_delete=models.CASCADE, null=True, related_name='promo_actions_author')
+
+
+@receiver(post_save, sender=PromoAction)
+def create_event_local_classes(sender, instance, created, **kwargs):
+    if created:
+        event_local_classes = PromoActionLocalClasses.objects.create(promoaction=instance)
+        instance.local_classes = event_local_classes
+        instance.save()

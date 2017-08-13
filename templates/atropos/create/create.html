@@ -17,12 +17,7 @@
 						<h2><strong>Мероприятия</strong></h2>
 
                         <a href="/create/event/{{ request.path|get_direction_city_url }}" class="btn btn-primary" data-toggle="modal" data-target=".ajax_modal_container">Мероприятия</a>
-						<div class="modal fade ajax_modal_container" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-							<div class="modal-dialog modal-lg">
-								<div class="modal-content"></div>
-							</div>
-						</div>
-						<button type="button" class="btn btn-primary">Акции</button>
+                        <a href="/create/promo-action/{{ request.path|get_direction_city_url }}" class="btn btn-primary" data-toggle="modal" data-target=".ajax_modal_container">Акции</a>
 
 						<hr />
 
@@ -55,6 +50,11 @@
 
 					</div>
 
+					<div class="modal fade ajax_modal_container" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+						<div class="modal-dialog modal-lg">
+							<div class="modal-content"></div>
+						</div>
+					</div>
 				</div>
 
 			</section>
