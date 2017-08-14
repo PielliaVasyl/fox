@@ -36,7 +36,7 @@ def places(request, city_title=None, direction_title=None):
         'instances': instances,
         'form': form,
     }
-    return render(request, 'map/places.html', context)
+    return render(request, 'map/place/places.html', context)
 
 
 def place(request, place_id, direction_title=None, city_title=None):
@@ -50,7 +50,7 @@ def place(request, place_id, direction_title=None, city_title=None):
         'instance': current_place,
         'form': form
     }
-    return render(request, 'map/place-single.html', context)
+    return render(request, 'map/place/place-single.html', context)
 
 
 def edit_place(request, place_id, city_title=None, direction_title=None):
@@ -162,7 +162,7 @@ def schools(request, city_title=None, direction_title=None):
         'instances': instances,
         'form': form,
     }
-    return render(request, 'map/schools.html', context)
+    return render(request, 'map/school/schools.html', context)
 
 
 def school(request, school_id, direction_title=None, city_title=None):
@@ -176,7 +176,7 @@ def school(request, school_id, direction_title=None, city_title=None):
         'instance': current_school,
         'form': form
     }
-    return render(request, 'map/school-single.html', context)
+    return render(request, 'map/school/school-single.html', context)
 
 
 def shops(request, city_title=None, direction_title=None):
@@ -203,7 +203,7 @@ def shops(request, city_title=None, direction_title=None):
         'instances': instances,
         'form': form,
     }
-    return render(request, 'map/shops.html', context)
+    return render(request, 'map/shop/shops.html', context)
 
 
 def shop(request, shop_id, direction_title=None, city_title=None):
@@ -217,7 +217,7 @@ def shop(request, shop_id, direction_title=None, city_title=None):
         'instance': current_shop,
         'form': form
     }
-    return render(request, 'map/shop-single.html', context)
+    return render(request, 'map/shop/shop-single.html', context)
 
 
 def services(request, city_title=None, direction_title=None):
@@ -244,7 +244,7 @@ def services(request, city_title=None, direction_title=None):
         'instances': instances,
         'form': form,
     }
-    return render(request, 'map/services.html', context)
+    return render(request, 'map/service/services.html', context)
 
 
 def service(request, service_id, direction_title=None, city_title=None):
@@ -258,7 +258,7 @@ def service(request, service_id, direction_title=None, city_title=None):
         'instance': current_services,
         'form': form
     }
-    return render(request, 'map/service-single.html', context)
+    return render(request, 'map/service/service-single.html', context)
 
 
 def halls(request, city_title=None, direction_title=None):
@@ -285,7 +285,7 @@ def halls(request, city_title=None, direction_title=None):
         'instances': instances,
         'form': form,
     }
-    return render(request, 'map/halls.html', context)
+    return render(request, 'map/hall/halls.html', context)
 
 
 def hall(request, hall_id, direction_title=None, city_title=None):
@@ -299,4 +299,4 @@ def hall(request, hall_id, direction_title=None, city_title=None):
         'instance': current_hall,
         'form': form
     }
-    return render(request, 'map/hall-single.html', context)
+    return render(request, 'map/hall/hall-single.html', context)

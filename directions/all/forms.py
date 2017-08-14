@@ -49,12 +49,12 @@ def _get_instances_choices(instances):
     return instances
 
 
-def _get_cities_choices(events):
-    cities_per_events = [[(loc.city.pk, loc.city.city) for loc in event.locations.all() if loc.city]
-                         for event in events]
+def _get_cities_choices(instances):
+    cities_per_instances = [[(loc.city.pk, loc.city.title) for loc in instance.locations.all() if loc.city]
+                            for instance in instances]
     all_cities = []
-    for cities_per_event in cities_per_events:
-        all_cities.extend(cities_per_event)
+    for cities_per_instance in cities_per_instances:
+        all_cities.extend(cities_per_instance)
     all_cities = tuple(set(all_cities))
     return all_cities
 
