@@ -161,7 +161,6 @@ urlpatterns = [
                 ])),
                 url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', map_views.place),
             ])),
-
         ])),
 
         url(r'^schools/', include([
@@ -244,6 +243,32 @@ urlpatterns = [
             ])),
         ])),
 
+        url(r'^(?:place-(?P<place_id>\d+)/)', include([
+            url(r'^$', map_views.place),
+            url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
+                url(r'^$', map_views.place),
+                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', map_views.place),
+            ])),
+            url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', map_views.place),
+
+            url(r'^(?:edit/)', include([
+                url(r'^$', map_views.edit_place),
+                url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
+                    url(r'^$', map_views.edit_place),
+                    url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', map_views.edit_place),
+                ])),
+                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', map_views.edit_place),
+
+                url(r'^(?:edit-(?P<attribute>[\w-]+)/)?', include([
+                    url(r'^$', map_views.edit_place_attr),
+                    url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
+                        url(r'^$', map_views.edit_place_attr),
+                        url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', map_views.edit_place_attr),
+                    ])),
+                    url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', map_views.edit_place_attr),
+                ])),
+            ])),
+        ])),
 
         url(r'^$', RedirectView.as_view(pattern_name='map_places', permanent=True)),
         url(r'^(?:direction-(?P<direction_title>[\w-]+)/)', include([
@@ -409,6 +434,15 @@ urlpatterns = [
                 url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', create_views.create_promo_action),
             ])),
             url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', create_views.create_promo_action),
+        ])),
+
+        url(r'^place/', include([
+            url(r'^$', create_views.create_place, name='create_place'),
+            url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
+                url(r'^$', create_views.create_place),
+                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', create_views.create_place),
+            ])),
+            url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', create_views.create_place),
         ])),
 
         url(r'^attributes/', include([

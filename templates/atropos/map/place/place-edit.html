@@ -1,0 +1,235 @@
+{% extends "base.html" %}
+{% load get_direction_city_url %}
+
+{% block title %}{{ title }} - {% endblock %}
+
+{% block wrapper %}
+<style>
+.modal-title {
+  text-align:center;
+  font-size:20px;
+  font-weight:bold;
+}
+@media screen and (min-width: 768px){
+  #myModal .modal-dialog {
+    webkit-box-shadow: 0 5px 15px rgba(0,0,0,.5);
+    box-shadow: 0 5px 15px rgba(0,0,0,.5);
+  }
+}
+#myModal .modal-header {
+//  border-radius: 5px 5px 0 0;
+//  background-color:#fff;
+}
+#myModal .modal-content {
+  background-color:#fff;
+  border-radius: 0;
+//  padding:20px;
+  box-shadow: none;
+  background-clip:inherit;
+}
+#myModal .modal-footer {
+  background-color:#fff;
+  border-radius: 0 0 5px 5px;
+}
+</style>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+		<!-- WRAPPER -->
+		<div id="wrapper" style="padding-top:0">
+			<div class="container magazine top-no-header" style="padding-top:20px">
+				<div class="row">
+					<div class="col-md-12">
+
+						<header class="page-title">
+							<h1 style="text-align: center">{{ instance.title }}</h1>
+						</header>
+
+						<div class="divider half-margins"><!-- divider -->
+							<i class="fa fa-star"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<section class="container">
+				<div class="row">
+
+					<div class="col-md-9">
+						<div class="white-row">
+
+							<h3 class="page-header margin-bottom40" style="text-align:center">
+								<strong class="styleColor">Основная информация</strong>
+							</h3>
+
+							<div class="row">
+								<!-- col 1 -->
+								<div class="col-md-5 col-sm-6 col-md-offset-1">
+									{% if instance.types.all %}
+									<div class="row">
+										<div class="col-md-12">
+											<small class="block styleCoor fsize20">
+												<i class="fa fa-list-alt" title="Типы мероприятий"></i>
+												{% for place_type in instance.types.all %}
+												<span class="label label-primary" title="Тип мероприятия">{{ place_type.title_show }}</span>
+												{% endfor %}
+											</small>
+										</div>
+									</div>
+									{% endif %}
+									{% if instance.local_classes.dance_styles.all %}
+									<div class="row">
+										<div class="col-md-12">
+											<small class="block styleCoor fsize20">
+												<i class="fa fa-reorder" title="Стиль танца"></i>
+												{% for dance_style in instance.local_classes.dance_styles.all %}
+												<span class="label label-success" title="Стиль танца">{{ dance_style.title }}</span>
+												{% endfor %}
+											</small>
+										</div>
+									</div>
+									{% endif %}
+								</div>
+								<!-- col 2 -->
+								<div class="col-md-5 col-sm-6 col-md-offset-1">
+									{% if instance.locations.all %}
+									<div class="row">
+										<div class="col-md-12">
+											<small class="block styleCoor fsize20">
+												<i class="fa fa-globe" title="Места проведения"></i>
+												{% for location in instance.locations.all %}
+												<span class="label label-info" title="Место проведения">{{ location.title_show }}</span>
+												{% endfor %}
+											</small>
+										</div>
+									</div>
+									{% endif %}
+									{% if place.note %}
+									<div class="row">
+										<div class="col-md-12">
+											<small class="block styleCoor fsize20">
+												<i class="fa fa-exclamation-circle" title="Обратите внимание"></i>
+												<span class="label label-default" title="Обратите внимание">{{ instance.note }}</span>
+											</small>
+										</div>
+									</div>
+									{% endif %}
+								</div>
+							</div>
+
+							<hr style="margin: 20px 0"/><!-- divider -->
+
+							{% if instance.image %}
+							<div class="row">
+								<div class="col-md-10 col-md-offset-1" style="margin-bottom: 10px; text-align: left;">
+									<img src="{{ instance.image.url }}" class="img-responsive" style="width: 100%; height: auto; display: block; margin-bottom: 10px;">
+								</div>
+							</div>
+							<hr style="margin: 20px 0"/><!-- divider -->
+							{% endif %}
+
+							{% if instance.description %}
+							<p class="lead text-center">Описание места</p>
+							{{ instance.description|linebreaks }}
+							{% endif %}
+
+							{% if instance.links.all %}
+							<p>Источник:
+								{% for link in instance.links.all %}
+								<a href="{{ link.link }}">Перейти</a>
+								{% endfor %}
+							</p>
+							{% endif %}
+
+							{% if instance.video %}
+							<div class="row">
+								<div class="col-md-10 col-md-offset-1">
+									<div style="width: 100%; position: relative; padding: 0;">
+										<iframe src="{{ instance.video }}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; margin: 0; padding: 0;" width="800" height="450"></iframe>
+									</div>
+								</div>
+							</div>
+							{% endif %}
+						</div><!-- /.white-row -->
+					</div>
+
+					<!-- side column -->
+					<div class="col-md-3">
+						<div class="white-row">
+							<h3 class="page-header nomargin-top margin-bottom40">
+								Изменить <strong class="styleColor">информацию</strong>
+							</h3>
+							<div class="row">
+								<div class="form-group">
+									<div class="col-md-12 col-sm-6">
+										<a data-toggle="modal" href="/map/place-{{ instance.pk }}/edit/edit-title/{{ request.path|get_direction_city_url }}"
+										   data-target="#myModal" class="btn btn-primary">Название</a>
+
+										<br />
+										<a data-toggle="modal" href="/map/place-{{ instance.pk }}/edit/edit-directions/{{ request.path|get_direction_city_url }}"
+										   data-target="#myModal" class="btn btn-primary">Направления</a>
+
+										<br />
+										<a data-toggle="modal" href="/map/place-{{ instance.pk }}/edit/edit-cities/{{ request.path|get_direction_city_url }}"
+										   data-target="#myModal" class="btn btn-primary">Города</a>
+
+										<br />
+										<a data-toggle="modal" href="/map/place-{{ instance.pk }}/edit/edit-types/{{ request.path|get_direction_city_url }}"
+										   data-target="#myModal" class="btn btn-primary">Типы места</a>
+
+										<br />
+										<a data-toggle="modal" href="/map/place-{{ instance.pk }}/edit/edit-place-dance-classes/{{ request.path|get_direction_city_url }}"
+										   data-target="#myModal" class="btn btn-primary">Танцевальное стили и направления</a>
+
+										<br />
+										<a data-toggle="modal" href="/map/place-{{ instance.pk }}/edit/edit-description/{{ request.path|get_direction_city_url }}"
+										   data-target="#myModal" class="btn btn-primary">Описание</a>
+
+										<br />
+										<a data-toggle="modal" href="/map/place-{{ instance.pk }}/edit/edit-image/{{ request.path|get_direction_city_url }}"
+										   data-target="#myModal" class="btn btn-primary">Изображение</a>
+
+										<br />
+										<a data-toggle="modal" href="/map/place-{{ instance.pk }}/edit/edit-place-locations/{{ request.path|get_direction_city_url }}"
+										   data-target="#myModal" class="btn btn-primary">Места проведения</a>
+
+										<br />
+										<a data-toggle="modal" href="/map/place-{{ instance.pk }}/edit/edit-place-links/{{ request.path|get_direction_city_url }}"
+										   data-target="#myModal" class="btn btn-primary">Ссылки</a>
+
+										<br />
+										<a data-toggle="modal" href="/map/place-{{ instance.pk }}/edit/edit-policy/{{ request.path|get_direction_city_url }}"
+										   data-target="#myModal" class="btn btn-primary">Права пользователей</a>
+
+										<!-- Modal -->
+										<div id="myModal" class="modal fade" role="dialog">
+											<div class="modal-dialog">
+												<div class="modal-content clearable-content">
+												</div>
+										  	</div>
+										</div>
+
+										<!-- Modal -->
+										<div id="myModal2" class="modal fade" role="dialog">
+											<div class="modal-dialog">
+											  	<div class="modal-content clearable-content">
+											  	</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+		<!-- /WRAPPER -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script>
+$(document).on('hidden.bs.modal', function (e) {
+    var target = $(e.target);
+    target.removeData('bs.modal')
+    .find(".clearable-content").html('');
+});
+</script>
+{% endblock %}

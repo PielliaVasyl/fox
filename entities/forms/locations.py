@@ -61,6 +61,12 @@ class PlaceLocationForm(forms.ModelForm):
         fields = ['city', 'address', 'note', 'coordinates', 'author']
 
 
+class CutPlaceLocationForm(forms.ModelForm):
+    class Meta:
+        model = PlaceLocation
+        fields = ['city', 'address', 'note', 'author']
+
+
 class SchoolLocationForm(forms.ModelForm):
     class Meta:
         model = SchoolLocation

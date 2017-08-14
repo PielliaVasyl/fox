@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 from entities.models.classes import Direction, City
 from entities.models.contacts import SchoolContacts, OrganizationContacts, TeacherContacts, PersonContacts, \
@@ -6,7 +8,7 @@ from entities.models.contacts import SchoolContacts, OrganizationContacts, Teach
 from entities.models.links import ResourceLink, HallLink, CustomerServicesLink, ShopLink, PersonLink, \
     TeacherLink, OrganizationLink, SchoolLink, PlaceLink
 from entities.models.locations import PlaceLocation, OrganizationLocation, ShopLocation, HallLocation, SchoolLocation
-from entities.models.supportclasses import PageLocalClasses
+from entities.models.supportclasses import PageLocalClasses, PlaceLocalClasses, SchoolLocalClasses
 from entities.models.types import PlaceType, ShopType, CustomerServicesType
 from entities.models.userprofile import UserProfile
 
@@ -79,7 +81,7 @@ class AbstractPage(models.Model):
 class Place(AbstractPage):
     locations = models.ManyToManyField(PlaceLocation, blank=True)
 
-    local_classes = models.OneToOneField(PageLocalClasses, on_delete=models.CASCADE)
+    local_classes = models.OneToOneField(PlaceLocalClasses, on_delete=models.CASCADE, null=True)
 
     types = models.ManyToManyField(PlaceType, blank=True)
     links = models.ManyToManyField(PlaceLink, blank=True)
@@ -87,6 +89,14 @@ class Place(AbstractPage):
     owners = models.ManyToManyField(UserProfile, blank=True, related_name='places_owner')
     contributors = models.ManyToManyField(UserProfile, blank=True, related_name='places_contributor')
     author = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='places_author')
+
+
+@receiver(post_save, sender=Place)
+def create_place_local_classes(sender, instance, created, **kwargs):
+    if created:
+        local_classes = PlaceLocalClasses.objects.create(place=instance)
+        instance.local_classes = local_classes
+        instance.save()
 
 
 class EmployersPage(AbstractPage):
@@ -104,7 +114,7 @@ class EmployeesPage(AbstractPage):
 
 
 class School(EmployersPage):
-    local_classes = models.OneToOneField(PageLocalClasses, on_delete=models.CASCADE)
+    local_classes = models.OneToOneField(SchoolLocalClasses, on_delete=models.CASCADE, null=True)
 
     locations = models.ManyToManyField(SchoolLocation, blank=True)
     employees = models.ManyToManyField(EmployeesPage, blank=True)
@@ -120,7 +130,7 @@ class School(EmployersPage):
 
 
 class Organization(EmployersPage):
-    local_classes = models.OneToOneField(PageLocalClasses, on_delete=models.CASCADE)
+    local_classes = models.OneToOneField(PageLocalClasses, on_delete=models.CASCADE, null=True)
 
     locations = models.ManyToManyField(OrganizationLocation, blank=True)
     employees = models.ManyToManyField(EmployeesPage, blank=True)
@@ -136,7 +146,7 @@ class Organization(EmployersPage):
 
 
 class Teacher(EmployeesPage):
-    local_classes = models.OneToOneField(PageLocalClasses, on_delete=models.CASCADE)
+    local_classes = models.OneToOneField(PageLocalClasses, on_delete=models.CASCADE, null=True)
 
     employers = models.ManyToManyField(EmployersPage, blank=True)
 
@@ -151,7 +161,7 @@ class Teacher(EmployeesPage):
 
 
 class Person(EmployeesPage):
-    local_classes = models.OneToOneField(PageLocalClasses, on_delete=models.CASCADE)
+    local_classes = models.OneToOneField(PageLocalClasses, on_delete=models.CASCADE, null=True)
 
     employers = models.ManyToManyField(EmployersPage, blank=True)
 
