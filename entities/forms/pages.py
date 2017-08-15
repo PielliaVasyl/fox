@@ -2,14 +2,8 @@
 
 from django import forms
 
-from entities.models import AbstractPage, Place, EmployersPage, EmployeesPage, School, Organization, Teacher, \
-    Person, Shop, Hall, Resource
-
-
-# class AbstractPageForm(forms.ModelForm):
-#     class Meta:
-#         model = AbstractPage
-#         fields = ['title', 'directions', 'cities', 'description', 'image', 'links']
+from entities.models import Place, EmployersPage, EmployeesPage, School, Organization, Teacher, Person, Shop, Hall, \
+    Resource
 
 
 class PlaceForm(forms.ModelForm):
@@ -85,3 +79,15 @@ class ResourceForm(forms.ModelForm):
         model = Resource
         fields = ['title', 'directions', 'cities', 'description', 'image', 'links', 'contacts', 'owners',
                   'contributors', 'author']
+
+
+class CutPlaceForm(forms.ModelForm):
+    class Meta:
+        model = Place
+        fields = ['title', 'author']
+
+
+class CutSchoolForm(forms.ModelForm):
+    class Meta:
+        model = School
+        fields = ['title', 'author']

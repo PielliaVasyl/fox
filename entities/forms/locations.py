@@ -7,85 +7,96 @@ from entities.models import AbstractMapCoordinates, PlaceMapCoordinates, SchoolM
     PlaceLocation, SchoolLocation, OrganizationLocation, ShopLocation, HallLocation
 
 
+MAP_COORDINATES_FIELDS = ['lat', 'lng', 'author']
+CUT_LOCATION_FIELDS = ['city', 'address', 'note', 'author']
+LOCATION_FIELDS = ['city', 'address', 'note', 'coordinates', 'author']
+
+
 class AbstractMapCoordinatesForm(forms.ModelForm):
     class Meta:
         model = AbstractMapCoordinates
-        fields = ['lat', 'lng', 'author']
+        fields = MAP_COORDINATES_FIELDS
 
 
 class PlaceMapCoordinatesForm(forms.ModelForm):
     class Meta:
         model = PlaceMapCoordinates
-        fields = ['lat', 'lng', 'author']
+        fields = MAP_COORDINATES_FIELDS
 
 
 class SchoolMapCoordinatesForm(forms.ModelForm):
     class Meta:
         model = SchoolMapCoordinates
-        fields = ['lat', 'lng', 'author']
+        fields = MAP_COORDINATES_FIELDS
 
 
 class OrganizationMapCoordinatesForm(forms.ModelForm):
     class Meta:
         model = OrganizationMapCoordinates
-        fields = ['lat', 'lng', 'author']
+        fields = MAP_COORDINATES_FIELDS
 
 
 class ShopMapCoordinatesForm(forms.ModelForm):
     class Meta:
         model = ShopMapCoordinates
-        fields = ['lat', 'lng', 'author']
+        fields = MAP_COORDINATES_FIELDS
 
 
 class HallMapCoordinatesForm(forms.ModelForm):
     class Meta:
         model = HallMapCoordinates
-        fields = ['lat', 'lng', 'author']
+        fields = MAP_COORDINATES_FIELDS
 
 
 class AbstractLocationForm(forms.ModelForm):
     class Meta:
         model = AbstractLocation
-        fields = ['city', 'address', 'note', 'author']
+        fields = CUT_LOCATION_FIELDS
 
 
 class EventLocationForm(forms.ModelForm):
     class Meta:
         model = EventLocation
-        fields = ['city', 'address', 'note', 'author']
+        fields = CUT_LOCATION_FIELDS
 
 
 class PlaceLocationForm(forms.ModelForm):
     class Meta:
         model = PlaceLocation
-        fields = ['city', 'address', 'note', 'coordinates', 'author']
+        fields = LOCATION_FIELDS
 
 
 class CutPlaceLocationForm(forms.ModelForm):
     class Meta:
         model = PlaceLocation
-        fields = ['city', 'address', 'note', 'author']
+        fields = CUT_LOCATION_FIELDS
 
 
 class SchoolLocationForm(forms.ModelForm):
     class Meta:
         model = SchoolLocation
-        fields = ['city', 'address', 'note', 'coordinates', 'author']
+        fields = LOCATION_FIELDS
+
+
+class CutSchoolLocationForm(forms.ModelForm):
+    class Meta:
+        model = SchoolLocation
+        fields = CUT_LOCATION_FIELDS
 
 
 class OrganizationLocationForm(forms.ModelForm):
     class Meta:
         model = OrganizationLocation
-        fields = ['city', 'address', 'note', 'coordinates', 'author']
+        fields = LOCATION_FIELDS
 
 
 class ShopLocationForm(forms.ModelForm):
     class Meta:
         model = ShopLocation
-        fields = ['city', 'address', 'note', 'coordinates', 'author']
+        fields = LOCATION_FIELDS
 
 
 class HallLocationForm(forms.ModelForm):
     class Meta:
         model = HallLocation
-        fields = ['city', 'address', 'note', 'coordinates', 'author']
+        fields = LOCATION_FIELDS

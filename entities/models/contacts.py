@@ -1,5 +1,7 @@
 from django.core.validators import RegexValidator
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 from entities.models.userprofile import UserProfile
 
@@ -65,8 +67,8 @@ class Socials(models.Model):
     created = models.DateTimeField(auto_now=False, auto_now_add=True)
     updated = models.DateTimeField(auto_now=True, auto_now_add=False)
 
-    def __str__(self):
-        return '%s' % self.abstractcontacts
+    # def __str__(self):
+        # return '%s' % self.abstractcontacts
 
     class Meta:
         ordering = ('updated',)
@@ -111,6 +113,14 @@ class SchoolContacts(AbstractContacts):
     pass
     # def __str__(self):
     #     return '%s' % self.school
+
+
+@receiver(post_save, sender=SchoolContacts)
+def create_school_contacts(sender, instance, created, **kwargs):
+    if created:
+        socials = Socials.objects.create(schoolcontacts=instance, author_id=instance.author_id)
+        instance.socials = socials
+        instance.save()
 
 
 class OrganizationContacts(AbstractContacts):

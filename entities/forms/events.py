@@ -4,9 +4,7 @@ from django import forms
 from django.db.models.fields.reverse_related import ManyToOneRel, ManyToManyRel
 from django.contrib import admin
 
-from entities.models import AbstractEvent
 from entities.models import Event
-from entities.models import Place
 from entities.models import PromoAction
 
 
@@ -105,9 +103,3 @@ class PromoActionForm(forms.ModelForm):
                 raise forms.ValidationError("End date cannot be earlier than start date!")
 
         return cleaned_data
-
-
-class CutPlaceForm(forms.ModelForm):
-    class Meta:
-        model = Place
-        fields = ['title', 'author']

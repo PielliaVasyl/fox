@@ -36,8 +36,8 @@ class AbstractPage(models.Model):
         return ''
 
     def get_links(self):
-        if self.links.all():
-            return "\n".join([p.link for p in self.links.all()])
+        # if self.links.all():
+        #     return "\n".join([p.link for p in self.links.all()])
         return ''
 
     def get_links_list(self):
@@ -46,13 +46,13 @@ class AbstractPage(models.Model):
         return []
 
     def get_owners(self):
-        if self.owners.all():
-            return "\n".join([p.user.username for p in self.owners.all()])
+        # if self.owners.all():
+        #     return "\n".join([p.user.username for p in self.owners.all()])
         return ''
 
     def get_contributors(self):
-        if self.contributors.all():
-            return "\n".join([p.title for p in self.contributors.all()])
+        # if self.contributors.all():
+        #     return "\n".join([p.title for p in self.contributors.all()])
         return ''
 
     def get_locations(self):
@@ -127,6 +127,22 @@ class School(EmployersPage):
     owners = models.ManyToManyField(UserProfile, blank=True, related_name='schools_owner')
     contributors = models.ManyToManyField(UserProfile, blank=True, related_name='schools_contributor')
     author = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='schools_author')
+
+
+@receiver(post_save, sender=School)
+def create_school_local_classes(sender, instance, created, **kwargs):
+    if created:
+        local_classes = SchoolLocalClasses.objects.create(school=instance)
+        instance.local_classes = local_classes
+        instance.save()
+
+
+@receiver(post_save, sender=School)
+def create_school_contacts(sender, instance, created, **kwargs):
+    if created:
+        contacts = SchoolContacts.objects.create(school=instance, author_id=instance.author_id)
+        instance.contacts = contacts
+        instance.save()
 
 
 class Organization(EmployersPage):

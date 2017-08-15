@@ -78,8 +78,8 @@ def past(request, city_title=None, direction_title=None):
     return render(request, 'events/events.html', context)
 
 
-def event(request, event_id, direction_title=None, city_title=None):
-    current_event = get_object_or_404(Event, pk=event_id)
+def event(request, instance_id, direction_title=None, city_title=None):
+    current_event = get_object_or_404(Event, pk=instance_id)
     title = '%s' % (current_event.title,)
 
     form = EventsFilterForm(request.POST or None, direction=direction_title)
@@ -92,8 +92,8 @@ def event(request, event_id, direction_title=None, city_title=None):
     return render(request, 'events/event-single.html', context)
 
 
-def promo_action(request, promo_action_id, direction_title=None, city_title=None):
-    current_promo_action = get_object_or_404(PromoAction, pk=promo_action_id)
+def promo_action(request, instance_id, direction_title=None, city_title=None):
+    current_promo_action = get_object_or_404(PromoAction, pk=instance_id)
     title = '%s' % (current_promo_action.title,)
 
     form = PromoActionFilterForm(request.POST or None, direction=direction_title)
@@ -106,8 +106,8 @@ def promo_action(request, promo_action_id, direction_title=None, city_title=None
     return render(request, 'events/promo-action-single.html', context)
 
 
-def edit_event(request, event_id, city_title=None, direction_title=None):
-    current_event = get_object_or_404(Event, pk=event_id)
+def edit_event(request, instance_id, city_title=None, direction_title=None):
+    current_event = get_object_or_404(Event, pk=instance_id)
     title = '%s' % (current_event.title,)
 
     context = {
@@ -117,8 +117,8 @@ def edit_event(request, event_id, city_title=None, direction_title=None):
     return render(request, 'events/event/event-edit.html', context)
 
 
-def edit_promo_action(request, promo_action_id, city_title=None, direction_title=None):
-    current_promo_action = get_object_or_404(PromoAction, pk=promo_action_id)
+def edit_promo_action(request, instance_id, city_title=None, direction_title=None):
+    current_promo_action = get_object_or_404(PromoAction, pk=instance_id)
     title = '%s' % (current_promo_action.title,)
 
     context = {
@@ -128,8 +128,8 @@ def edit_promo_action(request, promo_action_id, city_title=None, direction_title
     return render(request, 'events/promo_action/promo-action-edit.html', context)
 
 
-def edit_event_attr(request, event_id, attribute=None, city_title=None, direction_title=None):
-    current_event = get_object_or_404(Event, pk=event_id)
+def edit_event_attr(request, instance_id, attribute=None, city_title=None, direction_title=None):
+    current_event = get_object_or_404(Event, pk=instance_id)
     title = '%s' % (current_event.title,)
 
     attr = attribute
@@ -241,8 +241,8 @@ def edit_event_attr(request, event_id, attribute=None, city_title=None, directio
     return render(request, html_template_path, context)
 
 
-def edit_promo_action_attr(request, promo_action_id, attribute=None, city_title=None, direction_title=None):
-    current_instance = get_object_or_404(PromoAction, pk=promo_action_id)
+def edit_promo_action_attr(request, instance_id, attribute=None, city_title=None, direction_title=None):
+    current_instance = get_object_or_404(PromoAction, pk=instance_id)
     title = '%s' % (current_instance.title,)
 
     attr = attribute

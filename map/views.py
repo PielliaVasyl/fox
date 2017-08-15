@@ -6,9 +6,13 @@ from algoritms.get_filtered_instances import get_filtered_instances
 from directions.all.forms import PlacesFilterForm, SchoolsFilterForm, ShopsFilterForm, CustomerServicesFilterForm, \
     HallsFilterForm
 from entities.models import PlaceType
+from entities.models import SchoolContacts
 from entities.models.pages import Place, School, Shop, CustomerServices, Hall
 from map.forms import EditPlaceDirectionsForm, EditPlaceDescriptionForm, EditPlaceImageForm, EditPlaceTypesForm, \
-    EditPlaceLinksForm, EditPlacePlaceDanceClassesForm, EditPlacePolicyForm, EditPlacePlaceLocationForm
+    EditPlaceLinksForm, EditPlacePlaceDanceClassesForm, EditPlacePolicyForm, EditPlacePlaceLocationForm, \
+    EditSchoolTitleForm, EditSchoolDirectionsForm, EditSchoolSchoolDanceClassesForm, EditSchoolCitiesForm, \
+    EditSchoolDescriptionForm, EditSchoolImageForm, EditSchoolSchoolLocationForm, EditSchoolLinksForm, \
+    EditSchoolPolicyForm, EditSchoolEmployeesForm, EditSchoolSchoolContactForm, EditSchoolSocialsForm
 from map.forms import EditPlaceTitleForm, EditPlaceCitiesForm
 
 
@@ -39,8 +43,8 @@ def places(request, city_title=None, direction_title=None):
     return render(request, 'map/place/places.html', context)
 
 
-def place(request, place_id, direction_title=None, city_title=None):
-    current_place = get_object_or_404(Place, pk=place_id)
+def place(request, instance_id, direction_title=None, city_title=None):
+    current_place = get_object_or_404(Place, pk=instance_id)
     title = '%s' % (current_place.title,)
 
     form = PlacesFilterForm(request.POST or None, direction=direction_title)
@@ -53,8 +57,8 @@ def place(request, place_id, direction_title=None, city_title=None):
     return render(request, 'map/place/place-single.html', context)
 
 
-def edit_place(request, place_id, city_title=None, direction_title=None):
-    instance = get_object_or_404(Place, pk=place_id)
+def edit_place(request, instance_id, city_title=None, direction_title=None):
+    instance = get_object_or_404(Place, pk=instance_id)
     title = '%s' % (instance.title,)
 
     context = {
@@ -64,8 +68,8 @@ def edit_place(request, place_id, city_title=None, direction_title=None):
     return render(request, 'map/place/place-edit.html', context)
 
 
-def edit_place_attr(request, place_id, attribute=None, city_title=None, direction_title=None):
-    instance = get_object_or_404(Place, pk=place_id)
+def edit_place_attr(request, instance_id, attribute=None, city_title=None, direction_title=None):
+    instance = get_object_or_404(Place, pk=instance_id)
     title = '%s' % (instance.title,)
 
     attr = attribute
@@ -127,7 +131,7 @@ def edit_place_attr(request, place_id, attribute=None, city_title=None, directio
             new_attr = form.cleaned_data.get(attr)
         setattr(instance, attr, new_attr)
         instance.save()
-        return HttpResponseRedirect('/map/place-%s/edit/%s' %
+        return HttpResponseRedirect('/map/places/place-%s/edit/%s' %
                                     (instance.pk, get_direction_city_parameter(city_title, direction_title)))
 
     context = {
@@ -165,8 +169,8 @@ def schools(request, city_title=None, direction_title=None):
     return render(request, 'map/school/schools.html', context)
 
 
-def school(request, school_id, direction_title=None, city_title=None):
-    current_school = get_object_or_404(School, pk=school_id)
+def school(request, instance_id, direction_title=None, city_title=None):
+    current_school = get_object_or_404(School, pk=instance_id)
     title = '%s' % (current_school.title,)
 
     form = SchoolsFilterForm(request.POST or None, direction=direction_title)
@@ -177,6 +181,113 @@ def school(request, school_id, direction_title=None, city_title=None):
         'form': form
     }
     return render(request, 'map/school/school-single.html', context)
+
+
+def edit_school(request, instance_id, city_title=None, direction_title=None):
+    instance = get_object_or_404(School, pk=instance_id)
+    title = '%s' % (instance.title,)
+
+    context = {
+        'title': title,
+        'instance': instance,
+    }
+    return render(request, 'map/school/school-edit.html', context)
+
+
+def edit_school_attr(request, instance_id, attribute=None, city_title=None, direction_title=None):
+    instance = get_object_or_404(School, pk=instance_id)
+    title = '%s' % (instance.title,)
+
+    attr = attribute
+    html_template_path = 'map/school/edit/edit-' + attribute + '.html'
+
+    if attribute == 'title':
+        form = EditSchoolTitleForm(request.POST or None, initial={'title': instance.title})
+    if attribute == 'directions':
+        form = EditSchoolDirectionsForm(request.POST or None, initial={'directions': instance.directions.all()})
+    if attribute == 'cities':
+        form = EditSchoolCitiesForm(request.POST or None, initial={'cities': instance.cities.all()})
+    if attribute == 'description':
+        form = EditSchoolDescriptionForm(request.POST or None, initial={'description': instance.description})
+    if attribute == 'image':
+        if request.method == 'POST':
+            form = EditSchoolImageForm(request.POST, request.FILES)
+        else:
+            form = EditSchoolImageForm(None, initial={'image': instance.image})
+    if attribute == 'school-locations':
+        form = EditSchoolSchoolLocationForm(request.POST or None, initial={'locations': instance.locations.all()})
+        attr = 'locations'
+    if attribute == 'employees':
+        form = EditSchoolEmployeesForm(request.POST or None, initial={'employees': instance.employees.all()})
+    if attribute == 'school-dance-classes':
+        form = EditSchoolSchoolDanceClassesForm(request.POST or None,
+                                                initial={'dance_directions':
+                                                         instance.local_classes.dance_directions.all(),
+                                                         'dance_styles': instance.local_classes.dance_styles.all()})
+    if attribute == 'school-links':
+        form = EditSchoolLinksForm(request.POST or None, initial={'links': instance.links.all()})
+        attr = 'links'
+    if attribute == 'school-contacts':
+        form_contact = EditSchoolSchoolContactForm(request.POST or None,
+                                                   initial={'phone_numbers': instance.contacts.phone_numbers.all()})
+        form_socials = EditSchoolSocialsForm(request.POST or None, initial={'links': instance.links.all()})
+        attr = 'contacts'
+        if form_contact.is_valid():
+            phone_numbers = form_contact.cleaned_data.get('phone_numbers')
+            new_attr = SchoolContacts.objects.get(author_id=instance.author_id)
+            new_attr.phone_numbers = phone_numbers
+            setattr(instance, attr, new_attr)
+            instance.save()
+        if form_socials.is_valid():
+            pass
+        if form_contact.is_valid() or form_socials.is_valid():
+            return HttpResponseRedirect('/map/schools/school-%s/edit/%s' %
+                                        (instance.pk, get_direction_city_parameter(city_title, direction_title)))
+
+        context = {
+            'title': title,
+            'instance': instance,
+            'form_contact': form_contact,
+            'form_socials': form_socials
+        }
+        return render(request, html_template_path, context)
+    if attribute == 'policy':
+        form = EditSchoolPolicyForm(request.POST or None, initial={'owners': instance.owners.all(),
+                                                                   'contributors': instance.contributors.all(),
+                                                                   'author': instance.author})
+        attr = 'author'
+
+    if form.is_valid():
+        if attribute == 'image':
+            if 'image' in request.FILES:
+                new_attr = request.FILES['image']
+            else:
+                new_attr = None
+        elif attribute == 'school-dance-classes':
+            dance_styles = form.cleaned_data.get('dance_styles')
+            setattr(instance.local_classes, 'dance_styles', dance_styles)
+            dance_directions = form.cleaned_data.get('dance_directions')
+            setattr(instance.local_classes, 'dance_directions', dance_directions)
+            new_attr = None
+        elif attribute == 'policy':
+            owners = form.cleaned_data.get('owners')
+            setattr(instance, 'owners', owners)
+            contributors = form.cleaned_data.get('contributors')
+            setattr(instance, 'contributors', contributors)
+            new_attr = form.cleaned_data.get(attr)
+        else:
+            new_attr = form.cleaned_data.get(attr)
+        setattr(instance, attr, new_attr)
+        instance.save()
+        return HttpResponseRedirect('/map/schools/school-%s/edit/%s' %
+                                    (instance.pk, get_direction_city_parameter(city_title, direction_title)))
+
+    context = {
+        'title': title,
+        'instance': instance,
+        'form': form
+    }
+    return render(request, html_template_path, context)
 
 
 def shops(request, city_title=None, direction_title=None):

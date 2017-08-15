@@ -3,11 +3,13 @@ from django.shortcuts import render
 
 from algoritms.get_direction_city_parameter import get_direction_city_parameter
 from entities.forms import EventLocationForm
-from entities.forms import PlaceLocationForm
+from entities.forms import PhoneNumberForm
 from entities.forms.classes import DirectionForm, CityForm
-from entities.forms.events import CutEventForm, CutPromoActionForm, CutPlaceForm
-from entities.forms.links import EventLinkForm, PromoActionLinkForm, PlaceLinkForm
-from entities.forms.locations import CutPlaceLocationForm, PlaceMapCoordinatesForm
+from entities.forms.events import CutEventForm, CutPromoActionForm
+from entities.forms.links import EventLinkForm, PromoActionLinkForm, PlaceLinkForm, SchoolLinkForm
+from entities.forms.locations import CutPlaceLocationForm, PlaceMapCoordinatesForm, SchoolMapCoordinatesForm, \
+    CutSchoolLocationForm
+from entities.forms.pages import CutPlaceForm, CutSchoolForm
 
 
 def create(request, city_title=None, direction_title=None):
@@ -46,7 +48,7 @@ def create_place(request, city_title=None, direction_title=None):
     form = CutPlaceForm(request.POST or None)
     if form.is_valid():
         instance = form.save()
-        return HttpResponseRedirect('/map/place-%s/edit/%s' %
+        return HttpResponseRedirect('/map/places/place-%s/edit/%s' %
                                     (instance.pk, get_direction_city_parameter(city_title, direction_title)))
     context = {
         'form': form,
@@ -54,8 +56,20 @@ def create_place(request, city_title=None, direction_title=None):
     return render(request, 'create/create-place.html', context)
 
 
+def create_school(request, city_title=None, direction_title=None):
+    form = CutSchoolForm(request.POST or None)
+    if form.is_valid():
+        instance = form.save()
+        return HttpResponseRedirect('/map/schools/school-%s/edit/%s' %
+                                    (instance.pk, get_direction_city_parameter(city_title, direction_title)))
+    context = {
+        'form': form,
+    }
+    return render(request, 'create/create-school.html', context)
+
+
 def create_attr(request, attribute=None, city_title=None, direction_title=None):
-    html_template_path = 'create/create-attr-' + attribute + '.html'
+    html_template_path = 'create/attrs/create-attr-' + attribute + '.html'
     if attribute == 'direction':
         form = DirectionForm(request.POST or None)
     if attribute == 'city':
@@ -64,13 +78,19 @@ def create_attr(request, attribute=None, city_title=None, direction_title=None):
         form = EventLinkForm(request.POST or None)
     if attribute == 'place-link':
         form = PlaceLinkForm(request.POST or None)
+    if attribute == 'school-link':
+        form = SchoolLinkForm(request.POST or None)
     if attribute == 'promo-action-link':
         form = PromoActionLinkForm(request.POST or None)
     if attribute == 'event-location':
         form = EventLocationForm(request.POST or None)
-    if attribute == 'place-location':
-        form = CutPlaceLocationForm(request.POST or None)
-        form1 = PlaceMapCoordinatesForm(request.POST or None)
+    if attribute in ['place-location', 'school-location']:
+        if attribute == 'place-location':
+            form = CutPlaceLocationForm(request.POST or None)
+            form1 = PlaceMapCoordinatesForm(request.POST or None)
+        if attribute == 'school-location':
+            form = CutSchoolLocationForm(request.POST or None)
+            form1 = SchoolMapCoordinatesForm(request.POST or None)
         if form.is_valid():
             coordinates = form1.save()
             location = form.save(commit=False)
@@ -88,6 +108,8 @@ def create_attr(request, attribute=None, city_title=None, direction_title=None):
 
         }
         return render(request, html_template_path, context)
+    if attribute == 'telephone-number':
+        form = PhoneNumberForm(request.POST or None)
 
     if form.is_valid():
         form.save()
@@ -108,5 +130,7 @@ def get_section(instance):
     if 'event-' in instance or 'promo-action-' in instance:
         return 'events'
     if 'place-' in instance:
-        return 'map'
+        return 'map/places'
+    if 'school-' in instance:
+        return 'map/schools'
     return ''
