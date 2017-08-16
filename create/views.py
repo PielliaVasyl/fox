@@ -22,7 +22,7 @@ def create_event(request, city_title=None, direction_title=None):
     form = CutEventForm(request.POST or None)
     if form.is_valid():
         instance = form.save()
-        return HttpResponseRedirect('/events/event-%s/edit/%s' %
+        return HttpResponseRedirect('/event-%s/edit/%s' %
                                     (instance.pk, get_direction_city_parameter(city_title, direction_title)))
     context = {
         'form': form,
@@ -35,7 +35,7 @@ def create_promo_action(request, city_title=None, direction_title=None):
     form = CutPromoActionForm(request.POST or None)
     if form.is_valid():
         instance = form.save()
-        return HttpResponseRedirect('/events/promo-action-%s/edit/%s' %
+        return HttpResponseRedirect('/promo-action-%s/edit/%s' %
                                     (instance.pk, get_direction_city_parameter(city_title, direction_title)))
     context = {
         'form': form,
@@ -48,7 +48,7 @@ def create_place(request, city_title=None, direction_title=None):
     form = CutPlaceForm(request.POST or None)
     if form.is_valid():
         instance = form.save()
-        return HttpResponseRedirect('/map/places/place-%s/edit/%s' %
+        return HttpResponseRedirect('/place-%s/edit/%s' %
                                     (instance.pk, get_direction_city_parameter(city_title, direction_title)))
     context = {
         'form': form,
@@ -60,7 +60,7 @@ def create_school(request, city_title=None, direction_title=None):
     form = CutSchoolForm(request.POST or None)
     if form.is_valid():
         instance = form.save()
-        return HttpResponseRedirect('/map/schools/school-%s/edit/%s' %
+        return HttpResponseRedirect('/school-%s/edit/%s' %
                                     (instance.pk, get_direction_city_parameter(city_title, direction_title)))
     context = {
         'form': form,
@@ -96,9 +96,8 @@ def create_attr(request, attribute=None, city_title=None, direction_title=None):
             location = form.save(commit=False)
             location.coordinates = coordinates
             location.save()
-            return HttpResponseRedirect('/%s/%s/edit/%s' %
-                                        (get_section(request.GET.get('instance')),
-                                         request.GET.get('instance'),
+            return HttpResponseRedirect('/%s/edit/%s' %
+                                        (request.GET.get('instance'),
                                          get_direction_city_parameter(city_title, direction_title)
                                          ))
         context = {
@@ -108,14 +107,13 @@ def create_attr(request, attribute=None, city_title=None, direction_title=None):
 
         }
         return render(request, html_template_path, context)
-    if attribute == 'telephone-number':
+    if attribute == 'phone-number':
         form = PhoneNumberForm(request.POST or None)
 
     if form.is_valid():
         form.save()
-        return HttpResponseRedirect('/%s/%s/edit/%s' %
-                                    (get_section(request.GET.get('instance')),
-                                     request.GET.get('instance'),
+        return HttpResponseRedirect('/%s/edit/%s' %
+                                    (request.GET.get('instance'),
                                      get_direction_city_parameter(city_title, direction_title)
                                      ))
     context = {
@@ -124,13 +122,3 @@ def create_attr(request, attribute=None, city_title=None, direction_title=None):
 
     }
     return render(request, html_template_path, context)
-
-
-def get_section(instance):
-    if 'event-' in instance or 'promo-action-' in instance:
-        return 'events'
-    if 'place-' in instance:
-        return 'map/places'
-    if 'school-' in instance:
-        return 'map/schools'
-    return ''

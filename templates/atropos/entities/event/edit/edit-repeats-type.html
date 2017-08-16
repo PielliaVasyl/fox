@@ -1,0 +1,22 @@
+{% load crispy_forms_tags %}
+{% load get_direction_city_url %}
+{% load get_instance_id %}
+{% load static %}
+
+ 	  	<div class="modal-header">
+ 	  		<button type="button" class="close" data-dismiss="modal">&times;</button>
+ 	  		<h4 class="modal-title">Изменить частоту проведения</h4>
+   		</div>
+		<form action="/event-{{ instance.pk }}/edit/edit-repeats-type/" method="post">
+			<!-- modal body -->
+			<div class="modal-body">
+				{% csrf_token %}
+				{{ form }}
+			</div>
+			<!-- /modal body -->
+
+			<div class="modal-footer"><!-- modal footer -->
+				<button class="btn btn-default" data-dismiss="modal">Отмена</button>
+				<button type="submit" class="btn btn-primary">Сохранить частоту проведения</button>
+			</div><!-- /modal footer -->
+		</form>
