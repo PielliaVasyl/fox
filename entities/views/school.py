@@ -30,9 +30,24 @@ def edit_school(request, instance_id, city_title=None, direction_title=None):
     instance = get_object_or_404(School, pk=instance_id)
     title = '%s' % (instance.title,)
 
+    edit_buttons = [
+        ('school', 'title', 'Название'),
+        ('school', 'directions', 'Направления'),
+        ('school', 'cities', 'Города'),
+        ('school', 'school-dance-classes', 'Танцевальные стили и направления'),
+        ('school', 'description', 'Описание'),
+        ('school', 'image', 'Изобрадение'),
+        ('school', 'school-locations', 'Места'),
+        ('school', 'employees', 'Сотрудники'),
+        ('school', 'school-links', 'Ссылки'),
+        ('school', 'school-contacts', 'Контакты'),
+        ('school', 'policy', 'Права пользователей'),
+    ]
+
     context = {
         'title': title,
         'instance': instance,
+        'edit_buttons': edit_buttons
     }
     return render(request, 'entities/school/school-edit.html', context)
 

@@ -91,3 +91,9 @@ class CutSchoolForm(forms.ModelForm):
     class Meta:
         model = School
         fields = ['title', 'author']
+
+
+class CutTeacherForm(forms.ModelForm):
+    class Meta:
+        model = Teacher
+        fields = ['title', 'author']

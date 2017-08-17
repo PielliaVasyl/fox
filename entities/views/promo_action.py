@@ -29,9 +29,24 @@ def edit_promo_action(request, instance_id, city_title=None, direction_title=Non
     current_promo_action = get_object_or_404(PromoAction, pk=instance_id)
     title = '%s' % (current_promo_action.title,)
 
+    edit_buttons = [
+        ('promo-action', 'title', 'Название'),
+        ('promo-action', 'directions', 'Направления'),
+        ('promo-action', 'cities', 'Города'),
+        ('promo-action', 'event-dance-classes', 'Танцевальные стили и направления'),
+        ('promo-action', 'description', 'Описание'),
+        ('promo-action', 'note', 'Примечание'),
+        ('promo-action', 'image', 'Изобрадение'),
+        ('promo-action', 'video', 'Видео'),
+        ('promo-action', 'dates', 'Даты проведения'),
+        ('promo-action', 'status', 'Статус'),
+        ('promo-action', 'promo-action-links', 'Ссылки'),
+        ('promo-action', 'policy', 'Права пользователей'),
+    ]
     context = {
         'title': title,
         'instance': current_promo_action,
+        'edit_buttons': edit_buttons
     }
     return render(request, 'entities/promo_action/promo-action-edit.html', context)
 

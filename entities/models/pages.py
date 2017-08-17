@@ -8,7 +8,8 @@ from entities.models.contacts import SchoolContacts, OrganizationContacts, Teach
 from entities.models.links import ResourceLink, HallLink, CustomerServicesLink, ShopLink, PersonLink, \
     TeacherLink, OrganizationLink, SchoolLink, PlaceLink
 from entities.models.locations import PlaceLocation, OrganizationLocation, ShopLocation, HallLocation, SchoolLocation
-from entities.models.supportclasses import PageLocalClasses, PlaceLocalClasses, SchoolLocalClasses
+from entities.models.supportclasses import PageLocalClasses, PlaceLocalClasses, SchoolLocalClasses, TeacherLocalClasses, \
+    OrganizationLocalClasses, PersonLocalClasses
 from entities.models.types import PlaceType, ShopType, CustomerServicesType
 from entities.models.userprofile import UserProfile
 
@@ -146,7 +147,7 @@ def create_school_contacts(sender, instance, created, **kwargs):
 
 
 class Organization(EmployersPage):
-    local_classes = models.OneToOneField(PageLocalClasses, on_delete=models.CASCADE, null=True)
+    local_classes = models.OneToOneField(OrganizationLocalClasses, on_delete=models.CASCADE, null=True)
 
     locations = models.ManyToManyField(OrganizationLocation, blank=True)
     employees = models.ManyToManyField(EmployeesPage, blank=True)
@@ -162,7 +163,7 @@ class Organization(EmployersPage):
 
 
 class Teacher(EmployeesPage):
-    local_classes = models.OneToOneField(PageLocalClasses, on_delete=models.CASCADE, null=True)
+    local_classes = models.OneToOneField(TeacherLocalClasses, on_delete=models.CASCADE, null=True)
 
     employers = models.ManyToManyField(EmployersPage, blank=True)
 
@@ -176,8 +177,24 @@ class Teacher(EmployeesPage):
     author = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='teachers_author')
 
 
+@receiver(post_save, sender=Teacher)
+def create_teacher_local_classes(sender, instance, created, **kwargs):
+    if created:
+        local_classes = TeacherLocalClasses.objects.create(teacher=instance)
+        instance.local_classes = local_classes
+        instance.save()
+
+
+@receiver(post_save, sender=Teacher)
+def create_teacher_contacts(sender, instance, created, **kwargs):
+    if created:
+        contacts = TeacherContacts.objects.create(teacher=instance, author_id=instance.author_id)
+        instance.contacts = contacts
+        instance.save()
+
+
 class Person(EmployeesPage):
-    local_classes = models.OneToOneField(PageLocalClasses, on_delete=models.CASCADE, null=True)
+    local_classes = models.OneToOneField(PersonLocalClasses, on_delete=models.CASCADE, null=True)
 
     employers = models.ManyToManyField(EmployersPage, blank=True)
 

@@ -168,76 +168,12 @@
 							<div class="row">
 								<div class="form-group">
 									<div class="col-md-12 col-sm-6">
-										<a data-toggle="modal" href="/event-{{ instance.pk }}/edit/edit-title/{{ request.path|get_direction_city_url }}"
-										   data-target="#myModal" class="btn btn-primary">Название</a>
 
+										{% for url_entity, url_attr, title in edit_buttons %}
+										<a data-toggle="modal" href="/{{ url_entity }}-{{ instance.pk }}/edit/edit-{{ url_attr }}/{{ request.path|get_direction_city_url }}"
+										   data-target="#myModal" class="btn btn-primary">{{ title }}</a>
 										<br />
-										<a data-toggle="modal" href="/event-{{ instance.pk }}/edit/edit-directions/{{ request.path|get_direction_city_url }}"
-										   data-target="#myModal" class="btn btn-primary">Направления</a>
-
-										<br />
-										<a data-toggle="modal" href="/event-{{ instance.pk }}/edit/edit-cities/{{ request.path|get_direction_city_url }}"
-										   data-target="#myModal" class="btn btn-primary">Города</a>
-
-										<br />
-										<a data-toggle="modal" href="/event-{{ instance.pk }}/edit/edit-types/{{ request.path|get_direction_city_url }}"
-										   data-target="#myModal" class="btn btn-primary">Типы мероприятия</a>
-
-										<br />
-										<a data-toggle="modal" href="/event-{{ instance.pk }}/edit/edit-event-dance-classes/{{ request.path|get_direction_city_url }}"
-										   data-target="#myModal" class="btn btn-primary">Танцевальное стили и направления</a>
-
-										<br />
-										<a data-toggle="modal" href="/event-{{ instance.pk }}/edit/edit-description/{{ request.path|get_direction_city_url }}"
-										   data-target="#myModal" class="btn btn-primary">Описание</a>
-
-										<br />
-										<a data-toggle="modal" href="/event-{{ instance.pk }}/edit/edit-note/{{ request.path|get_direction_city_url }}"
-										   data-target="#myModal" class="btn btn-primary">Примечание</a>
-
-										<br />
-										<a data-toggle="modal" href="/event-{{ instance.pk }}/edit/edit-image/{{ request.path|get_direction_city_url }}"
-										   data-target="#myModal" class="btn btn-primary">Изображение</a>
-
-										<br />
-										<a data-toggle="modal" href="/event-{{ instance.pk }}/edit/edit-video/{{ request.path|get_direction_city_url }}"
-										   data-target="#myModal" class="btn btn-primary">Видео</a>
-
-										<br />
-										<a data-toggle="modal" href="/event-{{ instance.pk }}/edit/edit-dates/{{ request.path|get_direction_city_url }}"
-										   data-target="#myModal" class="btn btn-primary">Даты проведения</a>
-
-										<br />
-										<a data-toggle="modal" href="/event-{{ instance.pk }}/edit/edit-status/{{ request.path|get_direction_city_url }}"
-										   data-target="#myModal" class="btn btn-primary">Статус</a>
-
-										<br />
-										<a data-toggle="modal" href="/event-{{ instance.pk }}/edit/edit-event-locations/{{ request.path|get_direction_city_url }}"
-										   data-target="#myModal" class="btn btn-primary">Места проведения</a>
-
-										<br />
-										<a data-toggle="modal" href="/event-{{ instance.pk }}/edit/edit-event-links/{{ request.path|get_direction_city_url }}"
-										   data-target="#myModal" class="btn btn-primary">Ссылки</a>
-
-										<br />
-										<a data-toggle="modal" href="/event-{{ instance.pk }}/edit/edit-price-types/{{ request.path|get_direction_city_url }}"
-										   data-target="#myModal" class="btn btn-primary">Типы цен</a>
-
-										<br />
-										<a data-toggle="modal" href="/event-{{ instance.pk }}/edit/edit-experience-levels/{{ request.path|get_direction_city_url }}"
-										   data-target="#myModal" class="btn btn-primary">Уровни опыта</a>
-
-										<br />
-										<a data-toggle="modal" href="/event-{{ instance.pk }}/edit/edit-repeats-type/{{ request.path|get_direction_city_url }}"
-										   data-target="#myModal" class="btn btn-primary">Частота проведения</a>
-
-										<br />
-										<a data-toggle="modal" href="/event-{{ instance.pk }}/edit/edit-schedule/{{ request.path|get_direction_city_url }}"
-										   data-target="#myModal" class="btn btn-primary">Расписание</a>
-
-										<br />
-										<a data-toggle="modal" href="/event-{{ instance.pk }}/edit/edit-policy/{{ request.path|get_direction_city_url }}"
-										   data-target="#myModal" class="btn btn-primary">Права пользователей</a>
+										{% endfor %}
 
 										<!-- Modal -->
 										<div id="myModal" class="modal fade" role="dialog">

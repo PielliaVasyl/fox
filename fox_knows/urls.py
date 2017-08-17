@@ -26,6 +26,7 @@ from entities.views import promo_action as promo_action_views
 from map import views as map_views
 from entities.views import place as place_views
 from entities.views import school as school_views
+from entities.views import teacher as teacher_views
 from entities.views import shop as shop_views
 from entities.views import service as service_views
 from entities.views import hall as hall_views
@@ -349,6 +350,15 @@ urlpatterns = [
             url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', create_views.create_school),
         ])),
 
+        url(r'^teacher/', include([
+            url(r'^$', create_views.create_teacher, name='create_school'),
+            url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
+                url(r'^$', create_views.create_teacher),
+                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', create_views.create_teacher),
+            ])),
+            url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', create_views.create_teacher),
+        ])),
+
         url(r'^attributes/', include([
             url(r'^create-(?P<attribute>[\w-]+)/', include([
                 url(r'^$', create_views.create_attr),
@@ -419,6 +429,33 @@ urlpatterns = [
                     url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', school_views.edit_school_attr),
                 ])),
                 url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', school_views.edit_school_attr),
+            ])),
+        ])),
+    ])),
+
+    url(r'^(?:teacher-(?P<instance_id>\d+)/)', include([
+        url(r'^$', teacher_views.teacher),
+        url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
+            url(r'^$', teacher_views.teacher),
+            url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', teacher_views.teacher),
+        ])),
+        url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', teacher_views.teacher),
+
+        url(r'^(?:edit/)', include([
+            url(r'^$', teacher_views.edit_teacher),
+            url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
+                url(r'^$', teacher_views.edit_teacher),
+                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', teacher_views.edit_teacher),
+            ])),
+            url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', teacher_views.edit_teacher),
+
+            url(r'^(?:edit-(?P<attribute>[\w-]+)/)?', include([
+                url(r'^$', teacher_views.edit_teacher_attr),
+                url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
+                    url(r'^$', teacher_views.edit_teacher_attr),
+                    url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', teacher_views.edit_teacher_attr),
+                ])),
+                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', teacher_views.edit_teacher_attr),
             ])),
         ])),
     ])),

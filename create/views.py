@@ -6,10 +6,10 @@ from entities.forms import EventLocationForm
 from entities.forms import PhoneNumberForm
 from entities.forms.classes import DirectionForm, CityForm
 from entities.forms.events import CutEventForm, CutPromoActionForm
-from entities.forms.links import EventLinkForm, PromoActionLinkForm, PlaceLinkForm, SchoolLinkForm
+from entities.forms.links import EventLinkForm, PromoActionLinkForm, PlaceLinkForm, SchoolLinkForm, TeacherLinkForm
 from entities.forms.locations import CutPlaceLocationForm, PlaceMapCoordinatesForm, SchoolMapCoordinatesForm, \
     CutSchoolLocationForm
-from entities.forms.pages import CutPlaceForm, CutSchoolForm
+from entities.forms.pages import CutPlaceForm, CutSchoolForm, CutTeacherForm
 
 
 def create(request, city_title=None, direction_title=None):
@@ -68,6 +68,18 @@ def create_school(request, city_title=None, direction_title=None):
     return render(request, 'create/create-school.html', context)
 
 
+def create_teacher(request, city_title=None, direction_title=None):
+    form = CutTeacherForm(request.POST or None)
+    if form.is_valid():
+        instance = form.save()
+        return HttpResponseRedirect('/teacher-%s/edit/%s' %
+                                    (instance.pk, get_direction_city_parameter(city_title, direction_title)))
+    context = {
+        'form': form,
+    }
+    return render(request, 'create/create-teacher.html', context)
+
+
 def create_attr(request, attribute=None, city_title=None, direction_title=None):
     html_template_path = 'create/attrs/create-attr-' + attribute + '.html'
     if attribute == 'direction':
@@ -80,6 +92,8 @@ def create_attr(request, attribute=None, city_title=None, direction_title=None):
         form = PlaceLinkForm(request.POST or None)
     if attribute == 'school-link':
         form = SchoolLinkForm(request.POST or None)
+    if attribute == 'teacher-link':
+        form = TeacherLinkForm(request.POST or None)
     if attribute == 'promo-action-link':
         form = PromoActionLinkForm(request.POST or None)
     if attribute == 'event-location':

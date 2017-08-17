@@ -29,9 +29,24 @@ def edit_place(request, instance_id, city_title=None, direction_title=None):
     instance = get_object_or_404(Place, pk=instance_id)
     title = '%s' % (instance.title,)
 
+    edit_buttons = [
+        ('place', 'title', 'Название'),
+        ('place', 'directions', 'Направления'),
+        ('place', 'cities', 'Города'),
+        ('place', 'types', 'Типы мест'),
+        ('place', 'place-dance-classes', 'Танцевальные стили и направления'),
+        ('place', 'description', 'Описание'),
+        ('place', 'image', 'Изобрадение'),
+        ('place', 'video', 'Видео'),
+        ('place', 'place-locations', 'Места проведения'),
+        ('place', 'place-links', 'Ссылки'),
+        ('place', 'policy', 'Права пользователей'),
+    ]
+
     context = {
         'title': title,
         'instance': instance,
+        'edit_buttons': edit_buttons
     }
     return render(request, 'entities/place/place-edit.html', context)
 

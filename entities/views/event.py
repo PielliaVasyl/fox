@@ -35,9 +35,31 @@ def edit_event(request, instance_id, city_title=None, direction_title=None):
     current_event = get_object_or_404(Event, pk=instance_id)
     title = '%s' % (current_event.title,)
 
+    edit_buttons = [
+        ('event', 'title', 'Название'),
+        ('event', 'directions', 'Направления'),
+        ('event', 'cities', 'Города'),
+        ('event', 'types', 'Типы мероприятия'),
+        ('event', 'event-dance-classes', 'Танцевальные стили и направления'),
+        ('event', 'description', 'Описание'),
+        ('event', 'note', 'Примечание'),
+        ('event', 'image', 'Изобрадение'),
+        ('event', 'video', 'Видео'),
+        ('event', 'dates', 'Даты проведения'),
+        ('event', 'status', 'Статус'),
+        ('event', 'event-locations', 'Места проведения'),
+        ('event', 'event-links', 'Ссылки'),
+        ('event', 'price-types', 'Типы цен'),
+        ('event', 'experience-levels', 'Уровни опыта'),
+        ('event', 'repeats-type', 'Частота проведения'),
+        ('event', 'schedule', 'Расписание'),
+        ('event', 'policy', 'Права пользователей'),
+    ]
+
     context = {
         'title': title,
         'instance': current_event,
+        'edit_buttons': edit_buttons
     }
     return render(request, 'entities/event/event-edit.html', context)
 
