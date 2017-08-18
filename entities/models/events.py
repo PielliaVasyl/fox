@@ -243,8 +243,8 @@ class PromoAction(AbstractEvent):
 
 
 @receiver(post_save, sender=PromoAction)
-def create_event_local_classes(sender, instance, created, **kwargs):
+def create_promo_action_local_classes(sender, instance, created, **kwargs):
     if created:
-        event_local_classes = PromoActionLocalClasses.objects.create(promoaction=instance)
-        instance.local_classes = event_local_classes
+        local_classes = PromoActionLocalClasses.objects.create(promoaction=instance)
+        instance.local_classes = local_classes
         instance.save()

@@ -2,7 +2,6 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 
 from algoritms.get_direction_city_parameter import get_direction_city_parameter
-from directions.all.forms import SchoolsFilterForm
 
 from entities.models import SchoolContacts
 from entities.models.pages import School
@@ -12,44 +11,35 @@ from entities.edit_forms.school import EditSchoolTitleForm, EditSchoolDirections
     EditSchoolSchoolContactForm, EditSchoolSocialsForm
 
 
-def school(request, instance_id, direction_title=None, city_title=None):
-    current_school = get_object_or_404(School, pk=instance_id)
-    title = '%s' % (current_school.title,)
+SCHOOL_EDIT_BUTTONS = [
+    ('school', 'title', 'Название'),
+    ('school', 'directions', 'Направления'),
+    ('school', 'cities', 'Города'),
+    ('school', 'school-dance-classes', 'Танцевальные стили и направления'),
+    ('school', 'description', 'Описание'),
+    ('school', 'image', 'Изображение'),
+    ('school', 'school-locations', 'Места'),
+    ('school', 'employees', 'Сотрудники'),
+    ('school', 'school-links', 'Ссылки'),
+    ('school', 'school-contacts', 'Контакты'),
+    ('school', 'policy', 'Права пользователей'),
+]
 
-    form = SchoolsFilterForm(request.POST or None, direction=direction_title)
 
-    context = {
-        'title': title,
-        'instance': current_school,
-        'form': form
-    }
-    return render(request, 'entities/school/school-single.html', context)
-
-
-def edit_school(request, instance_id, city_title=None, direction_title=None):
-    instance = get_object_or_404(School, pk=instance_id)
-    title = '%s' % (instance.title,)
-
-    edit_buttons = [
-        ('school', 'title', 'Название'),
-        ('school', 'directions', 'Направления'),
-        ('school', 'cities', 'Города'),
-        ('school', 'school-dance-classes', 'Танцевальные стили и направления'),
-        ('school', 'description', 'Описание'),
-        ('school', 'image', 'Изобрадение'),
-        ('school', 'school-locations', 'Места'),
-        ('school', 'employees', 'Сотрудники'),
-        ('school', 'school-links', 'Ссылки'),
-        ('school', 'school-contacts', 'Контакты'),
-        ('school', 'policy', 'Права пользователей'),
-    ]
-
-    context = {
-        'title': title,
-        'instance': instance,
-        'edit_buttons': edit_buttons
-    }
-    return render(request, 'entities/school/school-edit.html', context)
+SCHOOL_ATTRIBUTE_FORMS = {
+    'title': EditSchoolTitleForm,
+    'directions': EditSchoolDirectionsForm,
+    'cities': EditSchoolCitiesForm,
+    'description': EditSchoolDescriptionForm,
+    'image': EditSchoolImageForm,
+    'school-locations': EditSchoolSchoolLocationForm,
+    'school-dance-classes': EditSchoolSchoolDanceClassesForm,
+    'school-links': EditSchoolLinksForm,
+    'policy': EditSchoolPolicyForm,
+    'employees': EditSchoolEmployeesForm,
+    'contacts': EditSchoolSchoolContactForm,
+    'socials': EditSchoolSocialsForm
+}
 
 
 def edit_school_attr(request, instance_id, attribute=None, city_title=None, direction_title=None):
@@ -93,7 +83,8 @@ def edit_school_attr(request, instance_id, attribute=None, city_title=None, dire
         if form_contact.is_valid():
             phone_numbers = form_contact.cleaned_data.get('phone_numbers')
             new_attr = SchoolContacts.objects.get(author_id=instance.author_id)
-            new_attr.phone_numbers = phone_numbers
+            # new_attr.phone_numbers = phone_numbers
+            setattr(new_attr, 'phone_numbers', phone_numbers)
             setattr(instance, attr, new_attr)
             instance.save()
         if form_socials.is_valid():

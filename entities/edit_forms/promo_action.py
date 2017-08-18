@@ -1,8 +1,7 @@
 from django import forms
 
-from entities.models import EventLocalClasses
-
 from entities.models.events import PromoAction
+from entities.models.supportclasses import PromoActionLocalClasses
 
 
 class EditPromoActionTitleForm(forms.ModelForm):
@@ -59,9 +58,9 @@ class EditPromoActionStatusForm(forms.ModelForm):
         fields = ['_status']
 
 
-class EditPromoActionEventDanceClassesForm(forms.ModelForm):
+class EditPromoActionPromoActionDanceClassesForm(forms.ModelForm):
     class Meta:
-        model = EventLocalClasses
+        model = PromoActionLocalClasses
         fields = ['dance_styles', 'dance_directions']
 
 

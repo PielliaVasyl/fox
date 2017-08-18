@@ -9,7 +9,7 @@ from entities.forms.events import CutEventForm, CutPromoActionForm
 from entities.forms.links import EventLinkForm, PromoActionLinkForm, PlaceLinkForm, SchoolLinkForm, TeacherLinkForm
 from entities.forms.locations import CutPlaceLocationForm, PlaceMapCoordinatesForm, SchoolMapCoordinatesForm, \
     CutSchoolLocationForm
-from entities.forms.pages import CutPlaceForm, CutSchoolForm, CutTeacherForm
+from entities.forms.pages import CutPlaceForm, CutSchoolForm, CutTeacherForm, CutOrganizationForm
 
 
 def create(request, city_title=None, direction_title=None):
@@ -18,66 +18,24 @@ def create(request, city_title=None, direction_title=None):
     return render(request, 'create/create.html', context)
 
 
-def create_event(request, city_title=None, direction_title=None):
-    form = CutEventForm(request.POST or None)
+def create_instance(request, instance=None, city_title=None, direction_title=None):
+    form = {
+        'event': CutEventForm(request.POST or None),
+        'promo-action': CutPromoActionForm(request.POST or None),
+        'place': CutPlaceForm(request.POST or None),
+        'school': CutSchoolForm(request.POST or None),
+        'teacher': CutTeacherForm(request.POST or None),
+        'organization': CutOrganizationForm(request.POST or None)
+    }.get(instance, None)
+
     if form.is_valid():
-        instance = form.save()
-        return HttpResponseRedirect('/event-%s/edit/%s' %
-                                    (instance.pk, get_direction_city_parameter(city_title, direction_title)))
-    context = {
-        'form': form,
-
-    }
-    return render(request, 'create/create-event.html', context)
-
-
-def create_promo_action(request, city_title=None, direction_title=None):
-    form = CutPromoActionForm(request.POST or None)
-    if form.is_valid():
-        instance = form.save()
-        return HttpResponseRedirect('/promo-action-%s/edit/%s' %
-                                    (instance.pk, get_direction_city_parameter(city_title, direction_title)))
-    context = {
-        'form': form,
-
-    }
-    return render(request, 'create/create-promo-action.html', context)
-
-
-def create_place(request, city_title=None, direction_title=None):
-    form = CutPlaceForm(request.POST or None)
-    if form.is_valid():
-        instance = form.save()
-        return HttpResponseRedirect('/place-%s/edit/%s' %
-                                    (instance.pk, get_direction_city_parameter(city_title, direction_title)))
+        my_instance = form.save()
+        return HttpResponseRedirect('/' + instance + '-%s/edit/%s' %
+                                    (my_instance.pk, get_direction_city_parameter(city_title, direction_title)))
     context = {
         'form': form,
     }
-    return render(request, 'create/create-place.html', context)
-
-
-def create_school(request, city_title=None, direction_title=None):
-    form = CutSchoolForm(request.POST or None)
-    if form.is_valid():
-        instance = form.save()
-        return HttpResponseRedirect('/school-%s/edit/%s' %
-                                    (instance.pk, get_direction_city_parameter(city_title, direction_title)))
-    context = {
-        'form': form,
-    }
-    return render(request, 'create/create-school.html', context)
-
-
-def create_teacher(request, city_title=None, direction_title=None):
-    form = CutTeacherForm(request.POST or None)
-    if form.is_valid():
-        instance = form.save()
-        return HttpResponseRedirect('/teacher-%s/edit/%s' %
-                                    (instance.pk, get_direction_city_parameter(city_title, direction_title)))
-    context = {
-        'form': form,
-    }
-    return render(request, 'create/create-teacher.html', context)
+    return render(request, 'create/create-' + instance + '.html', context)
 
 
 def create_attr(request, attribute=None, city_title=None, direction_title=None):

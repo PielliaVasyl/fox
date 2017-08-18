@@ -98,7 +98,7 @@ class EventsFilterForm(forms.Form):
                 )
 
 
-class PromoActionFilterForm(forms.Form):
+class PromoActionsFilterForm(forms.Form):
     promo_actions = PromoAction.objects.all()
 
     cities = forms.MultipleChoiceField(
@@ -121,7 +121,7 @@ class PromoActionFilterForm(forms.Form):
         promo_actions = PromoAction.objects.all()
         self.direction = kwargs.pop('direction')
 
-        super(PromoActionFilterForm, self).__init__(*args, **kwargs)
+        super(PromoActionsFilterForm, self).__init__(*args, **kwargs)
         # self.fields['event_types'].choices = _get_event_types_choices(events)
         # self.fields['cities'].choices = _get_cities_choices(promo_actions)
 

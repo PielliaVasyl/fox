@@ -2,51 +2,25 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 
 from algoritms.get_direction_city_parameter import get_direction_city_parameter
-from directions.all.forms import SchoolsFilterForm
 from entities.edit_forms.teacher import EditTeacherTitleForm, EditTeacherDirectionsForm, EditTeacherCitiesForm, \
     EditTeacherDescriptionForm, EditTeacherTeacherDanceClassesForm, EditTeacherEmployersForm, EditTeacherImageForm, \
     EditTeacherLinksForm, EditTeacherPolicyForm, EditTeacherTeacherContactForm, EditTeacherSocialsForm
-
-from entities.models import SchoolContacts
 from entities.models import TeacherContacts
 from entities.models.pages import Teacher
 
 
-def teacher(request, instance_id, direction_title=None, city_title=None):
-    instance = get_object_or_404(Teacher, pk=instance_id)
-    title = '%s' % (instance.title,)
-
-    # form = TeacherFilterForm(request.POST or None, direction=direction_title)
-
-    context = {
-        'title': title,
-        'instance': instance,
-        # 'form': form
-    }
-    return render(request, 'entities/teacher/teacher-single.html', context)
-
-
-def edit_teacher(request, instance_id, city_title=None, direction_title=None):
-    instance = get_object_or_404(Teacher, pk=instance_id)
-    title = '%s' % (instance.title,)
-    edit_buttons = [
-        ('teacher', 'title', 'Имя'),
-        ('teacher', 'directions', 'Направления'),
-        ('teacher', 'cities', 'Города'),
-        ('teacher', 'teacher-dance-classes', 'Танцевальные стили и направления'),
-        ('teacher', 'description', 'Описание'),
-        ('teacher', 'employers', 'Работает в'),
-        ('teacher', 'image', 'Фото'),
-        ('teacher', 'teacher-links', 'Ссылки'),
-        ('teacher', 'teacher-contacts', 'Контакты'),
-        ('teacher', 'policy', 'Права пользователей'),
-    ]
-    context = {
-        'title': title,
-        'instance': instance,
-        'edit_buttons': edit_buttons
-    }
-    return render(request, 'entities/teacher/teacher-edit.html', context)
+TEACHER_EDIT_BUTTONS = [
+    ('teacher', 'title', 'Имя'),
+    ('teacher', 'directions', 'Направления'),
+    ('teacher', 'cities', 'Города'),
+    ('teacher', 'teacher-dance-classes', 'Танцевальные стили и направления'),
+    ('teacher', 'description', 'Описание'),
+    ('teacher', 'employers', 'Работает в'),
+    ('teacher', 'image', 'Фото'),
+    ('teacher', 'teacher-links', 'Ссылки'),
+    ('teacher', 'teacher-contacts', 'Контакты'),
+    ('teacher', 'policy', 'Права пользователей'),
+]
 
 
 def edit_teacher_attr(request, instance_id, attribute=None, city_title=None, direction_title=None):
