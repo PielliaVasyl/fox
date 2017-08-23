@@ -4,7 +4,7 @@ from django.dispatch import receiver
 
 from entities.models.classes import Direction, City
 from entities.models.contacts import SchoolContacts, OrganizationContacts, TeacherContacts, PersonContacts, \
-    ShopContacts, HallContacts, ResourceContacts
+    ShopContacts, HallContacts, ResourceContacts, CustomerServicesContacts
 from entities.models.links import ResourceLink, HallLink, CustomerServicesLink, ShopLink, PersonLink, \
     TeacherLink, OrganizationLink, SchoolLink, PlaceLink
 from entities.models.locations import PlaceLocation, OrganizationLocation, ShopLocation, HallLocation, SchoolLocation
@@ -162,6 +162,22 @@ class Organization(EmployersPage):
     author = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='organizations_author')
 
 
+@receiver(post_save, sender=Organization)
+def create_organization_local_classes(sender, instance, created, **kwargs):
+    if created:
+        local_classes = OrganizationLocalClasses.objects.create(organization=instance)
+        instance.local_classes = local_classes
+        instance.save()
+
+
+@receiver(post_save, sender=Organization)
+def create_organization_contacts(sender, instance, created, **kwargs):
+    if created:
+        contacts = OrganizationContacts.objects.create(organization=instance, author_id=instance.author_id)
+        instance.contacts = contacts
+        instance.save()
+
+
 class Teacher(EmployeesPage):
     local_classes = models.OneToOneField(TeacherLocalClasses, on_delete=models.CASCADE, null=True)
 
@@ -208,6 +224,22 @@ class Person(EmployeesPage):
     author = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='persons_author')
 
 
+@receiver(post_save, sender=Person)
+def create_person_local_classes(sender, instance, created, **kwargs):
+    if created:
+        local_classes = PersonLocalClasses.objects.create(person=instance)
+        instance.local_classes = local_classes
+        instance.save()
+
+
+@receiver(post_save, sender=Person)
+def create_person_contacts(sender, instance, created, **kwargs):
+    if created:
+        contacts = PersonContacts.objects.create(person=instance, author_id=instance.author_id)
+        instance.contacts = contacts
+        instance.save()
+
+
 class Shop(EmployersPage):
     types = models.ManyToManyField(ShopType, blank=True)
 
@@ -224,6 +256,14 @@ class Shop(EmployersPage):
     author = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='shops_author')
 
 
+@receiver(post_save, sender=Shop)
+def create_shop_contacts(sender, instance, created, **kwargs):
+    if created:
+        contacts = ShopContacts.objects.create(shop=instance, author_id=instance.author_id)
+        instance.contacts = contacts
+        instance.save()
+
+
 class CustomerServices(EmployersPage):
     types = models.ManyToManyField(CustomerServicesType, blank=True)
 
@@ -238,6 +278,14 @@ class CustomerServices(EmployersPage):
     owners = models.ManyToManyField(UserProfile, blank=True, related_name='customer_services_owner')
     contributors = models.ManyToManyField(UserProfile, blank=True, related_name='customer_services_contributor')
     author = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='customer_services_author')
+
+
+@receiver(post_save, sender=CustomerServices)
+def create_customer_services_contacts(sender, instance, created, **kwargs):
+    if created:
+        contacts = CustomerServicesContacts.objects.create(customerservices=instance, author_id=instance.author_id)
+        instance.contacts = contacts
+        instance.save()
 
 
 class Hall(EmployersPage):

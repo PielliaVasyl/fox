@@ -90,6 +90,12 @@ class OrganizationLocationForm(forms.ModelForm):
         fields = LOCATION_FIELDS
 
 
+class CutOrganizationLocationForm(forms.ModelForm):
+    class Meta:
+        model = OrganizationLocation
+        fields = CUT_LOCATION_FIELDS
+
+
 class ShopLocationForm(forms.ModelForm):
     class Meta:
         model = ShopLocation

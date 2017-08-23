@@ -6,9 +6,10 @@ from entities.forms import EventLocationForm
 from entities.forms import PhoneNumberForm
 from entities.forms.classes import DirectionForm, CityForm
 from entities.forms.events import CutEventForm, CutPromoActionForm
-from entities.forms.links import EventLinkForm, PromoActionLinkForm, PlaceLinkForm, SchoolLinkForm, TeacherLinkForm
+from entities.forms.links import EventLinkForm, PromoActionLinkForm, PlaceLinkForm, SchoolLinkForm, TeacherLinkForm, \
+    OrganizationLinkForm
 from entities.forms.locations import CutPlaceLocationForm, PlaceMapCoordinatesForm, SchoolMapCoordinatesForm, \
-    CutSchoolLocationForm
+    CutSchoolLocationForm, OrganizationMapCoordinatesForm, CutOrganizationLocationForm
 from entities.forms.pages import CutPlaceForm, CutSchoolForm, CutTeacherForm, CutOrganizationForm
 
 
@@ -50,19 +51,24 @@ def create_attr(request, attribute=None, city_title=None, direction_title=None):
         form = PlaceLinkForm(request.POST or None)
     if attribute == 'school-link':
         form = SchoolLinkForm(request.POST or None)
+    if attribute == 'organization-link':
+        form = OrganizationLinkForm(request.POST or None)
     if attribute == 'teacher-link':
         form = TeacherLinkForm(request.POST or None)
     if attribute == 'promo-action-link':
         form = PromoActionLinkForm(request.POST or None)
     if attribute == 'event-location':
         form = EventLocationForm(request.POST or None)
-    if attribute in ['place-location', 'school-location']:
+    if attribute in ['place-location', 'school-location', 'organization-location']:
         if attribute == 'place-location':
             form = CutPlaceLocationForm(request.POST or None)
             form1 = PlaceMapCoordinatesForm(request.POST or None)
         if attribute == 'school-location':
             form = CutSchoolLocationForm(request.POST or None)
             form1 = SchoolMapCoordinatesForm(request.POST or None)
+        if attribute == 'organization-location':
+            form = CutOrganizationLocationForm(request.POST or None)
+            form1 = OrganizationMapCoordinatesForm(request.POST or None)
         if form.is_valid():
             coordinates = form1.save()
             location = form.save(commit=False)

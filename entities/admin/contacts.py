@@ -4,6 +4,8 @@ from entities.forms import AbstractSocialLinkForm, SocialLinkFBForm, SocialLinkV
     SocialLinkTwitterForm, SocialsForm, PhoneNumberForm, AbstractContactsForm, SchoolContactsForm, \
     OrganizationContactsForm, TeacherContactsForm, PersonContactsForm, ShopContactsForm, HallContactsForm, \
     ResourceContactsForm
+from entities.forms import CustomerServicesForm
+from entities.forms.contacts import CustomerServicesContactsForm
 from entities.models import AbstractSocialLink, SocialLinkFB, SocialLinkVK, SocialLinkInstagram, \
     SocialLinkTwitter, Socials, PhoneNumber, AbstractContacts, SchoolContacts, OrganizationContacts, TeacherContacts, \
     PersonContacts, ShopContacts, HallContacts, ResourceContacts
@@ -14,6 +16,7 @@ from entities.models import AbstractSocialLink, SocialLinkFB, SocialLinkVK, Soci
 #     form = AbstractSocialLinkForm
 #
 # admin.site.register(AbstractSocialLink, AbstractSocialLinkAdmin)
+from entities.models.contacts import CustomerServicesContacts
 
 
 class SocialLinkFBAdmin(admin.ModelAdmin):
@@ -98,6 +101,13 @@ class ShopContactsAdmin(admin.ModelAdmin):
     form = ShopContactsForm
 
 admin.site.register(ShopContacts, ShopContactsAdmin)
+
+
+class CustomerServicesContactsAdmin(admin.ModelAdmin):
+    list_display = ['get_phone_numbers', 'socials', 'author', 'created', 'updated']
+    form = CustomerServicesContactsForm
+
+admin.site.register(CustomerServicesContacts, CustomerServicesContactsAdmin)
 
 
 class HallContactsAdmin(admin.ModelAdmin):

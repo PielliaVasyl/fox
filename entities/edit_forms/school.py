@@ -1,6 +1,5 @@
 from django import forms
 
-from entities.models import Place
 from entities.models import School
 from entities.models import SchoolContacts
 from entities.models import Socials
@@ -75,5 +74,5 @@ class EditSchoolSocialsForm(forms.ModelForm):
 
 class EditSchoolPolicyForm(forms.ModelForm):
     class Meta:
-        model = Place
+        model = School
         fields = ['owners', 'contributors', 'author']

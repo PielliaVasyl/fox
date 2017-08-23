@@ -5,6 +5,7 @@ from django import forms
 from entities.models import AbstractSocialLink, SocialLinkFB, SocialLinkVK, SocialLinkInstagram, SocialLinkTwitter, \
     Socials, PhoneNumber, AbstractContacts, SchoolContacts, OrganizationContacts, TeacherContacts, PersonContacts, \
     ShopContacts, HallContacts, ResourceContacts
+from entities.models.contacts import CustomerServicesContacts
 
 
 class AbstractSocialLinkForm(forms.ModelForm):
@@ -82,6 +83,12 @@ class PersonContactsForm(forms.ModelForm):
 class ShopContactsForm(forms.ModelForm):
     class Meta:
         model = ShopContacts
+        fields = ['phone_numbers', 'socials', 'author']
+
+
+class CustomerServicesContactsForm(forms.ModelForm):
+    class Meta:
+        model = CustomerServicesContacts
         fields = ['phone_numbers', 'socials', 'author']
 
 

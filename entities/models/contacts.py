@@ -129,10 +129,26 @@ class OrganizationContacts(AbstractContacts):
     #     return '%s' % self.organization
 
 
+@receiver(post_save, sender=OrganizationContacts)
+def create_organization_contacts(sender, instance, created, **kwargs):
+    if created:
+        socials = Socials.objects.create(organizationcontacts=instance, author_id=instance.author_id)
+        instance.socials = socials
+        instance.save()
+
+
 class TeacherContacts(AbstractContacts):
     pass
     # def __str__(self):
     #     return '%s' % self.teacher
+
+
+@receiver(post_save, sender=TeacherContacts)
+def create_teacher_contacts(sender, instance, created, **kwargs):
+    if created:
+        socials = Socials.objects.create(teachercontacts=instance, author_id=instance.author_id)
+        instance.socials = socials
+        instance.save()
 
 
 class PersonContacts(AbstractContacts):
@@ -141,10 +157,40 @@ class PersonContacts(AbstractContacts):
     #     return '%s' % self.person
 
 
+@receiver(post_save, sender=PersonContacts)
+def create_person_contacts(sender, instance, created, **kwargs):
+    if created:
+        socials = Socials.objects.create(personcontacts=instance, author_id=instance.author_id)
+        instance.socials = socials
+        instance.save()
+
+
 class ShopContacts(AbstractContacts):
     pass
     # def __str__(self):
     #     return '%s' % self.shop
+
+
+@receiver(post_save, sender=ShopContacts)
+def create_shop_contacts(sender, instance, created, **kwargs):
+    if created:
+        socials = Socials.objects.create(shopcontacts=instance, author_id=instance.author_id)
+        instance.socials = socials
+        instance.save()
+
+
+class CustomerServicesContacts(AbstractContacts):
+    pass
+    # def __str__(self):
+    #     return '%s' % self.shop
+
+
+@receiver(post_save, sender=CustomerServicesContacts)
+def create_customer_services_contacts(sender, instance, created, **kwargs):
+    if created:
+        socials = Socials.objects.create(customerservicescontacts=instance, author_id=instance.author_id)
+        instance.socials = socials
+        instance.save()
 
 
 class HallContacts(AbstractContacts):
@@ -153,7 +199,23 @@ class HallContacts(AbstractContacts):
     #     return '%s' % self.hall
 
 
+@receiver(post_save, sender=HallContacts)
+def create_hall_contacts(sender, instance, created, **kwargs):
+    if created:
+        socials = Socials.objects.create(hallcontacts=instance, author_id=instance.author_id)
+        instance.socials = socials
+        instance.save()
+
+
 class ResourceContacts(AbstractContacts):
     pass
     # def __str__(self):
     #     return '%s' % self.resource
+
+
+@receiver(post_save, sender=ResourceContacts)
+def create_resource_contacts(sender, instance, created, **kwargs):
+    if created:
+        socials = Socials.objects.create(resourcecontacts=instance, author_id=instance.author_id)
+        instance.socials = socials
+        instance.save()
