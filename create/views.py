@@ -7,10 +7,10 @@ from entities.forms import PhoneNumberForm
 from entities.forms.classes import DirectionForm, CityForm
 from entities.forms.events import CutEventForm, CutPromoActionForm
 from entities.forms.links import EventLinkForm, PromoActionLinkForm, PlaceLinkForm, SchoolLinkForm, TeacherLinkForm, \
-    OrganizationLinkForm
+    OrganizationLinkForm, PersonLinkForm
 from entities.forms.locations import CutPlaceLocationForm, PlaceMapCoordinatesForm, SchoolMapCoordinatesForm, \
     CutSchoolLocationForm, OrganizationMapCoordinatesForm, CutOrganizationLocationForm
-from entities.forms.pages import CutPlaceForm, CutSchoolForm, CutTeacherForm, CutOrganizationForm
+from entities.forms.pages import CutPlaceForm, CutSchoolForm, CutTeacherForm, CutOrganizationForm, CutPersonForm
 
 
 def create(request, city_title=None, direction_title=None):
@@ -26,7 +26,9 @@ def create_instance(request, instance=None, city_title=None, direction_title=Non
         'place': CutPlaceForm(request.POST or None),
         'school': CutSchoolForm(request.POST or None),
         'teacher': CutTeacherForm(request.POST or None),
-        'organization': CutOrganizationForm(request.POST or None)
+        'organization': CutOrganizationForm(request.POST or None),
+        'person': CutPersonForm(request.POST or None)
+
     }.get(instance, None)
 
     if form.is_valid():
@@ -55,6 +57,8 @@ def create_attr(request, attribute=None, city_title=None, direction_title=None):
         form = OrganizationLinkForm(request.POST or None)
     if attribute == 'teacher-link':
         form = TeacherLinkForm(request.POST or None)
+    if attribute == 'person-link':
+        form = PersonLinkForm(request.POST or None)
     if attribute == 'promo-action-link':
         form = PromoActionLinkForm(request.POST or None)
     if attribute == 'event-location':

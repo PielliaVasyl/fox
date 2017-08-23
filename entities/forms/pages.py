@@ -6,6 +6,9 @@ from entities.models import Place, EmployersPage, EmployeesPage, School, Organiz
     Resource
 
 
+CUT_FORM_FIELDS = ['title', 'author']
+
+
 class PlaceForm(forms.ModelForm):
     class Meta:
         model = Place
@@ -84,22 +87,28 @@ class ResourceForm(forms.ModelForm):
 class CutPlaceForm(forms.ModelForm):
     class Meta:
         model = Place
-        fields = ['title', 'author']
+        fields = CUT_FORM_FIELDS
 
 
 class CutSchoolForm(forms.ModelForm):
     class Meta:
         model = School
-        fields = ['title', 'author']
+        fields = CUT_FORM_FIELDS
 
 
 class CutTeacherForm(forms.ModelForm):
     class Meta:
         model = Teacher
-        fields = ['title', 'author']
+        fields = CUT_FORM_FIELDS
 
 
 class CutOrganizationForm(forms.ModelForm):
     class Meta:
         model = Organization
-        fields = ['title', 'author']
+        fields = CUT_FORM_FIELDS
+
+
+class CutPersonForm(forms.ModelForm):
+    class Meta:
+        model = Person
+        fields = CUT_FORM_FIELDS

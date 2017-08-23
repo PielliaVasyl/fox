@@ -7,7 +7,7 @@ register = template.Library()
 @register.filter('get_instance_id')
 def get_instance_id(text):
     result = ''
-    words = {'/event-', '/promo-action-', '/place-', '/school-', '/teacher-', '/organization-'}
+    words = {'/event-', '/promo-action-', '/place-', '/school-', '/teacher-', '/organization-', '/person-'}
 
     for word in words:
         if word in text:

@@ -18,9 +18,12 @@ from entities.models import SchoolContacts
 from entities.models import Socials
 from entities.models import Teacher
 from entities.models import TeacherContacts
+from entities.models.contacts import PersonContacts
 from entities.models.events import Event, PromoAction
+from entities.models.pages import Person
 from entities.views.event import EVENT_EDIT_BUTTONS, EVENT_ATTRIBUTE_FORMS
-from entities.views.organization import ORGANIZATION_EDIT_BUTTONS, ORGANIZATION_FORMS
+from entities.views.organization import ORGANIZATION_EDIT_BUTTONS, ORGANIZATION_ATTRIBUTE_FORMS
+from entities.views.person import PERSON_EDIT_BUTTONS, PERSON_ATTRIBUTE_FORMS
 from entities.views.place import PLACE_EDIT_BUTTONS, PLACE_ATTRIBUTE_FORMS
 from entities.views.promo_action import PROMO_ACTION_EDIT_BUTTONS, PROMO_ACTION_ATTRIBUTE_FORMS
 from entities.views.school import SCHOOL_EDIT_BUTTONS, SCHOOL_ATTRIBUTE_FORMS
@@ -32,7 +35,8 @@ ENTITY = {
     'place': Place,
     'school': School,
     'teacher': Teacher,
-    'organization': Organization
+    'organization': Organization,
+    'person': Person
 }
 
 ENTITY_FORM = {
@@ -50,7 +54,8 @@ EDIT_BUTTONS = {
     'place': PLACE_EDIT_BUTTONS,
     'school': SCHOOL_EDIT_BUTTONS,
     'teacher':  TEACHER_EDIT_BUTTONS,
-    'organization': ORGANIZATION_EDIT_BUTTONS
+    'organization': ORGANIZATION_EDIT_BUTTONS,
+    'person': PERSON_EDIT_BUTTONS
 }
 
 ATTRIBUTE_FORMS = {
@@ -59,14 +64,16 @@ ATTRIBUTE_FORMS = {
     'place': PLACE_ATTRIBUTE_FORMS,
     'school': SCHOOL_ATTRIBUTE_FORMS,
     'teacher':  TEACHER_ATTRIBUTE_FORMS,
-    'organization': ORGANIZATION_FORMS,
+    'organization': ORGANIZATION_ATTRIBUTE_FORMS,
+    'person': PERSON_ATTRIBUTE_FORMS
 }
 
 
 CONTACTS_ENTITY = {
     'school': SchoolContacts,
     'teacher':  TeacherContacts,
-    'organization': OrganizationContacts
+    'organization': OrganizationContacts,
+    'person': PersonContacts
 }
 
 
@@ -249,6 +256,8 @@ def _get_contacts(entity, author_id, instance_id):
             contacts = contacts_entity.objects.get(author_id=author_id, teacher__id=instance_id)
         if entity == 'organization':
             contacts = contacts_entity.objects.get(author_id=author_id, organization__id=instance_id)
+        if entity == 'person':
+            contacts = contacts_entity.objects.get(author_id=author_id, person__id=instance_id)
         return contacts
     return None
 
@@ -260,6 +269,8 @@ def _get_socials(entity, author_id, instance_id):
         socials = Socials.objects.get(author_id=author_id, teachercontacts__teacher__id=instance_id)
     if entity == 'organization':
         socials = Socials.objects.get(author_id=author_id, organizationcontacts__organization__id=instance_id)
+    if entity == 'person':
+        socials = Socials.objects.get(author_id=author_id, personcontacts__person__id=instance_id)
     return socials
 
 

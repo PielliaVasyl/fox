@@ -18,7 +18,7 @@ ORGANIZATION_EDIT_BUTTONS = [
     ('organization', 'policy', 'Права пользователей'),
 ]
 
-ORGANIZATION_FORMS = {
+ORGANIZATION_ATTRIBUTE_FORMS = {
     'title': EditOrganizationTitleForm,
     'directions': EditOrganizationDirectionsForm,
     'cities': EditOrganizationCitiesForm,
