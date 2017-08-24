@@ -31,7 +31,7 @@
 						<button type="button" class="btn btn-primary">Магазин</button>
 						<button type="button" class="btn btn-primary">Услуги</button>
 						<button type="button" class="btn btn-primary">Зал для аренды</button>
-						<button type="button" class="btn btn-primary">Информационный ресурс</button>
+                        <a href="/create/resource/{{ request.path|get_direction_city_url }}" class="btn btn-primary" data-toggle="modal" data-target=".ajax_modal_container">Информационный ресурс</a>
 
 						<hr />
 

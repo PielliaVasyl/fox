@@ -112,3 +112,9 @@ class CutPersonForm(forms.ModelForm):
     class Meta:
         model = Person
         fields = CUT_FORM_FIELDS
+
+
+class CutResourceForm(forms.ModelForm):
+    class Meta:
+        model = Resource
+        fields = CUT_FORM_FIELDS

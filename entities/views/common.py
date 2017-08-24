@@ -4,28 +4,17 @@ from django.shortcuts import render, get_object_or_404
 from algoritms.get_direction_city_parameter import get_direction_city_parameter
 from directions.all.forms import EventsFilterForm, PromoActionsFilterForm, PlacesFilterForm, SchoolsFilterForm
 
-from entities.models import DayOfTheWeek
-from entities.models import EventType
-from entities.models import ExperienceLevel
-from entities.models import Organization
-from entities.models import OrganizationContacts
-from entities.models import Place
-from entities.models import PlaceType
-from entities.models import PriceType
-from entities.models import RepeatsType
-from entities.models import School
-from entities.models import SchoolContacts
-from entities.models import Socials
-from entities.models import Teacher
-from entities.models import TeacherContacts
-from entities.models.contacts import PersonContacts
+from entities.models.types import DayOfTheWeek, EventType, ExperienceLevel, PlaceType, PriceType, RepeatsType
+from entities.models.pages import Place, School, Organization, Teacher, Person, Resource
+from entities.models.contacts import OrganizationContacts, SchoolContacts, Socials, TeacherContacts, PersonContacts, \
+    ResourceContacts
 from entities.models.events import Event, PromoAction
-from entities.models.pages import Person
 from entities.views.event import EVENT_EDIT_BUTTONS, EVENT_ATTRIBUTE_FORMS
 from entities.views.organization import ORGANIZATION_EDIT_BUTTONS, ORGANIZATION_ATTRIBUTE_FORMS
 from entities.views.person import PERSON_EDIT_BUTTONS, PERSON_ATTRIBUTE_FORMS
 from entities.views.place import PLACE_EDIT_BUTTONS, PLACE_ATTRIBUTE_FORMS
 from entities.views.promo_action import PROMO_ACTION_EDIT_BUTTONS, PROMO_ACTION_ATTRIBUTE_FORMS
+from entities.views.resource import RESOURCE_EDIT_BUTTONS, RESOURCE_ATTRIBUTE_FORMS
 from entities.views.school import SCHOOL_EDIT_BUTTONS, SCHOOL_ATTRIBUTE_FORMS
 from entities.views.teacher import TEACHER_EDIT_BUTTONS, TEACHER_ATTRIBUTE_FORMS
 
@@ -36,7 +25,8 @@ ENTITY = {
     'school': School,
     'teacher': Teacher,
     'organization': Organization,
-    'person': Person
+    'person': Person,
+    'resource': Resource
 }
 
 ENTITY_FORM = {
@@ -46,6 +36,7 @@ ENTITY_FORM = {
     'school': SchoolsFilterForm,
     # 'teacher': TeachersFilterForm,
     # 'organization': OrganizationsFilterForm,
+    # 'resource': ResourceFilterForm
 }
 
 EDIT_BUTTONS = {
@@ -55,7 +46,8 @@ EDIT_BUTTONS = {
     'school': SCHOOL_EDIT_BUTTONS,
     'teacher':  TEACHER_EDIT_BUTTONS,
     'organization': ORGANIZATION_EDIT_BUTTONS,
-    'person': PERSON_EDIT_BUTTONS
+    'person': PERSON_EDIT_BUTTONS,
+    'resource': RESOURCE_EDIT_BUTTONS
 }
 
 ATTRIBUTE_FORMS = {
@@ -65,7 +57,8 @@ ATTRIBUTE_FORMS = {
     'school': SCHOOL_ATTRIBUTE_FORMS,
     'teacher':  TEACHER_ATTRIBUTE_FORMS,
     'organization': ORGANIZATION_ATTRIBUTE_FORMS,
-    'person': PERSON_ATTRIBUTE_FORMS
+    'person': PERSON_ATTRIBUTE_FORMS,
+    'resource': RESOURCE_ATTRIBUTE_FORMS,
 }
 
 
@@ -73,7 +66,8 @@ CONTACTS_ENTITY = {
     'school': SchoolContacts,
     'teacher':  TeacherContacts,
     'organization': OrganizationContacts,
-    'person': PersonContacts
+    'person': PersonContacts,
+    'resource': ResourceContacts,
 }
 
 
@@ -139,14 +133,10 @@ def __get_form(entity, attribute, request, current_instance):
                                                        'end_date': current_instance.end_date})
         if attribute == 'status':
             form = form(request.POST or None, initial={'_status': current_instance._status})
-        # if attribute in ['event-locations', 'place-locations', 'school-locations']:
         if '-locations' in attribute:
             form = form(request.POST or None, initial={'locations': current_instance.locations.all()})
-        # if attribute in ['event-links', 'promo-action-links', 'place-links', 'school-links', 'teacher-links']:
         if '-links' in attribute:
             form = form(request.POST or None, initial={'links': current_instance.links.all()})
-        # if attribute in ['event-dance-classes', 'promo-action-dance-classes', 'place-dance-classes',
-        #                  'school-dance-classes', 'teacher-dance-classes']:
         if '-dance-classes' in attribute:
             form = form(request.POST or None, initial={'dance_directions':
                                                        current_instance.local_classes.dance_directions.all(),
@@ -204,8 +194,6 @@ def save_instance_changes(entity, form, attribute, request, current_instance):
     if attribute == 'dates':
         attr_values['start_date'] = form.cleaned_data.get('start_date')
         attr_values['end_date'] = form.cleaned_data.get('end_date')
-    # if attribute in ['event-dance-classes', 'promo-action-dance-classes', 'place-dance-classes',
-    #                  'school-dance-classes', 'teacher-dance-classes']:
     if '-dance-classes' in attribute:
         attr_values['dance_styles'] = form.cleaned_data.get('dance_styles')
         attr_values['dance_directions'] = form.cleaned_data.get('dance_directions')
@@ -226,10 +214,8 @@ def save_instance_changes(entity, form, attribute, request, current_instance):
         attr_values[attribute] = DayOfTheWeek.objects.filter(title__in=form.cleaned_data.get(attribute))
     if attribute == 'status':
         attr_values['_status'] = form.cleaned_data.get('_status')
-    # if attribute in ['event-locations', 'place-locations', 'school-locations']:
     if '-locations' in attribute:
         attr_values['locations'] = form.cleaned_data.get('locations')
-    # if attribute in ['event-links', 'promo-action-links', 'place-links', 'school-links']:
     if '-links' in attribute:
         attr_values['links'] = form.cleaned_data.get('links')
     if attribute == 'policy':
@@ -258,6 +244,8 @@ def _get_contacts(entity, author_id, instance_id):
             contacts = contacts_entity.objects.get(author_id=author_id, organization__id=instance_id)
         if entity == 'person':
             contacts = contacts_entity.objects.get(author_id=author_id, person__id=instance_id)
+        if entity == 'resource':
+            contacts = contacts_entity.objects.get(author_id=author_id, resource__id=instance_id)
         return contacts
     return None
 
@@ -271,6 +259,8 @@ def _get_socials(entity, author_id, instance_id):
         socials = Socials.objects.get(author_id=author_id, organizationcontacts__organization__id=instance_id)
     if entity == 'person':
         socials = Socials.objects.get(author_id=author_id, personcontacts__person__id=instance_id)
+    if entity == 'resource':
+        socials = Socials.objects.get(author_id=author_id, resourcecontacts__resource__id=instance_id)
     return socials
 
 
