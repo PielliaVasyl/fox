@@ -271,7 +271,7 @@ class CustomerServices(EmployersPage):
     employees = models.ManyToManyField(EmployeesPage, blank=True)
 
     links = models.ManyToManyField(CustomerServicesLink, blank=True)
-    contacts = models.OneToOneField(ShopContacts, on_delete=models.CASCADE, null=True, blank=True)
+    contacts = models.OneToOneField(CustomerServicesContacts, on_delete=models.CASCADE, null=True, blank=True)
 
     # events = models.ManyToManyField(AbstractEvent, blank=True)
 
@@ -300,6 +300,14 @@ class Hall(EmployersPage):
     owners = models.ManyToManyField(UserProfile, blank=True, related_name='halls_owner')
     contributors = models.ManyToManyField(UserProfile, blank=True, related_name='halls_contributor')
     author = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='halls_author')
+
+
+@receiver(post_save, sender=Hall)
+def create_hall_contacts(sender, instance, created, **kwargs):
+    if created:
+        contacts = HallContacts.objects.create(hall=instance, author_id=instance.author_id)
+        instance.contacts = contacts
+        instance.save()
 
 
 class Resource(EmployersPage):

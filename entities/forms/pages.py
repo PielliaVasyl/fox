@@ -4,7 +4,7 @@ from django import forms
 
 from entities.models import Place, EmployersPage, EmployeesPage, School, Organization, Teacher, Person, Shop, Hall, \
     Resource
-
+from entities.models.pages import CustomerServices
 
 CUT_FORM_FIELDS = ['title', 'author']
 
@@ -111,4 +111,22 @@ class CutOrganizationForm(forms.ModelForm):
 class CutPersonForm(forms.ModelForm):
     class Meta:
         model = Person
+        fields = CUT_FORM_FIELDS
+
+
+class CutShopForm(forms.ModelForm):
+    class Meta:
+        model = Shop
+        fields = CUT_FORM_FIELDS
+
+
+class CutCustomerServicesForm(forms.ModelForm):
+    class Meta:
+        model = CustomerServices
+        fields = CUT_FORM_FIELDS
+
+
+class CutHallForm(forms.ModelForm):
+    class Meta:
+        model = Hall
         fields = CUT_FORM_FIELDS

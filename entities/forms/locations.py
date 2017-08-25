@@ -5,7 +5,7 @@ from django import forms
 from entities.models import AbstractMapCoordinates, PlaceMapCoordinates, SchoolMapCoordinates, \
     OrganizationMapCoordinates, ShopMapCoordinates, HallMapCoordinates, AbstractLocation, EventLocation, \
     PlaceLocation, SchoolLocation, OrganizationLocation, ShopLocation, HallLocation
-
+from entities.models.locations import CustomerServicesMapCoordinates, CustomerServicesLocation
 
 MAP_COORDINATES_FIELDS = ['lat', 'lng', 'author']
 CUT_LOCATION_FIELDS = ['city', 'address', 'note', 'author']
@@ -39,6 +39,12 @@ class OrganizationMapCoordinatesForm(forms.ModelForm):
 class ShopMapCoordinatesForm(forms.ModelForm):
     class Meta:
         model = ShopMapCoordinates
+        fields = MAP_COORDINATES_FIELDS
+
+
+class CustomerServicesMapCoordinatesForm(forms.ModelForm):
+    class Meta:
+        model = CustomerServicesMapCoordinates
         fields = MAP_COORDINATES_FIELDS
 
 
@@ -102,7 +108,31 @@ class ShopLocationForm(forms.ModelForm):
         fields = LOCATION_FIELDS
 
 
+class CutShopLocationForm(forms.ModelForm):
+    class Meta:
+        model = ShopLocation
+        fields = CUT_LOCATION_FIELDS
+
+
+class CustomerServicesLocationForm(forms.ModelForm):
+    class Meta:
+        model = CustomerServicesLocation
+        fields = LOCATION_FIELDS
+
+
+class CutCustomerServicesLocationForm(forms.ModelForm):
+    class Meta:
+        model = CustomerServicesLocation
+        fields = CUT_LOCATION_FIELDS
+
+
 class HallLocationForm(forms.ModelForm):
     class Meta:
         model = HallLocation
         fields = LOCATION_FIELDS
+
+
+class CutHallLocationForm(forms.ModelForm):
+    class Meta:
+        model = HallLocation
+        fields = CUT_LOCATION_FIELDS

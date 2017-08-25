@@ -2,7 +2,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 
 from algoritms.get_direction_city_parameter import get_direction_city_parameter
-from directions.all.forms import EventsFilterForm, PromoActionsFilterForm, PlacesFilterForm, SchoolsFilterForm
+from directions.all.forms import EventsFilterForm, PromoActionsFilterForm, PlacesFilterForm, SchoolsFilterForm, \
+    ShopsFilterForm, CustomerServicesFilterForm, HallsFilterForm
 
 from entities.models import DayOfTheWeek
 from entities.models import EventType
@@ -18,15 +19,19 @@ from entities.models import SchoolContacts
 from entities.models import Socials
 from entities.models import Teacher
 from entities.models import TeacherContacts
-from entities.models.contacts import PersonContacts
+from entities.models.contacts import PersonContacts, ShopContacts, CustomerServicesContacts, HallContacts
 from entities.models.events import Event, PromoAction
-from entities.models.pages import Person
+from entities.models.pages import Person, Shop, CustomerServices, Hall
+from entities.models.types import ShopType, CustomerServicesType
+from entities.views.customer_services import CUSTOMER_SERVICES_EDIT_BUTTONS, CUSTOMER_SERVICES_ATTRIBUTE_FORMS
 from entities.views.event import EVENT_EDIT_BUTTONS, EVENT_ATTRIBUTE_FORMS
+from entities.views.hall import HALL_EDIT_BUTTONS, HALL_ATTRIBUTE_FORMS
 from entities.views.organization import ORGANIZATION_EDIT_BUTTONS, ORGANIZATION_ATTRIBUTE_FORMS
 from entities.views.person import PERSON_EDIT_BUTTONS, PERSON_ATTRIBUTE_FORMS
 from entities.views.place import PLACE_EDIT_BUTTONS, PLACE_ATTRIBUTE_FORMS
 from entities.views.promo_action import PROMO_ACTION_EDIT_BUTTONS, PROMO_ACTION_ATTRIBUTE_FORMS
 from entities.views.school import SCHOOL_EDIT_BUTTONS, SCHOOL_ATTRIBUTE_FORMS
+from entities.views.shop import SHOP_EDIT_BUTTONS, SHOP_ATTRIBUTE_FORMS
 from entities.views.teacher import TEACHER_EDIT_BUTTONS, TEACHER_ATTRIBUTE_FORMS
 
 ENTITY = {
@@ -36,16 +41,22 @@ ENTITY = {
     'school': School,
     'teacher': Teacher,
     'organization': Organization,
-    'person': Person
+    'person': Person,
+    'shop': Shop,
+    'customer-services': CustomerServices,
+    'hall': Hall
 }
 
-ENTITY_FORM = {
+ENTITY_FILTER_FORM = {
     'event': EventsFilterForm,
     'promo-action': PromoActionsFilterForm,
     'place': PlacesFilterForm,
     'school': SchoolsFilterForm,
     # 'teacher': TeachersFilterForm,
     # 'organization': OrganizationsFilterForm,
+    'shop': ShopsFilterForm,
+    'customer-services': CustomerServicesFilterForm,
+    'hall': HallsFilterForm
 }
 
 EDIT_BUTTONS = {
@@ -55,7 +66,10 @@ EDIT_BUTTONS = {
     'school': SCHOOL_EDIT_BUTTONS,
     'teacher':  TEACHER_EDIT_BUTTONS,
     'organization': ORGANIZATION_EDIT_BUTTONS,
-    'person': PERSON_EDIT_BUTTONS
+    'person': PERSON_EDIT_BUTTONS,
+    'shop': SHOP_EDIT_BUTTONS,
+    'customer-services': CUSTOMER_SERVICES_EDIT_BUTTONS,
+    'hall': HALL_EDIT_BUTTONS
 }
 
 ATTRIBUTE_FORMS = {
@@ -65,7 +79,10 @@ ATTRIBUTE_FORMS = {
     'school': SCHOOL_ATTRIBUTE_FORMS,
     'teacher':  TEACHER_ATTRIBUTE_FORMS,
     'organization': ORGANIZATION_ATTRIBUTE_FORMS,
-    'person': PERSON_ATTRIBUTE_FORMS
+    'person': PERSON_ATTRIBUTE_FORMS,
+    'shop': SHOP_ATTRIBUTE_FORMS,
+    'customer-services': CUSTOMER_SERVICES_ATTRIBUTE_FORMS,
+    'hall': HALL_ATTRIBUTE_FORMS
 }
 
 
@@ -73,7 +90,10 @@ CONTACTS_ENTITY = {
     'school': SchoolContacts,
     'teacher':  TeacherContacts,
     'organization': OrganizationContacts,
-    'person': PersonContacts
+    'person': PersonContacts,
+    'shop': ShopContacts,
+    'customer-services': CustomerServicesContacts,
+    'hall': HallContacts
 }
 
 
@@ -84,7 +104,7 @@ def show_instance(request, entity, instance_id, direction_title=None, city_title
     current_instance = get_object_or_404(current_entity, pk=instance_id)
     title = '%s' % (current_instance.title,)
 
-    form = ENTITY_FORM.get(entity, None)
+    form = ENTITY_FILTER_FORM.get(entity, None)
     if form is not None:
         form = form(request.POST or None, direction=direction_title)
 
@@ -213,6 +233,10 @@ def save_instance_changes(entity, form, attribute, request, current_instance):
         attr_values[attribute] = EventType.objects.filter(title__in=form.cleaned_data.get(attribute))
     if attribute == 'types' and entity == 'place':
         attr_values[attribute] = PlaceType.objects.filter(title__in=form.cleaned_data.get(attribute))
+    if attribute == 'types' and entity == 'shop':
+        attr_values[attribute] = ShopType.objects.filter(title__in=form.cleaned_data.get(attribute))
+    if attribute == 'types' and entity == 'customer-services':
+        attr_values[attribute] = CustomerServicesType.objects.filter(title__in=form.cleaned_data.get(attribute))
     if attribute == 'price-types':
         attr_values[attribute] = PriceType.objects\
             .filter(title__in=form.cleaned_data.get(attribute.replace('-', '_')))
@@ -249,28 +273,40 @@ def _get_response_redirect(entity, instance_id, city_title, direction_title):
 
 def _get_contacts(entity, author_id, instance_id):
     contacts_entity = CONTACTS_ENTITY.get(entity, None)
+    # if contacts_entity:
+    #     if entity == 'school':
+    #         contacts = contacts_entity.objects.get(author_id=author_id, school__id=instance_id)
+    #     if entity == 'teacher':
+    #         contacts = contacts_entity.objects.get(author_id=author_id, teacher__id=instance_id)
+    #     if entity == 'organization':
+    #         contacts = contacts_entity.objects.get(author_id=author_id, organization__id=instance_id)
+    #     if entity == 'person':
+    #         contacts = contacts_entity.objects.get(author_id=author_id, person__id=instance_id)
+    #     if entity == 'shop':
+    #         contacts = contacts_entity.objects.get(author_id=author_id, shop__id=instance_id)
+    #     if entity == 'customer-services':
+    #         contacts = contacts_entity.objects.get(author_id=author_id, customerservices__id=instance_id)
+    #     if entity == 'hall':
+    #         contacts = contacts_entity.objects.get(author_id=author_id, hall__id=instance_id)
+    #     return contacts
     if contacts_entity:
-        if entity == 'school':
-            contacts = contacts_entity.objects.get(author_id=author_id, school__id=instance_id)
-        if entity == 'teacher':
-            contacts = contacts_entity.objects.get(author_id=author_id, teacher__id=instance_id)
-        if entity == 'organization':
-            contacts = contacts_entity.objects.get(author_id=author_id, organization__id=instance_id)
-        if entity == 'person':
-            contacts = contacts_entity.objects.get(author_id=author_id, person__id=instance_id)
+        contacts = eval('contacts_entity.objects.get(author_id=%s, %s__id=%s)'
+                        % (author_id, entity.replace('-', ''), instance_id))
         return contacts
     return None
 
 
 def _get_socials(entity, author_id, instance_id):
-    if entity == 'school':
-        socials = Socials.objects.get(author_id=author_id, schoolcontacts__school__id=instance_id)
-    if entity == 'teacher':
-        socials = Socials.objects.get(author_id=author_id, teachercontacts__teacher__id=instance_id)
-    if entity == 'organization':
-        socials = Socials.objects.get(author_id=author_id, organizationcontacts__organization__id=instance_id)
-    if entity == 'person':
-        socials = Socials.objects.get(author_id=author_id, personcontacts__person__id=instance_id)
+    # if entity == 'school':
+    #     socials = Socials.objects.get(author_id=author_id, schoolcontacts__school__id=instance_id)
+    # if entity == 'teacher':
+    #     socials = Socials.objects.get(author_id=author_id, teachercontacts__teacher__id=instance_id)
+    # if entity == 'organization':
+    #     socials = Socials.objects.get(author_id=author_id, organizationcontacts__organization__id=instance_id)
+    # if entity == 'person':
+    #     socials = Socials.objects.get(author_id=author_id, personcontacts__person__id=instance_id)
+    socials = eval('Socials.objects.get(author_id=%s, %scontacts__%s__id=%s)'
+                   % (author_id, entity.replace('-', ''), entity.replace('-', ''), instance_id))
     return socials
 
 

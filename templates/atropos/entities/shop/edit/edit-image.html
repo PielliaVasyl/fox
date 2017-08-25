@@ -1,0 +1,20 @@
+{% load crispy_forms_tags %}
+{% load static %}
+
+ 	  	<div class="modal-header">
+ 	  		<button type="button" class="close" data-dismiss="modal">&times;</button>
+ 	  		<p class="modal-title">Изменить изображение</p>
+   		</div>
+		<form action="/shop-{{ instance.pk }}/edit/edit-image/" method="post" enctype='multipart/form-data'>
+			<!-- modal body -->
+			<div class="modal-body">
+					{% csrf_token %}
+					{{ form }}
+			</div>
+			<!-- /modal body -->
+
+			<div class="modal-footer"><!-- modal footer -->
+				<button class="btn btn-default" data-dismiss="modal">Отмена</button>
+				<button type="submit" class="btn btn-primary">Сохранить изображение</button>
+			</div><!-- /modal footer -->
+		</form>

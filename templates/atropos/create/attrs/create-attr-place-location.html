@@ -6,7 +6,7 @@
  	  		<button type="button" class="close" data-dismiss="modal">&times;</button>
  	  		<h4 class="modal-title">Добавить место</h4>
    		</div>
-		<form name="createDirection" action="/create/attributes/create-place-location/{{ request.path|get_direction_city_url }}?instance={{ incoming_instance }}" method="post">
+		<form action="/create/attributes/create-place-location/{{ request.path|get_direction_city_url }}?instance={{ incoming_instance }}" method="post">
 			<!-- modal body -->
 			<div class="modal-body">
 					{% csrf_token %}
@@ -16,6 +16,6 @@
 			<!-- /modal body -->
 
 			<div class="modal-footer"><!-- modal footer -->
-				<button class="btn btn-default" data-dismiss="modal">Закрыть</button> <button type="submit" class="btn btn-primary">Добавить место проведения</button>
+				<button class="btn btn-default" data-dismiss="modal">Отмена</button> <button type="submit" class="btn btn-primary">Добавить</button>
 			</div><!-- /modal footer -->
 		</form>

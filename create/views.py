@@ -7,10 +7,13 @@ from entities.forms import PhoneNumberForm
 from entities.forms.classes import DirectionForm, CityForm
 from entities.forms.events import CutEventForm, CutPromoActionForm
 from entities.forms.links import EventLinkForm, PromoActionLinkForm, PlaceLinkForm, SchoolLinkForm, TeacherLinkForm, \
-    OrganizationLinkForm, PersonLinkForm
+    OrganizationLinkForm, PersonLinkForm, ShopLinkForm, CustomerServicesLinkForm, HallLinkForm
 from entities.forms.locations import CutPlaceLocationForm, PlaceMapCoordinatesForm, SchoolMapCoordinatesForm, \
-    CutSchoolLocationForm, OrganizationMapCoordinatesForm, CutOrganizationLocationForm
-from entities.forms.pages import CutPlaceForm, CutSchoolForm, CutTeacherForm, CutOrganizationForm, CutPersonForm
+    CutSchoolLocationForm, OrganizationMapCoordinatesForm, CutOrganizationLocationForm, ShopMapCoordinatesForm, \
+    CutShopLocationForm, CutHallLocationForm, HallMapCoordinatesForm, CutCustomerServicesLocationForm, \
+    CustomerServicesMapCoordinatesForm
+from entities.forms.pages import CutPlaceForm, CutSchoolForm, CutTeacherForm, CutOrganizationForm, CutPersonForm, \
+    CutShopForm, CutCustomerServicesForm, CutHallForm
 
 
 def create(request, city_title=None, direction_title=None):
@@ -27,7 +30,10 @@ def create_instance(request, instance=None, city_title=None, direction_title=Non
         'school': CutSchoolForm(request.POST or None),
         'teacher': CutTeacherForm(request.POST or None),
         'organization': CutOrganizationForm(request.POST or None),
-        'person': CutPersonForm(request.POST or None)
+        'person': CutPersonForm(request.POST or None),
+        'shop': CutShopForm(request.POST or None),
+        'customer-services': CutCustomerServicesForm(request.POST or None),
+        'hall': CutHallForm(request.POST or None)
 
     }.get(instance, None)
 
@@ -61,9 +67,16 @@ def create_attr(request, attribute=None, city_title=None, direction_title=None):
         form = PersonLinkForm(request.POST or None)
     if attribute == 'promo-action-link':
         form = PromoActionLinkForm(request.POST or None)
+    if attribute == 'shop-link':
+        form = ShopLinkForm(request.POST or None)
+    if attribute == 'customer-services-link':
+        form = CustomerServicesLinkForm(request.POST or None)
+    if attribute == 'hall-link':
+        form = HallLinkForm(request.POST or None)
     if attribute == 'event-location':
         form = EventLocationForm(request.POST or None)
-    if attribute in ['place-location', 'school-location', 'organization-location']:
+    if attribute in ['place-location', 'school-location', 'organization-location', 'shop-location',
+                     'customer-services-location', 'hall-location']:
         if attribute == 'place-location':
             form = CutPlaceLocationForm(request.POST or None)
             form1 = PlaceMapCoordinatesForm(request.POST or None)
@@ -73,6 +86,15 @@ def create_attr(request, attribute=None, city_title=None, direction_title=None):
         if attribute == 'organization-location':
             form = CutOrganizationLocationForm(request.POST or None)
             form1 = OrganizationMapCoordinatesForm(request.POST or None)
+        if attribute == 'shop-location':
+            form = CutShopLocationForm(request.POST or None)
+            form1 = ShopMapCoordinatesForm(request.POST or None)
+        if attribute == 'customer-services-location':
+            form = CutCustomerServicesLocationForm(request.POST or None)
+            form1 = CustomerServicesMapCoordinatesForm(request.POST or None)
+        if attribute == 'hall-location':
+            form = CutHallLocationForm(request.POST or None)
+            form1 = HallMapCoordinatesForm(request.POST or None)
         if form.is_valid():
             coordinates = form1.save()
             location = form.save(commit=False)

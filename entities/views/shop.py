@@ -1,18 +1,32 @@
-from django.shortcuts import render, get_object_or_404
+from entities.edit_forms.shop import EditShopTitleForm, EditShopDirectionsForm, EditShopCitiesForm, \
+    EditShopDescriptionForm, EditShopImageForm, EditShopShopLocationForm, EditShopShopTypesForm, EditShopLinksForm, \
+    EditShopPolicyForm, EditShopEmployeesForm, EditShopShopContactForm, EditShopSocialsForm
 
-from directions.all.forms import SchoolsFilterForm
-from entities.models import Shop
+SHOP_EDIT_BUTTONS = [
+    ('shop', 'title', 'Название'),
+    ('shop', 'directions', 'Направления'),
+    ('shop', 'cities', 'Города'),
+    ('shop', 'types', 'Типы магазина'),
+    ('shop', 'description', 'Описание'),
+    ('shop', 'image', 'Изображение'),
+    ('shop', 'shop-locations', 'Места'),
+    ('shop', 'employees', 'Сотрудники'),
+    ('shop', 'shop-links', 'Ссылки'),
+    ('shop', 'shop-contacts', 'Контакты'),
+    ('shop', 'policy', 'Права пользователей'),
+]
 
-
-def shop(request, shop_id, direction_title=None, city_title=None):
-    current_shop = get_object_or_404(Shop, pk=shop_id)
-    title = '%s' % (current_shop.title,)
-
-    form = SchoolsFilterForm(request.POST or None, direction=direction_title)
-
-    context = {
-        'title': title,
-        'instance': current_shop,
-        'form': form
-    }
-    return render(request, 'map/shop/shop-single.html', context)
+SHOP_ATTRIBUTE_FORMS = {
+    'title': EditShopTitleForm,
+    'directions': EditShopDirectionsForm,
+    'cities': EditShopCitiesForm,
+    'description': EditShopDescriptionForm,
+    'image': EditShopImageForm,
+    'shop-locations': EditShopShopLocationForm,
+    'types': EditShopShopTypesForm,
+    'shop-links': EditShopLinksForm,
+    'policy': EditShopPolicyForm,
+    'employees': EditShopEmployeesForm,
+    'contacts': EditShopShopContactForm,
+    'socials': EditShopSocialsForm
+}

@@ -1,18 +1,30 @@
-from django.shortcuts import render, get_object_or_404
+from entities.edit_forms.hall import EditHallTitleForm, EditHallDirectionsForm, EditHallCitiesForm, \
+    EditHallDescriptionForm, EditHallImageForm, EditHallHallLocationForm, EditHallLinksForm, EditHallPolicyForm, \
+    EditHallEmployeesForm, EditHallHallContactForm, EditHallSocialsForm
 
-from directions.all.forms import HallsFilterForm
-from entities.models import Hall
+HALL_EDIT_BUTTONS = [
+    ('hall', 'title', 'Название'),
+    ('hall', 'directions', 'Направления'),
+    ('hall', 'cities', 'Города'),
+    ('hall', 'description', 'Описание'),
+    ('hall', 'image', 'Изображение'),
+    ('hall', 'hall-locations', 'Места'),
+    ('hall', 'employees', 'Сотрудники'),
+    ('hall', 'hall-links', 'Ссылки'),
+    ('hall', 'hall-contacts', 'Контакты'),
+    ('hall', 'policy', 'Права пользователей'),
+]
 
-
-def hall(request, hall_id, direction_title=None, city_title=None):
-    current_hall = get_object_or_404(Hall, pk=hall_id)
-    title = '%s' % (current_hall.title,)
-
-    form = HallsFilterForm(request.POST or None, direction=direction_title)
-
-    context = {
-        'title': title,
-        'instance': current_hall,
-        'form': form
-    }
-    return render(request, 'map/hall/hall-single.html', context)
+HALL_ATTRIBUTE_FORMS = {
+    'title': EditHallTitleForm,
+    'directions': EditHallDirectionsForm,
+    'cities': EditHallCitiesForm,
+    'description': EditHallDescriptionForm,
+    'image': EditHallImageForm,
+    'hall-locations': EditHallHallLocationForm,
+    'hall-links': EditHallLinksForm,
+    'policy': EditHallPolicyForm,
+    'employees': EditHallEmployeesForm,
+    'contacts': EditHallHallContactForm,
+    'socials': EditHallSocialsForm
+}

@@ -49,6 +49,14 @@ class ShopMapCoordinates(AbstractMapCoordinates):
         return 'Shop: Lat:%s, lng: %s' % (self.lat, self.lng)
 
 
+class CustomerServicesMapCoordinates(AbstractMapCoordinates):
+    def __str__(self):
+        if hasattr(self, 'customerserviceslocation'):
+            return 'CustomerServices: %s - Lat:%s, lng: %s' % (self.customerserviceslocation.shop_set.all(),
+                                                               self.lat, self.lng)
+        return 'CustomerServices: Lat:%s, lng: %s' % (self.lat, self.lng)
+
+
 class HallMapCoordinates(AbstractMapCoordinates):
     def __str__(self):
         if hasattr(self, 'halllocation'):
@@ -90,8 +98,6 @@ class PlaceLocation(AbstractLocation):
 
 class SchoolLocation(AbstractLocation):
     coordinates = models.OneToOneField(SchoolMapCoordinates, on_delete=models.CASCADE, blank=True, null=True)
-    # school = models.ForeignKey('School', on_delete=models.CASCADE, related_name="locations",
-    #                            related_query_name="location", blank=True, null=True)
 
 
 class OrganizationLocation(AbstractLocation):
@@ -100,6 +106,10 @@ class OrganizationLocation(AbstractLocation):
 
 class ShopLocation(AbstractLocation):
     coordinates = models.OneToOneField(ShopMapCoordinates, on_delete=models.CASCADE, blank=True, null=True)
+
+
+class CustomerServicesLocation(AbstractLocation):
+    coordinates = models.OneToOneField(CustomerServicesMapCoordinates, on_delete=models.CASCADE, blank=True, null=True)
 
 
 class HallLocation(AbstractLocation):

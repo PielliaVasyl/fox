@@ -4,6 +4,7 @@ from entities.forms import AbstractLocationForm
 from entities.forms import AbstractMapCoordinatesForm, PlaceMapCoordinatesForm, SchoolMapCoordinatesForm, \
     OrganizationMapCoordinatesForm, ShopMapCoordinatesForm, HallMapCoordinatesForm, EventLocationForm, \
     PlaceLocationForm, SchoolLocationForm, OrganizationLocationForm, ShopLocationForm, HallLocationForm
+from entities.forms.locations import CustomerServicesMapCoordinatesForm, CustomerServicesLocationForm
 from entities.models import AbstractMapCoordinates, PlaceMapCoordinates, SchoolMapCoordinates, \
     OrganizationMapCoordinates, ShopMapCoordinates, HallMapCoordinates, AbstractLocation, \
     EventLocation, PlaceLocation, SchoolLocation, OrganizationLocation, ShopLocation, HallLocation
@@ -14,6 +15,7 @@ from entities.models import AbstractMapCoordinates, PlaceMapCoordinates, SchoolM
 #     form = AbstractMapCoordinatesForm
 #
 # admin.site.register(AbstractMapCoordinates, AbstractMapCoordinatesAdmin)
+from entities.models.locations import CustomerServicesMapCoordinates, CustomerServicesLocation
 
 
 class PlaceMapCoordinatesAdmin(admin.ModelAdmin):
@@ -42,6 +44,13 @@ class ShopMapCoordinatesAdmin(admin.ModelAdmin):
     form = ShopMapCoordinatesForm
 
 admin.site.register(ShopMapCoordinates, ShopMapCoordinatesAdmin)
+
+
+class CustomerServicesMapCoordinatesAdmin(admin.ModelAdmin):
+    list_display = ['lat', 'lng', 'author', 'created', 'updated']
+    form = CustomerServicesMapCoordinatesForm
+
+admin.site.register(CustomerServicesMapCoordinates, CustomerServicesMapCoordinatesAdmin)
 
 
 class HallMapCoordinatesAdmin(admin.ModelAdmin):
@@ -91,6 +100,13 @@ class ShopLocationAdmin(admin.ModelAdmin):
     form = ShopLocationForm
 
 admin.site.register(ShopLocation, ShopLocationAdmin)
+
+
+class CustomerServicesLocationAdmin(admin.ModelAdmin):
+    list_display = ['city', 'address', 'note', 'coordinates', 'author', 'created', 'updated']
+    form = CustomerServicesLocationForm
+
+admin.site.register(CustomerServicesLocation, CustomerServicesLocationAdmin)
 
 
 class HallLocationAdmin(admin.ModelAdmin):
