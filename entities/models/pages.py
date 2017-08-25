@@ -311,9 +311,18 @@ def create_hall_contacts(sender, instance, created, **kwargs):
 
 
 class Resource(EmployersPage):
+    employees = models.ManyToManyField(EmployeesPage, blank=True)
+
     links = models.ManyToManyField(ResourceLink, blank=True)
     contacts = models.OneToOneField(ResourceContacts, on_delete=models.CASCADE, null=True, blank=True)
 
     owners = models.ManyToManyField(UserProfile, blank=True, related_name='resources_owner')
     contributors = models.ManyToManyField(UserProfile, blank=True, related_name='resources_contributor')
     author = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='resources_author')
+
+@receiver(post_save, sender=Resource)
+def create_resource_contacts(sender, instance, created, **kwargs):
+    if created:
+        contacts = ResourceContacts.objects.create(resource=instance, author_id=instance.author_id)
+        instance.contacts = contacts
+        instance.save()

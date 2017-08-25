@@ -8,8 +8,7 @@ register = template.Library()
 def get_instance_id(text):
     result = ''
     words = {'/event-', '/promo-action-', '/place-', '/school-', '/teacher-', '/organization-', '/person-', '/shop-',
-             '/customer-services-', '/hall-'}
-
+             '/customer-services-', '/hall-', '/resource-'}
     for word in words:
         if word in text:
             result += text[text.find(word):text.find('/', text.find(word)+1)]

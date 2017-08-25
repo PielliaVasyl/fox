@@ -7,13 +7,14 @@ from entities.forms import PhoneNumberForm
 from entities.forms.classes import DirectionForm, CityForm
 from entities.forms.events import CutEventForm, CutPromoActionForm
 from entities.forms.links import EventLinkForm, PromoActionLinkForm, PlaceLinkForm, SchoolLinkForm, TeacherLinkForm, \
-    OrganizationLinkForm, PersonLinkForm, ShopLinkForm, CustomerServicesLinkForm, HallLinkForm
+    ShopLinkForm, CustomerServicesLinkForm, HallLinkForm, OrganizationLinkForm, PersonLinkForm, ResourceLinkForm
 from entities.forms.locations import CutPlaceLocationForm, PlaceMapCoordinatesForm, SchoolMapCoordinatesForm, \
     CutSchoolLocationForm, OrganizationMapCoordinatesForm, CutOrganizationLocationForm, ShopMapCoordinatesForm, \
     CutShopLocationForm, CutHallLocationForm, HallMapCoordinatesForm, CutCustomerServicesLocationForm, \
     CustomerServicesMapCoordinatesForm
 from entities.forms.pages import CutPlaceForm, CutSchoolForm, CutTeacherForm, CutOrganizationForm, CutPersonForm, \
-    CutShopForm, CutCustomerServicesForm, CutHallForm
+    CutShopForm, CutCustomerServicesForm, CutHallForm, CutResourceForm
+
 
 
 def create(request, city_title=None, direction_title=None):
@@ -33,7 +34,8 @@ def create_instance(request, instance=None, city_title=None, direction_title=Non
         'person': CutPersonForm(request.POST or None),
         'shop': CutShopForm(request.POST or None),
         'customer-services': CutCustomerServicesForm(request.POST or None),
-        'hall': CutHallForm(request.POST or None)
+        'hall': CutHallForm(request.POST or None),
+        'resource': CutResourceForm(request.POST or None),
 
     }.get(instance, None)
 
@@ -73,6 +75,8 @@ def create_attr(request, attribute=None, city_title=None, direction_title=None):
         form = CustomerServicesLinkForm(request.POST or None)
     if attribute == 'hall-link':
         form = HallLinkForm(request.POST or None)
+    if attribute == 'resource-link':
+        form = ResourceLinkForm(request.POST or None)
     if attribute == 'event-location':
         form = EventLocationForm(request.POST or None)
     if attribute in ['place-location', 'school-location', 'organization-location', 'shop-location',

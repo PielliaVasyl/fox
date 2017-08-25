@@ -4,7 +4,7 @@ from entities.forms import AbstractSocialLinkForm, SocialLinkFBForm, SocialLinkV
     SocialLinkTwitterForm, SocialsForm, PhoneNumberForm, AbstractContactsForm, SchoolContactsForm, \
     OrganizationContactsForm, TeacherContactsForm, PersonContactsForm, ShopContactsForm, HallContactsForm, \
     ResourceContactsForm
-from entities.forms import CustomerServicesForm
+# from entities.forms import CustomerServicesForm
 from entities.forms.contacts import CustomerServicesContactsForm
 from entities.models import AbstractSocialLink, SocialLinkFB, SocialLinkVK, SocialLinkInstagram, \
     SocialLinkTwitter, Socials, PhoneNumber, AbstractContacts, SchoolContacts, OrganizationContacts, TeacherContacts, \
