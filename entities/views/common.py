@@ -10,7 +10,7 @@ from entities.views.customer_services import CUSTOMER_SERVICES_EDIT_BUTTONS, CUS
 from entities.models.types import DayOfTheWeek, EventType, ExperienceLevel, PlaceType, PriceType, RepeatsType
 from entities.models.pages import Place, School, Organization, Teacher, Person, Shop, CustomerServices, Hall, Resource
 from entities.models.contacts import OrganizationContacts, SchoolContacts, TeacherContacts, PersonContacts, \
-    ShopContacts, CustomerServicesContacts, HallContacts, ResourceContacts
+    ShopContacts, CustomerServicesContacts, HallContacts, ResourceContacts, Socials
 from entities.models.events import Event, PromoAction
 
 from entities.views.event import EVENT_EDIT_BUTTONS, EVENT_ATTRIBUTE_FORMS

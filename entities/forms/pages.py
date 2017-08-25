@@ -129,6 +129,7 @@ class CutCustomerServicesForm(forms.ModelForm):
 class CutHallForm(forms.ModelForm):
     class Meta:
         model = Hall
+        fields = CUT_FORM_FIELDS
 
 
 class CutResourceForm(forms.ModelForm):

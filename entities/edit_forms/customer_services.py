@@ -24,7 +24,7 @@ class EditCustomerServicesCitiesForm(forms.ModelForm):
         fields = ['cities']
 
 
-class EditCustomerServicesCustomerServicesTypesForm(forms.ModelForm):
+class EditCustomerServicesCustomerServicesTypesForm(forms.Form):
     types = forms.MultipleChoiceField(choices=CustomerServicesType.TITLE_CHOICES)
 
 

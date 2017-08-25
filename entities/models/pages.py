@@ -7,7 +7,8 @@ from entities.models.contacts import SchoolContacts, OrganizationContacts, Teach
     ShopContacts, HallContacts, ResourceContacts, CustomerServicesContacts
 from entities.models.links import ResourceLink, HallLink, CustomerServicesLink, ShopLink, PersonLink, \
     TeacherLink, OrganizationLink, SchoolLink, PlaceLink
-from entities.models.locations import PlaceLocation, OrganizationLocation, ShopLocation, HallLocation, SchoolLocation
+from entities.models.locations import PlaceLocation, OrganizationLocation, ShopLocation, HallLocation, SchoolLocation, \
+    CustomerServicesLocation
 from entities.models.supportclasses import PageLocalClasses, PlaceLocalClasses, SchoolLocalClasses, TeacherLocalClasses, \
     OrganizationLocalClasses, PersonLocalClasses
 from entities.models.types import PlaceType, ShopType, CustomerServicesType
@@ -267,7 +268,7 @@ def create_shop_contacts(sender, instance, created, **kwargs):
 class CustomerServices(EmployersPage):
     types = models.ManyToManyField(CustomerServicesType, blank=True)
 
-    locations = models.ManyToManyField(ShopLocation, blank=True)
+    locations = models.ManyToManyField(CustomerServicesLocation, blank=True)
     employees = models.ManyToManyField(EmployeesPage, blank=True)
 
     links = models.ManyToManyField(CustomerServicesLink, blank=True)
