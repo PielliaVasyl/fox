@@ -1,8 +1,11 @@
+# -*- coding: utf-8 -*-
+
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 
 from algoritms.get_direction_city_parameter import get_direction_city_parameter
-from entities.forms import EventLocationForm
+from entities.forms import EventLocationForm, ArticleTagForm, ChapterTagForm, AlbumTagForm, PlaylistTagForm, \
+    TracklistTagForm, DanceDirectionTagForm, PhotoTagForm, VideoTagForm, AudioTagForm, DanceStyleTagForm
 from entities.forms import PhoneNumberForm
 from entities.forms.classes import DirectionForm, CityForm
 from entities.forms.events import CutEventForm, CutPromoActionForm
@@ -14,7 +17,8 @@ from entities.forms.locations import CutPlaceLocationForm, PlaceMapCoordinatesFo
     CustomerServicesMapCoordinatesForm
 from entities.forms.pages import CutPlaceForm, CutSchoolForm, CutTeacherForm, CutOrganizationForm, CutPersonForm, \
     CutShopForm, CutCustomerServicesForm, CutHallForm, CutResourceForm
-
+from entities.forms.posts import CutArticleForm, CutChapterForm, CutPhotoForm, CutAlbumForm, CutVideoForm, \
+    CutPlaylistForm, CutAudioForm, CutTracklistForm, CutDanceStyleForm, CutDanceDirectionForm
 
 
 def create(request, city_title=None, direction_title=None):
@@ -24,6 +28,32 @@ def create(request, city_title=None, direction_title=None):
 
 
 def create_instance(request, instance=None, city_title=None, direction_title=None):
+    html_template_path = 'create/create-entity.html'
+    entity_url = instance
+    entity_title = {
+        'event': 'мероприятие',
+        'promo-action': 'акцию',
+        'place': 'место на карте',
+        'school': 'школу',
+        'teacher': 'учителя',
+        'organization': 'организацию',
+        'person': 'персону',
+        'shop': 'магазин',
+        'customer-services': 'услуги',
+        'hall': 'зал для оренды',
+        'resource': 'информационный ресурс',
+        'article': 'статью',
+        'chapter': 'главу',
+        'photo': 'фото',
+        'album': 'Альбом',
+        'video': 'Видео',
+        'playlist': 'Плейлист',
+        'audio': 'Аудио',
+        'tracklist': 'треклист',
+        'dance-style': 'танцевальный стиль',
+        'dance-direction': 'танцевальное направление',
+    }.get(instance, 'Неизнестный экземпляр')
+    title = 'Добавить ' + entity_title
     form = {
         'event': CutEventForm(request.POST or None),
         'promo-action': CutPromoActionForm(request.POST or None),
@@ -36,7 +66,16 @@ def create_instance(request, instance=None, city_title=None, direction_title=Non
         'customer-services': CutCustomerServicesForm(request.POST or None),
         'hall': CutHallForm(request.POST or None),
         'resource': CutResourceForm(request.POST or None),
-
+        'article': CutArticleForm(request.POST or None),
+        'chapter': CutChapterForm(request.POST or None),
+        'photo': CutPhotoForm(request.POST or None),
+        'album': CutAlbumForm(request.POST or None),
+        'video': CutVideoForm(request.POST or None),
+        'playlist': CutPlaylistForm(request.POST or None),
+        'audio': CutAudioForm(request.POST or None),
+        'tracklist': CutTracklistForm(request.POST or None),
+        'dance-style': CutDanceStyleForm(request.POST or None),
+        'dance-direction': CutDanceDirectionForm(request.POST or None)
     }.get(instance, None)
 
     if form.is_valid():
@@ -45,8 +84,10 @@ def create_instance(request, instance=None, city_title=None, direction_title=Non
                                     (my_instance.pk, get_direction_city_parameter(city_title, direction_title)))
     context = {
         'form': form,
+        'title': title,
+        'entity_url': entity_url
     }
-    return render(request, 'create/create-' + instance + '.html', context)
+    return render(request, html_template_path, context)
 
 
 def create_attr(request, attribute=None, city_title=None, direction_title=None):
@@ -117,7 +158,26 @@ def create_attr(request, attribute=None, city_title=None, direction_title=None):
         return render(request, html_template_path, context)
     if attribute == 'phone-number':
         form = PhoneNumberForm(request.POST or None)
-
+    if attribute == 'chapter-tag':
+        form = ChapterTagForm(request.POST or None)
+    if attribute == 'album-tag':
+        form = AlbumTagForm(request.POST or None)
+    if attribute == 'playlist-tag':
+        form = PlaylistTagForm(request.POST or None)
+    if attribute == 'tracklist-tag':
+        form = TracklistTagForm(request.POST or None)
+    if attribute == 'dance-direction-tag':
+        form = DanceDirectionTagForm(request.POST or None)
+    if attribute == 'article-tag':
+        form = ArticleTagForm(request.POST or None)
+    if attribute == 'photo-tag':
+        form = PhotoTagForm(request.POST or None)
+    if attribute == 'video-tag':
+        form = VideoTagForm(request.POST or None)
+    if attribute == 'audio-tag':
+        form = AudioTagForm(request.POST or None)
+    if attribute == 'dance-style-tag':
+        form = DanceStyleTagForm(request.POST or None)
     if form.is_valid():
         form.save()
         return HttpResponseRedirect('/%s/edit/%s' %

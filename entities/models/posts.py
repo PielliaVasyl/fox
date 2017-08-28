@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 from entities.models.classes import Direction
 from entities.models.links import ArticleLink, AudioLink, PhotoLink, PlaylistLink, VideoLink, DanceStyleAuthorLink
@@ -10,9 +12,7 @@ from entities.models.userprofile import UserProfile
 
 class AbstractPostGroup(models.Model):
     title = models.CharField(max_length=100)
-
     directions = models.ManyToManyField(Direction, blank=True)
-
     description = models.TextField(blank=True)
 
     created = models.DateTimeField(auto_now=False, auto_now_add=True)
@@ -68,6 +68,14 @@ class Playlist(AbstractPostGroup):
     author = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
 
 
+@receiver(post_save, sender=Playlist)
+def create_playlist_link(sender, instance, created, **kwargs):
+    if created:
+        link = PlaylistLink.objects.create(playlist=instance, author_id=instance.author_id)
+        instance.link = link
+        instance.save()
+
+
 class Tracklist(AbstractPostGroup):
     tags = models.ManyToManyField(TracklistTag, blank=True)
 
@@ -84,11 +92,19 @@ class DanceDirection(AbstractPostGroup):
     author = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
 
 
+@receiver(post_save, sender=DanceDirection)
+def create_dance_direction_tag(sender, instance, created, **kwargs):
+    if created:
+        tag = DanceDirectionTag.objects.create(title=instance.title,
+                                               author_id=instance.author_id,
+                                               direction=Direction.objects.get(title='dance'))
+        instance.tags.add(tag)
+        instance.save()
+
+
 class AbstractPost(models.Model):
     title = models.CharField(max_length=100)
-
     directions = models.ManyToManyField(Direction, blank=True)
-
     description = models.TextField(blank=True)
 
     created = models.DateTimeField(auto_now=False, auto_now_add=True)
@@ -140,6 +156,14 @@ class Article(AbstractPost):
     author = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='articles_author')
 
 
+@receiver(post_save, sender=Article)
+def create_article_link(sender, instance, created, **kwargs):
+    if created:
+        link = ArticleLink.objects.create(article=instance, author_id=instance.author_id)
+        instance.link = link
+        instance.save()
+
+
 class Photo(AbstractPost):
     tags = models.ManyToManyField(PhotoTag, blank=True)
     link = models.OneToOneField(PhotoLink, blank=True, null=True)
@@ -151,6 +175,13 @@ class Photo(AbstractPost):
     author = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='photos_author')
 
 
+@receiver(post_save, sender=Photo)
+def create_photo_link(sender, instance, created, **kwargs):
+    if created:
+        link = PhotoLink.objects.create(photo=instance, author_id=instance.author_id)
+        instance.link = link
+        instance.save()
+
 class Video(AbstractPost):
     tags = models.ManyToManyField(VideoTag, blank=True)
     link = models.OneToOneField(VideoLink, blank=True, null=True)
@@ -161,6 +192,14 @@ class Video(AbstractPost):
     author = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='videos_author')
 
 
+@receiver(post_save, sender=Video)
+def create_video_link(sender, instance, created, **kwargs):
+    if created:
+        link = VideoLink.objects.create(video=instance, author_id=instance.author_id)
+        instance.link = link
+        instance.save()
+
+
 class Audio(AbstractPost):
     tags = models.ManyToManyField(AudioTag, blank=True)
     link = models.OneToOneField(AudioLink, blank=True, null=True)
@@ -169,6 +208,14 @@ class Audio(AbstractPost):
     owners = models.ManyToManyField(UserProfile, blank=True, related_name='audios_owner')
     contributors = models.ManyToManyField(UserProfile, blank=True, related_name='audios_contributor')
     author = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='audios_author')
+
+
+@receiver(post_save, sender=Audio)
+def create_audio_link(sender, instance, created, **kwargs):
+    if created:
+        link = AudioLink.objects.create(audio=instance, author_id=instance.author_id)
+        instance.link = link
+        instance.save()
 
 
 class DanceStyle(AbstractPost):
@@ -210,3 +257,21 @@ class DanceStyle(AbstractPost):
     owners = models.ManyToManyField(UserProfile, blank=True, related_name='dance_styles_owner')
     contributors = models.ManyToManyField(UserProfile, blank=True, related_name='dance_styles_contributor')
     author = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='dance_styles_author')
+
+
+@receiver(post_save, sender=DanceStyle)
+def create_audio_link(sender, instance, created, **kwargs):
+    if created:
+        link = DanceStyleAuthorLink.objects.create(dancestyle=instance, author_id=instance.author_id)
+        instance.link_to_author = link
+        instance.save()
+
+
+@receiver(post_save, sender=DanceStyle)
+def create_dance_style_tag(sender, instance, created, **kwargs):
+    if created:
+        tag = DanceStyleTag.objects.create(title=instance.title,
+                                           author_id=instance.author_id,
+                                           direction=Direction.objects.get(title='dance'))
+        instance.tags.add(tag)
+        instance.save()

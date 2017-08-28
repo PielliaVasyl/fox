@@ -37,16 +37,16 @@
 
                         <h2><strong>Материал</strong></h2>
 
-						<button type="button" class="btn btn-primary">Статья</button>
-						<button type="button" class="btn btn-primary">Глава</button>
-						<button type="button" class="btn btn-primary">Фото</button>
-						<button type="button" class="btn btn-primary">Альбом</button>
-						<button type="button" class="btn btn-primary">Видео</button>
-						<button type="button" class="btn btn-primary">Плейлист</button>
-						<button type="button" class="btn btn-primary">Аудио</button>
-						<button type="button" class="btn btn-primary">Треклист</button>
-						<button type="button" class="btn btn-primary">Танцевальный стиль</button>
-						<button type="button" class="btn btn-primary">Танцевальное направление</button>
+                        <a href="/create/article/{{ request.path|get_direction_city_url }}" class="btn btn-primary" data-toggle="modal" data-target=".ajax_modal_container">Статья</a>
+                        <a href="/create/chapter/{{ request.path|get_direction_city_url }}" class="btn btn-primary" data-toggle="modal" data-target=".ajax_modal_container">Глава</a>
+                        <a href="/create/photo/{{ request.path|get_direction_city_url }}" class="btn btn-primary" data-toggle="modal" data-target=".ajax_modal_container">Фото</a>
+                        <a href="/create/album/{{ request.path|get_direction_city_url }}" class="btn btn-primary" data-toggle="modal" data-target=".ajax_modal_container">Альбом</a>
+                        <a href="/create/video/{{ request.path|get_direction_city_url }}" class="btn btn-primary" data-toggle="modal" data-target=".ajax_modal_container">Видео</a>
+                        <a href="/create/playlist/{{ request.path|get_direction_city_url }}" class="btn btn-primary" data-toggle="modal" data-target=".ajax_modal_container">Плейлист</a>
+                        <a href="/create/audio/{{ request.path|get_direction_city_url }}" class="btn btn-primary" data-toggle="modal" data-target=".ajax_modal_container">Аудио</a>
+                        <a href="/create/tracklist/{{ request.path|get_direction_city_url }}" class="btn btn-primary" data-toggle="modal" data-target=".ajax_modal_container">Треклист</a>
+                        <a href="/create/dance-style/{{ request.path|get_direction_city_url }}" class="btn btn-primary" data-toggle="modal" data-target=".ajax_modal_container">Танцевальный стиль</a>
+                        <a href="/create/dance-direction/{{ request.path|get_direction_city_url }}" class="btn btn-primary" data-toggle="modal" data-target=".ajax_modal_container">Танцевальное направление</a>
 
 					</div>
 

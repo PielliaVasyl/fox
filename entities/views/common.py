@@ -1,28 +1,49 @@
+# -*- coding: utf-8 -*-
+
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 
 from algoritms.get_direction_city_parameter import get_direction_city_parameter
 from directions.all.forms import EventsFilterForm, PromoActionsFilterForm, PlacesFilterForm, SchoolsFilterForm, \
     ShopsFilterForm, CustomerServicesFilterForm, HallsFilterForm
+from entities.models import Article, Playlist, Audio, Tracklist, DanceStyle, DanceDirection
+from entities.models import Chapter
+from entities.models import Photo
+from entities.models import Album
+from entities.models import Video
 
 from entities.models.types import ShopType, CustomerServicesType
+from entities.views.album import ALBUM_EDIT_BUTTONS, ALBUM_ATTRIBUTE_FORMS
+from entities.views.article import ARTICLE_EDIT_BUTTONS, ARTICLE_ATTRIBUTE_FORMS
+from entities.views.audio import AUDIO_EDIT_BUTTONS, AUDIO_ATTRIBUTE_FORMS
+from entities.views.chapter import CHAPTER_EDIT_BUTTONS, CHAPTER_ATTRIBUTE_FORMS
 from entities.views.customer_services import CUSTOMER_SERVICES_EDIT_BUTTONS, CUSTOMER_SERVICES_ATTRIBUTE_FORMS
 from entities.models.types import DayOfTheWeek, EventType, ExperienceLevel, PlaceType, PriceType, RepeatsType
 from entities.models.pages import Place, School, Organization, Teacher, Person, Shop, CustomerServices, Hall, Resource
 from entities.models.contacts import OrganizationContacts, SchoolContacts, TeacherContacts, PersonContacts, \
     ShopContacts, CustomerServicesContacts, HallContacts, ResourceContacts, Socials
 from entities.models.events import Event, PromoAction
+from entities.views.dance_direction import DANCE_DIRECTION_EDIT_BUTTONS
+from entities.views.dance_direction import DANCE_DIRECTION_ATTRIBUTE_FORMS
+from entities.views.dance_style import DANCE_STYLE_EDIT_BUTTONS
+from entities.views.dance_style import DANCE_STYLE_ATTRIBUTE_FORMS
 
 from entities.views.event import EVENT_EDIT_BUTTONS, EVENT_ATTRIBUTE_FORMS
 from entities.views.hall import HALL_EDIT_BUTTONS, HALL_ATTRIBUTE_FORMS
 from entities.views.organization import ORGANIZATION_EDIT_BUTTONS, ORGANIZATION_ATTRIBUTE_FORMS
 from entities.views.person import PERSON_EDIT_BUTTONS, PERSON_ATTRIBUTE_FORMS
+from entities.views.photo import PHOTO_EDIT_BUTTONS
+from entities.views.photo import PHOTO_ATTRIBUTE_FORMS
 from entities.views.place import PLACE_EDIT_BUTTONS, PLACE_ATTRIBUTE_FORMS
+from entities.views.playlist import PLAYLIST_EDIT_BUTTONS
+from entities.views.playlist import PLAYLIST_ATTRIBUTE_FORMS
 from entities.views.promo_action import PROMO_ACTION_EDIT_BUTTONS, PROMO_ACTION_ATTRIBUTE_FORMS
 from entities.views.resource import RESOURCE_EDIT_BUTTONS, RESOURCE_ATTRIBUTE_FORMS
 from entities.views.school import SCHOOL_EDIT_BUTTONS, SCHOOL_ATTRIBUTE_FORMS
 from entities.views.shop import SHOP_EDIT_BUTTONS, SHOP_ATTRIBUTE_FORMS
 from entities.views.teacher import TEACHER_EDIT_BUTTONS, TEACHER_ATTRIBUTE_FORMS
+from entities.views.tracklist import TRACKLIST_EDIT_BUTTONS, TRACKLIST_ATTRIBUTE_FORMS
+from entities.views.video import VIDEO_EDIT_BUTTONS, VIDEO_ATTRIBUTE_FORMS
 
 ENTITY = {
     'event': Event,
@@ -35,7 +56,17 @@ ENTITY = {
     'shop': Shop,
     'customer-services': CustomerServices,
     'hall': Hall,
-    'resource': Resource
+    'resource': Resource,
+    'article': Article,
+    'chapter': Chapter,
+    'photo': Photo,
+    'album': Album,
+    'video': Video,
+    'playlist': Playlist,
+    'audio': Audio,
+    'tracklist': Tracklist,
+    'dance-style': DanceStyle,
+    'dance-direction': DanceDirection
 }
 
 ENTITY_FILTER_FORM = {
@@ -63,6 +94,16 @@ EDIT_BUTTONS = {
     'customer-services': CUSTOMER_SERVICES_EDIT_BUTTONS,
     'hall': HALL_EDIT_BUTTONS,
     'resource': RESOURCE_EDIT_BUTTONS,
+    'article': ARTICLE_EDIT_BUTTONS,
+    'chapter': CHAPTER_EDIT_BUTTONS,
+    'photo': PHOTO_EDIT_BUTTONS,
+    'album': ALBUM_EDIT_BUTTONS,
+    'video': VIDEO_EDIT_BUTTONS,
+    'playlist': PLAYLIST_EDIT_BUTTONS,
+    'audio': AUDIO_EDIT_BUTTONS,
+    'tracklist': TRACKLIST_EDIT_BUTTONS,
+    'dance-style': DANCE_STYLE_EDIT_BUTTONS,
+    'dance-direction': DANCE_DIRECTION_EDIT_BUTTONS
 }
 
 ATTRIBUTE_FORMS = {
@@ -77,8 +118,17 @@ ATTRIBUTE_FORMS = {
     'customer-services': CUSTOMER_SERVICES_ATTRIBUTE_FORMS,
     'hall': HALL_ATTRIBUTE_FORMS,
     'resource': RESOURCE_ATTRIBUTE_FORMS,
+    'article': ARTICLE_ATTRIBUTE_FORMS,
+    'chapter': CHAPTER_ATTRIBUTE_FORMS,
+    'photo': PHOTO_ATTRIBUTE_FORMS,
+    'album': ALBUM_ATTRIBUTE_FORMS,
+    'video': VIDEO_ATTRIBUTE_FORMS,
+    'playlist': PLAYLIST_ATTRIBUTE_FORMS,
+    'audio': AUDIO_ATTRIBUTE_FORMS,
+    'tracklist': TRACKLIST_ATTRIBUTE_FORMS,
+    'dance-style': DANCE_STYLE_ATTRIBUTE_FORMS,
+    'dance-direction': DANCE_DIRECTION_ATTRIBUTE_FORMS
 }
-
 
 CONTACTS_ENTITY = {
     'school': SchoolContacts,
@@ -88,7 +138,7 @@ CONTACTS_ENTITY = {
     'shop': ShopContacts,
     'customer-services': CustomerServicesContacts,
     'hall': HallContacts,
-    'resource': ResourceContacts,
+    'resource': ResourceContacts
 }
 
 

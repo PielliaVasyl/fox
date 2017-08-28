@@ -8,6 +8,7 @@ from entities.models import Event
 from entities.models import PromoAction
 from entities.models.classes import Direction
 
+CUT_FORM_FIELDS = ['title', 'author']
 
 class EventForm(forms.ModelForm):
     # directions = forms.ModelMultipleChoiceField(queryset=Direction.objects.all(), required=False)
@@ -52,13 +53,13 @@ class EventForm(forms.ModelForm):
 class CutEventForm(forms.ModelForm):
     class Meta:
         model = Event
-        fields = ['title', 'author']
+        fields = CUT_FORM_FIELDS
 
 
 class CutPromoActionForm(forms.ModelForm):
     class Meta:
         model = PromoAction
-        fields = ['title', 'author']
+        fields = CUT_FORM_FIELDS
 
 
 class PromoActionForm(forms.ModelForm):

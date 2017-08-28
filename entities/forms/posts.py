@@ -6,6 +6,8 @@ from entities.models.posts import AbstractPost, AbstractPostGroup, Album, Articl
     Tracklist, Video, DanceDirection, DanceStyle
 
 
+CUT_FORM_FIELDS = ['title', 'author']
+
 class AbstractPostGroupForm(forms.ModelForm):
     class Meta:
         model = AbstractPostGroup
@@ -79,3 +81,63 @@ class DanceStyleForm(forms.ModelForm):
         model = DanceStyle
         fields = ['title', 'directions', 'description', 'tags', 'image', 'author_of_post', 'link_to_author', 'group',
                   'count_types', 'distance_types', 'owners', 'contributors', 'author']
+
+
+class CutArticleForm(forms.ModelForm):
+    class Meta:
+        model = Article
+        fields = CUT_FORM_FIELDS
+
+
+class CutChapterForm(forms.ModelForm):
+    class Meta:
+        model = Chapter
+        fields = CUT_FORM_FIELDS
+
+
+class CutPhotoForm(forms.ModelForm):
+    class Meta:
+        model = Photo
+        fields = CUT_FORM_FIELDS
+
+
+class CutAlbumForm(forms.ModelForm):
+    class Meta:
+        model = Album
+        fields = CUT_FORM_FIELDS
+
+
+class CutVideoForm(forms.ModelForm):
+    class Meta:
+        model = Video
+        fields = CUT_FORM_FIELDS
+
+
+class CutPlaylistForm(forms.ModelForm):
+    class Meta:
+        model = Playlist
+        fields = CUT_FORM_FIELDS
+
+
+class CutAudioForm(forms.ModelForm):
+    class Meta:
+        model = Audio
+        fields = CUT_FORM_FIELDS
+
+
+class CutTracklistForm(forms.ModelForm):
+    class Meta:
+        model = Tracklist
+        fields = CUT_FORM_FIELDS
+
+
+class CutDanceStyleForm(forms.ModelForm):
+    class Meta:
+        model = DanceStyle
+        fields = CUT_FORM_FIELDS
+
+
+class CutDanceDirectionForm(forms.ModelForm):
+    class Meta:
+        model = DanceDirection
+        fields = CUT_FORM_FIELDS

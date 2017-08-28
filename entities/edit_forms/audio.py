@@ -1,0 +1,45 @@
+from django import forms
+
+from entities.models import Audio
+
+
+class EditAudioTitleForm(forms.ModelForm):
+    class Meta:
+        model = Audio
+        fields = ['title']
+
+
+class EditAudioDirectionsForm(forms.ModelForm):
+    class Meta:
+        model = Audio
+        fields = ['directions']
+
+
+class EditAudioDescriptionForm(forms.ModelForm):
+    class Meta:
+        model = Audio
+        fields = ['description']
+
+
+class EditAudioTagsForm(forms.ModelForm):
+    class Meta:
+        model = Audio
+        fields = ['tags']
+
+
+class EditAudioLinkForm(forms.ModelForm):
+    class Meta:
+        model = Audio
+        fields = ['link']
+
+
+class EditAudioGroupsForm(forms.ModelForm):
+    class Meta:
+        model = Audio
+        fields = ['groups']
+
+
+class EditAudioPolicyForm(forms.ModelForm):
+    class Meta:
+        model = Audio
+        fields = ['owners', 'contributors', 'author']
