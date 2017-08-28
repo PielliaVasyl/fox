@@ -227,13 +227,14 @@ def __get_form(entity, attribute, request, current_instance):
         if '-tags' in attribute:
             form = form(request.POST or None, initial={'tags': current_instance.tags.all()})
         if attribute in ['article-link', 'photo-link', 'video-link', 'audio-link', 'playlist-link']:
-            form = form(request.POST or None, initial={'link': current_instance.link.link,
-                                                       'is_linked_article': current_instance.is_linked_article})
-        if attribute == 'description-and-author':
+            form = form(request.POST or None, initial={'link': current_instance.link.link})
+        if attribute in ['article-linked']:
+            form = form(request.POST or None, initial={'is_linked_article': current_instance.is_linked_article})
+        if attribute == 'article-description':
             form = form(request.POST or None, initial={'description': current_instance.description,
                                                        'author_of_post': current_instance.author_of_post})
         if '-groups' in attribute:
-            form = form(request.POST or None, initial={'groups': current_instance.groups})
+            form = form(request.POST or None, initial={'groups': current_instance.groups.all()})
         if attribute == 'dance-style-description':
             form = form(request.POST or None, initial={'description': current_instance.description,
                                                        'author_of_post': current_instance.author_of_post,
@@ -268,6 +269,8 @@ def set_attributes(current_instance, attr_values):
                 current_instance.instagram.clear()
                 if value:
                     current_instance.instagram.add(value)
+        elif attr in ['article-link', 'photo-link', 'video-link', 'audio-link', 'playlist-link']:
+            current_instance.link = value
         else:
             setattr(current_instance, attr.replace('-', '_'), value)
 
@@ -317,6 +320,18 @@ def save_instance_changes(entity, form, attribute, request, current_instance):
         attr_values['owners'] = form.cleaned_data.get('owners')
         attr_values['contributors'] = form.cleaned_data.get('contributors')
         attr_values['author'] = form.cleaned_data.get('author')
+    if '-tags' in attribute:
+        attr_values['tags'] = form.cleaned_data.get('tags')
+    if attribute == 'article-description':
+        attr_values['description'] = form.cleaned_data.get('description')
+        attr_values['author_of_post'] = form.cleaned_data.get('author_of_post')
+    if attribute in ['article-link', 'photo-link', 'video-link', 'audio-link', 'playlist-link']:
+        current_instance = current_instance.link
+        attr_values[attribute] = form.cleaned_data.get('link')
+    if attribute == 'article-linked':
+        attr_values['is_linked_article'] = form.cleaned_data.get('is_linked_article')
+    if attribute == 'article-groups':
+        attr_values['groups'] = form.cleaned_data.get('groups')
 
     set_attributes(current_instance, attr_values)
     current_instance.save()

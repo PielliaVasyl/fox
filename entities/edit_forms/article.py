@@ -1,6 +1,7 @@
 from django import forms
 
 from entities.models import Article
+from entities.models.links import ArticleLink
 
 
 class EditArticleTitleForm(forms.ModelForm):
@@ -15,7 +16,7 @@ class EditArticleDirectionsForm(forms.ModelForm):
         fields = ['directions']
 
 
-class EditArticleDescriptionAndAuthorForm(forms.ModelForm):
+class EditArticleArticleDescriptionForm(forms.ModelForm):
     class Meta:
         model = Article
         fields = ['description', 'author_of_post']
@@ -33,10 +34,16 @@ class EditArticleTagsForm(forms.ModelForm):
         fields = ['tags']
 
 
-class EditArticleLinkForm(forms.ModelForm):
+class EditArticleArticleLinkForm(forms.ModelForm):
+    class Meta:
+        model = ArticleLink
+        fields = ['link']
+
+
+class EditArticleLinkedForm(forms.ModelForm):
     class Meta:
         model = Article
-        fields = ['link', 'is_linked_article']
+        fields = ['is_linked_article']
 
 
 class EditArticleGroupsForm(forms.ModelForm):
