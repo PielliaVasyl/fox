@@ -2,6 +2,7 @@ from django import forms
 
 from entities.models import Article
 
+
 class EditArticleTitleForm(forms.ModelForm):
     class Meta:
         model = Article
@@ -14,7 +15,7 @@ class EditArticleDirectionsForm(forms.ModelForm):
         fields = ['directions']
 
 
-class EditArticleDescriptionForm(forms.ModelForm):
+class EditArticleDescriptionAndAuthorForm(forms.ModelForm):
     class Meta:
         model = Article
         fields = ['description', 'author_of_post']

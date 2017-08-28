@@ -182,6 +182,7 @@ def create_photo_link(sender, instance, created, **kwargs):
         instance.link = link
         instance.save()
 
+
 class Video(AbstractPost):
     tags = models.ManyToManyField(VideoTag, blank=True)
     link = models.OneToOneField(VideoLink, blank=True, null=True)

@@ -321,6 +321,7 @@ class Resource(EmployersPage):
     contributors = models.ManyToManyField(UserProfile, blank=True, related_name='resources_contributor')
     author = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='resources_author')
 
+
 @receiver(post_save, sender=Resource)
 def create_resource_contacts(sender, instance, created, **kwargs):
     if created:

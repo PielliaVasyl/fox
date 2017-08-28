@@ -18,7 +18,7 @@ class EditDanceStyleDirectionsForm(forms.ModelForm):
 class EditDanceStyleDescriptionForm(forms.ModelForm):
     class Meta:
         model = DanceStyle
-        fields = ['description']
+        fields = ['description', 'author_of_post', 'link_to_author']
 
 
 class EditDanceStyleImageForm(forms.ModelForm):
@@ -31,12 +31,6 @@ class EditDanceStyleTagsForm(forms.ModelForm):
     class Meta:
         model = DanceStyle
         fields = ['tags']
-
-
-class EditDanceStyleAuthorForm(forms.ModelForm):
-    class Meta:
-        model = DanceStyle
-        fields = ['author_of_post', 'link_to_author']
 
 
 class EditDanceStyleGroupForm(forms.ModelForm):

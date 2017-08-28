@@ -224,6 +224,26 @@ def __get_form(entity, attribute, request, current_instance):
             form = form(request.POST or None, initial={'owners': current_instance.owners.all(),
                                                        'contributors': current_instance.contributors.all(),
                                                        'author': current_instance.author})
+        if '-tags' in attribute:
+            form = form(request.POST or None, initial={'tags': current_instance.tags.all()})
+        if attribute in ['article-link', 'photo-link', 'video-link', 'audio-link', 'playlist-link']:
+            form = form(request.POST or None, initial={'link': current_instance.link.link,
+                                                       'is_linked_article': current_instance.is_linked_article})
+        if attribute == 'description-and-author':
+            form = form(request.POST or None, initial={'description': current_instance.description,
+                                                       'author_of_post': current_instance.author_of_post})
+        if '-groups' in attribute:
+            form = form(request.POST or None, initial={'groups': current_instance.groups})
+        if attribute == 'dance-style-description':
+            form = form(request.POST or None, initial={'description': current_instance.description,
+                                                       'author_of_post': current_instance.author_of_post,
+                                                       'link_to_author': current_instance.link_to_author})
+        if attribute == 'dance-style-group':
+            form = form(request.POST or None, initial={'group': current_instance.group})
+        if attribute == 'dance-style-count-types':
+            form = form(request.POST or None, initial={'count_types': current_instance.count_types})
+        if attribute == 'dance-style-distance-types':
+            form = form(request.POST or None, initial={'distance_types': current_instance.distance_types})
     return form
 
 
