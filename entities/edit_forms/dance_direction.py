@@ -9,12 +9,6 @@ class EditDanceDirectionTitleForm(forms.ModelForm):
         fields = ['title']
 
 
-class EditDanceDirectionDirectionsForm(forms.ModelForm):
-    class Meta:
-        model = DanceDirection
-        fields = ['directions']
-
-
 class EditDanceDirectionDescriptionForm(forms.ModelForm):
     class Meta:
         model = DanceDirection

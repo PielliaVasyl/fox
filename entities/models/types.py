@@ -1,5 +1,10 @@
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.template.defaultfilters import truncatechars
+
+from entities.models import DanceStyleCountTag
+from entities.models import DanceStyleDistanceTag
 
 
 class AbstractType(models.Model):
@@ -288,6 +293,15 @@ class DanceStyleCountType(AbstractType):
         return '%s' % self.title
 
 
+@receiver(post_save, sender=DanceStyleCountType)
+def create_dance_style_count_tag(sender, instance, created, **kwargs):
+    if created:
+        dance_style_count_tag_title = DanceStyleCountType.TITLE_SHOW.get(instance.title, instance.title)
+        if not DanceStyleCountTag.objects.filter(title=dance_style_count_tag_title):
+            DanceStyleCountTag.objects.create(title=dance_style_count_tag_title)
+        instance.save()
+
+
 class DanceStyleDistanceType(AbstractType):
     CLOSE = 'CLOSE'
     AVERAGE = 'AVERAGE'
@@ -313,3 +327,12 @@ class DanceStyleDistanceType(AbstractType):
 
     def __str__(self):
         return '%s' % self.title
+
+
+@receiver(post_save, sender=DanceStyleDistanceType)
+def create_dance_style_distance_tag(sender, instance, created, **kwargs):
+    if created:
+        dance_style_distance_tag_title = DanceStyleDistanceType.TITLE_SHOW.get(instance.title, instance.title)
+        if not DanceStyleDistanceTag.objects.filter(title=dance_style_distance_tag_title):
+            DanceStyleDistanceTag.objects.create(title=dance_style_distance_tag_title)
+        instance.save()

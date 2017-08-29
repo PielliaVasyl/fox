@@ -12,14 +12,13 @@ from entities.models.userprofile import UserProfile
 
 class AbstractPostGroup(models.Model):
     title = models.CharField(max_length=100)
-    directions = models.ManyToManyField(Direction, blank=True)
     description = models.TextField(blank=True)
 
     created = models.DateTimeField(auto_now=False, auto_now_add=True)
     updated = models.DateTimeField(auto_now=True, auto_now_add=False)
 
     def get_directions(self):
-        if self.directions.all():
+        if self.directions and self.directions.all():
             return "\n".join([p.title for p in self.directions.all()])
         return ''
 
@@ -44,6 +43,7 @@ class AbstractPostGroup(models.Model):
 
 
 class Chapter(AbstractPostGroup):
+    directions = models.ManyToManyField(Direction, blank=True)
     tags = models.ManyToManyField(ChapterTag, blank=True)
 
     owners = models.ManyToManyField(UserProfile, blank=True, related_name='chapter_owners')
@@ -52,6 +52,7 @@ class Chapter(AbstractPostGroup):
 
 
 class Album(AbstractPostGroup):
+    directions = models.ManyToManyField(Direction, blank=True)
     tags = models.ManyToManyField(AlbumTag, blank=True)
 
     owners = models.ManyToManyField(UserProfile, blank=True, related_name='album_owners')
@@ -60,6 +61,7 @@ class Album(AbstractPostGroup):
 
 
 class Playlist(AbstractPostGroup):
+    directions = models.ManyToManyField(Direction, blank=True)
     link = models.OneToOneField(PlaylistLink, blank=True, null=True)
     tags = models.ManyToManyField(PlaylistTag, blank=True)
 
@@ -77,6 +79,7 @@ def create_playlist_link(sender, instance, created, **kwargs):
 
 
 class Tracklist(AbstractPostGroup):
+    directions = models.ManyToManyField(Direction, blank=True)
     tags = models.ManyToManyField(TracklistTag, blank=True)
 
     owners = models.ManyToManyField(UserProfile, blank=True, related_name='tracklist_owners')
@@ -85,6 +88,7 @@ class Tracklist(AbstractPostGroup):
 
 
 class DanceDirection(AbstractPostGroup):
+    direction = models.ForeignKey(Direction, default=Direction.objects.get(title='dance').id, on_delete=models.CASCADE)
     tags = models.ManyToManyField(DanceDirectionTag, blank=True)
 
     owners = models.ManyToManyField(UserProfile, blank=True, related_name='dance_direction_owners')
@@ -96,7 +100,6 @@ class DanceDirection(AbstractPostGroup):
 def create_dance_direction_tag(sender, instance, created, **kwargs):
     if created:
         tag = DanceDirectionTag.objects.create(title=instance.title,
-                                               author_id=instance.author_id,
                                                direction=Direction.objects.get(title='dance'))
         instance.tags.add(tag)
         instance.save()
@@ -104,7 +107,6 @@ def create_dance_direction_tag(sender, instance, created, **kwargs):
 
 class AbstractPost(models.Model):
     title = models.CharField(max_length=100)
-    directions = models.ManyToManyField(Direction, blank=True)
     description = models.TextField(blank=True)
 
     created = models.DateTimeField(auto_now=False, auto_now_add=True)
@@ -144,6 +146,7 @@ class AbstractPost(models.Model):
 
 
 class Article(AbstractPost):
+    directions = models.ManyToManyField(Direction, blank=True)
     tags = models.ManyToManyField(ArticleTag, blank=True)
     link = models.OneToOneField(ArticleLink, blank=True, null=True)
     image = models.ImageField(blank=True)
@@ -165,6 +168,7 @@ def create_article_link(sender, instance, created, **kwargs):
 
 
 class Photo(AbstractPost):
+    directions = models.ManyToManyField(Direction, blank=True)
     tags = models.ManyToManyField(PhotoTag, blank=True)
     link = models.OneToOneField(PhotoLink, blank=True, null=True)
     image = models.ImageField(blank=True)
@@ -184,6 +188,7 @@ def create_photo_link(sender, instance, created, **kwargs):
 
 
 class Video(AbstractPost):
+    directions = models.ManyToManyField(Direction, blank=True)
     tags = models.ManyToManyField(VideoTag, blank=True)
     link = models.OneToOneField(VideoLink, blank=True, null=True)
     groups = models.ManyToManyField(Playlist, blank=True)
@@ -202,6 +207,7 @@ def create_video_link(sender, instance, created, **kwargs):
 
 
 class Audio(AbstractPost):
+    directions = models.ManyToManyField(Direction, blank=True)
     tags = models.ManyToManyField(AudioTag, blank=True)
     link = models.OneToOneField(AudioLink, blank=True, null=True)
     groups = models.ManyToManyField(Tracklist, blank=True)
@@ -220,6 +226,7 @@ def create_audio_link(sender, instance, created, **kwargs):
 
 
 class DanceStyle(AbstractPost):
+    direction = models.ForeignKey(Direction, default=Direction.objects.get(title='dance').id, on_delete=models.CASCADE)
     tags = models.ManyToManyField(DanceStyleTag, blank=True)
     image = models.ImageField(blank=True)
     author_of_post = models.CharField(max_length=100, blank=True)
@@ -272,7 +279,6 @@ def create_dance_style_link(sender, instance, created, **kwargs):
 def create_dance_style_tag(sender, instance, created, **kwargs):
     if created:
         tag = DanceStyleTag.objects.create(title=instance.title,
-                                           author_id=instance.author_id,
                                            direction=Direction.objects.get(title='dance'))
         instance.tags.add(tag)
         instance.save()

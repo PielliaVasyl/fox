@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from entities.edit_forms.dance_style import EditDanceStyleTitleForm, EditDanceStyleDirectionsForm, \
-    EditDanceStyleDescriptionForm, EditDanceStyleImageForm, EditDanceStyleTagsForm, EditDanceStyleGroupForm, \
-    EditDanceStyleCountTypesForm, EditDanceStyleDistanceTypesForm, EditDanceStylePolicyForm
+from entities.edit_forms.dance_style import EditDanceStyleTitleForm, EditDanceStyleDescriptionForm, \
+    EditDanceStyleImageForm, EditDanceStyleTagsForm, EditDanceStyleGroupForm, EditDanceStyleCountTypesForm, \
+    EditDanceStyleDistanceTypesForm, EditDanceStylePolicyForm, EditDanceStyleAuthorLink
 
 DANCE_STYLE_EDIT_BUTTONS = [
     ('dance-style', 'title', 'Название'),
-    ('dance-style', 'directions', 'Направления'),
     ('dance-style', 'dance-style-description', 'Описание стиля и автор'),
     ('dance-style', 'image', 'Изображение'),
     ('dance-style', 'dance-style-tags', 'Теги'),
@@ -18,8 +17,8 @@ DANCE_STYLE_EDIT_BUTTONS = [
 
 DANCE_STYLE_ATTRIBUTE_FORMS = {
     'title': EditDanceStyleTitleForm,
-    'directions': EditDanceStyleDirectionsForm,
     'dance-style-description': EditDanceStyleDescriptionForm,
+    'dance-style-link': EditDanceStyleAuthorLink,
     'image': EditDanceStyleImageForm,
     'dance-style-tags': EditDanceStyleTagsForm,
     'dance-style-group': EditDanceStyleGroupForm,

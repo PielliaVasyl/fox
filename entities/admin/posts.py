@@ -1,17 +1,9 @@
 from django.contrib import admin
 
-from entities.forms.posts import AbstractPostGroupForm, ChapterForm, AlbumForm, PlaylistForm, TracklistForm, \
-    AbstractPostForm, ArticleForm, PhotoForm, VideoForm, AudioForm, DanceDirectionForm, DanceStyleForm
-from entities.models.posts import AbstractPostGroup, Chapter, Album, Playlist, Tracklist, AbstractPost, Article, Photo, \
+from entities.forms.posts import ChapterForm, AlbumForm, PlaylistForm, TracklistForm, \
+    ArticleForm, PhotoForm, VideoForm, AudioForm, DanceDirectionForm, DanceStyleForm
+from entities.models.posts import Chapter, Album, Playlist, Tracklist, Article, Photo, \
     Video, Audio, DanceDirection, DanceStyle
-
-
-# class AbstractPostGroupAdmin(admin.ModelAdmin):
-#     list_display = ['title', 'get_directions', 'description', 'get_owners', 'get_contributors',
-#                     'author', 'created', 'updated']
-#     form = AbstractPostGroupForm
-#
-# admin.site.register(AbstractPostGroup, AbstractPostGroupAdmin)
 
 
 class ChapterAdmin(admin.ModelAdmin):
@@ -47,19 +39,11 @@ admin.site.register(Tracklist, TracklistAdmin)
 
 
 class DanceDirectionAdmin(admin.ModelAdmin):
-    list_display = ['title', 'get_directions', 'description', 'get_tags', 'get_owners', 'get_contributors',
+    list_display = ['title', 'description', 'get_tags', 'get_owners', 'get_contributors',
                     'author', 'created', 'updated']
     form = DanceDirectionForm
 
 admin.site.register(DanceDirection, DanceDirectionAdmin)
-
-
-# class AbstractPostAdmin(admin.ModelAdmin):
-#     list_display = ['title', 'get_directions', 'description', 'get_owners', 'get_contributors',
-#                     'author', 'created', 'updated']
-#     form = AbstractPostForm
-#
-# admin.site.register(AbstractPost, AbstractPostAdmin)
 
 
 class ArticleAdmin(admin.ModelAdmin):
@@ -95,7 +79,7 @@ admin.site.register(Audio, AudioAdmin)
 
 
 class DanceStyleAdmin(admin.ModelAdmin):
-    list_display = ['title', 'get_directions', 'description', 'get_tags', 'image', 'author_of_post',
+    list_display = ['title', 'description', 'get_tags', 'image', 'author_of_post',
                     'link_to_author', 'group', 'get_count_types', 'get_distance_types', 'get_owners',
                     'get_contributors', 'author', 'created', 'updated']
     form = DanceStyleForm

@@ -32,5 +32,5 @@ from entities.forms.events import EventForm, PromoActionForm
 from entities.forms.pages import PlaceForm, EmployersPageForm, EmployeesPageForm, SchoolForm, \
     OrganizationForm, TeacherForm, PersonForm, ShopForm, CustomerServicesForm, HallForm, ResourceForm
 
-from entities.forms.posts import AbstractPostForm, AbstractPostGroupForm, AlbumForm, ArticleForm, AudioForm, \
-    ChapterForm, PhotoForm, PlaylistForm, TracklistForm, VideoForm, DanceDirectionForm, DanceStyleForm
+from entities.forms.posts import AlbumForm, ArticleForm, AudioForm, ChapterForm, PhotoForm, PlaylistForm, \
+    TracklistForm, VideoForm, DanceDirectionForm, DanceStyleForm

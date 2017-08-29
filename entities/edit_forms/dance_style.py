@@ -1,6 +1,7 @@
 from django import forms
 
 from entities.models import DanceStyle
+from entities.models.links import DanceStyleAuthorLink
 
 
 class EditDanceStyleTitleForm(forms.ModelForm):
@@ -9,16 +10,16 @@ class EditDanceStyleTitleForm(forms.ModelForm):
         fields = ['title']
 
 
-class EditDanceStyleDirectionsForm(forms.ModelForm):
-    class Meta:
-        model = DanceStyle
-        fields = ['directions']
-
-
 class EditDanceStyleDescriptionForm(forms.ModelForm):
     class Meta:
         model = DanceStyle
-        fields = ['description', 'author_of_post', 'link_to_author']
+        fields = ['description', 'author_of_post']
+
+
+class EditDanceStyleAuthorLink(forms.ModelForm):
+    class Meta:
+        model = DanceStyleAuthorLink
+        fields = ['link']
 
 
 class EditDanceStyleImageForm(forms.ModelForm):

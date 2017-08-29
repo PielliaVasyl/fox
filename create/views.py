@@ -19,6 +19,7 @@ from entities.forms.pages import CutPlaceForm, CutSchoolForm, CutTeacherForm, Cu
     CutShopForm, CutCustomerServicesForm, CutHallForm, CutResourceForm
 from entities.forms.posts import CutArticleForm, CutChapterForm, CutPhotoForm, CutAlbumForm, CutVideoForm, \
     CutPlaylistForm, CutAudioForm, CutTracklistForm, CutDanceStyleForm, CutDanceDirectionForm
+from entities.models.posts import DanceDirection
 
 
 def create(request, city_title=None, direction_title=None):

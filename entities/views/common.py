@@ -11,6 +11,7 @@ from entities.models import Chapter
 from entities.models import Photo
 from entities.models import Album
 from entities.models import Video
+from entities.models.links import DanceStyleAuthorLink
 
 from entities.models.types import ShopType, CustomerServicesType
 from entities.views.album import ALBUM_EDIT_BUTTONS, ALBUM_ATTRIBUTE_FORMS
@@ -237,14 +238,15 @@ def __get_form(entity, attribute, request, current_instance):
             form = form(request.POST or None, initial={'groups': current_instance.groups.all()})
         if attribute == 'dance-style-description':
             form = form(request.POST or None, initial={'description': current_instance.description,
-                                                       'author_of_post': current_instance.author_of_post,
-                                                       'link_to_author': current_instance.link_to_author})
+                                                       'author_of_post': current_instance.author_of_post})
+        if attribute == 'dance-style-link':
+            form = form(request.POST or None, initial={'link': current_instance.link_to_author.link})
         if attribute == 'dance-style-group':
             form = form(request.POST or None, initial={'group': current_instance.group})
         if attribute == 'dance-style-count-types':
-            form = form(request.POST or None, initial={'count_types': current_instance.count_types})
+            form = form(request.POST or None, initial={'count_types': current_instance.count_types.all()})
         if attribute == 'dance-style-distance-types':
-            form = form(request.POST or None, initial={'distance_types': current_instance.distance_types})
+            form = form(request.POST or None, initial={'distance_types': current_instance.distance_types.all()})
     return form
 
 
@@ -332,6 +334,10 @@ def save_instance_changes(entity, form, attribute, request, current_instance):
         attr_values['is_linked_article'] = form.cleaned_data.get('is_linked_article')
     if attribute == 'article-groups':
         attr_values['groups'] = form.cleaned_data.get('groups')
+    if attribute == 'dance-style-count-types':
+        attr_values['count_types'] = form.cleaned_data.get('count_types')
+    if attribute == 'dance-style-distance-types':
+        attr_values['distance_types'] = form.cleaned_data.get('distance_types')
 
     set_attributes(current_instance, attr_values)
     current_instance.save()
@@ -387,6 +393,26 @@ def edit_instance_attr(request, entity, instance_id, attribute=None, city_title=
         context = {
             'form_contact': form_contact,
             'form_socials': form_socials
+        }
+    elif attribute == 'dance-style-description':
+        form_description = __get_form(entity, 'dance-style-description', request, current_instance)
+        form_dance_style_link = __get_form(entity, 'dance-style-link', request, current_instance)
+        if form_description.is_valid():
+            attr_values = {'description': form_description.cleaned_data.get('description'),
+                           'author_of_post': form_description.cleaned_data.get('author_of_post')}
+            set_attributes(current_instance, attr_values)
+            current_instance.save()
+        if form_dance_style_link.is_valid():
+            link_to_author = DanceStyleAuthorLink.objects.get(author_id=current_instance.author_id,
+                                                              dancestyle__id=instance_id)
+            set_attributes(link_to_author, {'link': form_dance_style_link.cleaned_data.get('link')})
+            link_to_author.save()
+        if any([form_description.is_valid(), form_dance_style_link.is_valid()]):
+            return HttpResponseRedirect(_get_response_redirect(entity, instance_id, city_title, direction_title))
+
+        context = {
+            'form_description': form_description,
+            'form_dance_style_link': form_dance_style_link
         }
     else:
         form = __get_form(entity, attribute, request, current_instance)

@@ -40,31 +40,31 @@ class LocalTagForm(forms.ModelForm):
 class DanceTagForm(forms.ModelForm):
     class Meta:
         model = DanceTag
-        fields = ['title', 'direction']
+        fields = ['title']
 
 
 class DanceStyleTagForm(forms.ModelForm):
     class Meta:
         model = DanceStyleTag
-        fields = ['title', 'direction']
+        fields = ['title']
 
 
 class DanceStyleCountTagForm(forms.ModelForm):
     class Meta:
         model = DanceStyleCountTag
-        fields = ['title', 'direction']
+        fields = ['title']
 
 
 class DanceStyleDistanceTagForm(forms.ModelForm):
     class Meta:
         model = DanceStyleDistanceTag
-        fields = ['title', 'direction']
+        fields = ['title']
 
 
 class DanceDirectionTagForm(forms.ModelForm):
     class Meta:
         model = DanceDirectionTag
-        fields = ['title', 'direction']
+        fields = ['title']
 
 
 class PostTagForm(forms.ModelForm):
