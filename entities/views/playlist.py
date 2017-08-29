@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from entities.edit_forms.playlist import EditPlaylistTitleForm, EditPlaylistDirectionsForm, EditPlaylistTagsForm, \
-    EditPlaylistDescriptionForm, EditPlaylistLinkForm, EditPlaylistPolicyForm
+    EditPlaylistDescriptionForm, EditPlaylistPlaylistLinkForm, EditPlaylistPolicyForm
 
 PLAYLIST_EDIT_BUTTONS = [
     ('playlist', 'title', 'Название'),
@@ -17,6 +17,6 @@ PLAYLIST_ATTRIBUTE_FORMS = {
     'directions': EditPlaylistDirectionsForm,
     'description': EditPlaylistDescriptionForm,
     'playlist-tags': EditPlaylistTagsForm,
-    'playlist-link': EditPlaylistLinkForm,
+    'playlist-link': EditPlaylistPlaylistLinkForm,
     'policy': EditPlaylistPolicyForm
 }

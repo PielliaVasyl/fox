@@ -1,6 +1,6 @@
 from django import forms
 
-from entities.models import Audio
+from entities.models import Audio, AudioLink
 
 
 class EditAudioTitleForm(forms.ModelForm):
@@ -27,9 +27,9 @@ class EditAudioTagsForm(forms.ModelForm):
         fields = ['tags']
 
 
-class EditAudioLinkForm(forms.ModelForm):
+class EditAudioAudioLinkForm(forms.ModelForm):
     class Meta:
-        model = Audio
+        model = AudioLink
         fields = ['link']
 
 

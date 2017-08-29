@@ -1,6 +1,6 @@
 from django import forms
 
-from entities.models import Playlist
+from entities.models import Playlist, PlaylistLink
 
 
 class EditPlaylistTitleForm(forms.ModelForm):
@@ -27,9 +27,9 @@ class EditPlaylistTagsForm(forms.ModelForm):
         fields = ['tags']
 
 
-class EditPlaylistLinkForm(forms.ModelForm):
+class EditPlaylistPlaylistLinkForm(forms.ModelForm):
     class Meta:
-        model = Playlist
+        model = PlaylistLink
         fields = ['link']
 
 

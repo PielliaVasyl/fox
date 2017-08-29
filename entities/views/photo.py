@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from entities.edit_forms.photo import EditPhotoTitleForm, EditPhotoDirectionsForm, EditPhotoDescriptionForm, \
-    EditPhotoImageForm, EditPhotoTagsForm, EditPhotoLinkForm, EditPhotoGroupsForm, EditPhotoPolicyForm
+    EditPhotoImageForm, EditPhotoTagsForm, EditPhotoGroupsForm, EditPhotoPolicyForm, EditPhotoPhotoLinkForm
 
 PHOTO_EDIT_BUTTONS = [
     ('photo', 'title', 'Название'),
@@ -20,7 +20,7 @@ PHOTO_ATTRIBUTE_FORMS = {
     'description': EditPhotoDescriptionForm,
     'image': EditPhotoImageForm,
     'photo-tags': EditPhotoTagsForm,
-    'photo-link': EditPhotoLinkForm,
+    'photo-link': EditPhotoPhotoLinkForm,
     'photo-groups': EditPhotoGroupsForm,
     'policy': EditPhotoPolicyForm,
 }

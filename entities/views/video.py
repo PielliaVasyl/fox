@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from entities.edit_forms.video import EditVideoTitleForm, EditVideoDirectionsForm, EditVideoDescriptionForm, \
-    EditVideoTagsForm, EditVideoLinkForm, EditVideoGroupsForm, EditVideoPolicyForm
+    EditVideoTagsForm, EditVideoGroupsForm, EditVideoPolicyForm, EditVideoVideoLinkForm
 
 VIDEO_EDIT_BUTTONS = [
     ('video', 'title', 'Название'),
@@ -18,7 +18,7 @@ VIDEO_ATTRIBUTE_FORMS = {
     'directions': EditVideoDirectionsForm,
     'description': EditVideoDescriptionForm,
     'video-tags': EditVideoTagsForm,
-    'video-link': EditVideoLinkForm,
+    'video-link': EditVideoVideoLinkForm,
     'video-groups': EditVideoGroupsForm,
     'policy': EditVideoPolicyForm,
 }

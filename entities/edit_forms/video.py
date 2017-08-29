@@ -1,6 +1,6 @@
 from django import forms
 
-from entities.models import Video
+from entities.models import Video, VideoLink
 
 
 class EditVideoTitleForm(forms.ModelForm):
@@ -27,9 +27,9 @@ class EditVideoTagsForm(forms.ModelForm):
         fields = ['tags']
 
 
-class EditVideoLinkForm(forms.ModelForm):
+class EditVideoVideoLinkForm(forms.ModelForm):
     class Meta:
-        model = Video
+        model = VideoLink
         fields = ['link']
 
 

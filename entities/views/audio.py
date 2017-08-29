@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from entities.edit_forms.audio import EditAudioTitleForm, EditAudioDirectionsForm, EditAudioDescriptionForm, \
-    EditAudioTagsForm, EditAudioLinkForm, EditAudioGroupsForm, EditAudioPolicyForm
+    EditAudioTagsForm, EditAudioAudioLinkForm, EditAudioGroupsForm, EditAudioPolicyForm
 
 AUDIO_EDIT_BUTTONS = [
     ('audio', 'title', 'Название'),
@@ -18,7 +18,7 @@ AUDIO_ATTRIBUTE_FORMS = {
     'directions': EditAudioDirectionsForm,
     'description': EditAudioDescriptionForm,
     'audio-tags': EditAudioTagsForm,
-    'audio-link': EditAudioLinkForm,
+    'audio-link': EditAudioAudioLinkForm,
     'audio-groups': EditAudioGroupsForm,
     'policy': EditAudioPolicyForm,
 }

@@ -1,6 +1,6 @@
 from django import forms
 
-from entities.models import Photo
+from entities.models import Photo, PhotoLink
 
 
 class EditPhotoTitleForm(forms.ModelForm):
@@ -33,9 +33,9 @@ class EditPhotoTagsForm(forms.ModelForm):
         fields = ['tags']
 
 
-class EditPhotoLinkForm(forms.ModelForm):
+class EditPhotoPhotoLinkForm(forms.ModelForm):
     class Meta:
-        model = Photo
+        model = PhotoLink
         fields = ['link']
 
 

@@ -15,6 +15,6 @@ TRACKLIST_ATTRIBUTE_FORMS = {
     'title': EditTracklistTitleForm,
     'directions': EditTracklistDirectionsForm,
     'description': EditTracklistDescriptionForm,
-    'chapter-tags': EditTracklistTagsForm,
+    'tracklist-tags': EditTracklistTagsForm,
     'policy': EditTracklistPolicyForm
 }

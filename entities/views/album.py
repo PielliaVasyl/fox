@@ -15,6 +15,6 @@ ALBUM_ATTRIBUTE_FORMS = {
     'title': EditAlbumTitleForm,
     'directions': EditAlbumDirectionsForm,
     'description': EditAlbumDescriptionForm,
-    'chapter-tags': EditAlbumTagsForm,
+    'album-tags': EditAlbumTagsForm,
     'policy': EditAlbumPolicyForm
 }

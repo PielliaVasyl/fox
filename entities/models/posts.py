@@ -261,7 +261,7 @@ class DanceStyle(AbstractPost):
 
 
 @receiver(post_save, sender=DanceStyle)
-def create_audio_link(sender, instance, created, **kwargs):
+def create_dance_style_link(sender, instance, created, **kwargs):
     if created:
         link = DanceStyleAuthorLink.objects.create(dancestyle=instance, author_id=instance.author_id)
         instance.link_to_author = link
