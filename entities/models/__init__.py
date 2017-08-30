@@ -31,3 +31,6 @@ from entities.models.pages import AbstractPage, Place, EmployersPage, EmployeesP
 
 from entities.models.posts import AbstractPostGroup, Chapter, Album, Playlist, Tracklist, AbstractPost, Article, \
     Photo, Video, Audio, DanceStyle, DanceDirection
+
+from entities.models.owns import PlaceOwns, PlaceOwns, SchoolOwns, OrganizationOwns, TeacherOwns, PersonOwns, \
+    ShopOwns, CustomerServicesOwns, HallOwns, ResourceOwns

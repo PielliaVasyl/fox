@@ -9,8 +9,10 @@ from entities.models.links import ResourceLink, HallLink, CustomerServicesLink, 
     TeacherLink, OrganizationLink, SchoolLink, PlaceLink
 from entities.models.locations import PlaceLocation, OrganizationLocation, ShopLocation, HallLocation, SchoolLocation, \
     CustomerServicesLocation
-from entities.models.supportclasses import PageLocalClasses, PlaceLocalClasses, SchoolLocalClasses, TeacherLocalClasses, \
+from entities.models.supportclasses import PlaceLocalClasses, SchoolLocalClasses, TeacherLocalClasses, \
     OrganizationLocalClasses, PersonLocalClasses
+from entities.models.owns import SchoolOwns, PlaceOwns, OrganizationOwns, TeacherOwns, PersonOwns, ShopOwns, \
+    CustomerServicesOwns, HallOwns, ResourceOwns
 from entities.models.types import PlaceType, ShopType, CustomerServicesType
 from entities.models.userprofile import UserProfile
 
@@ -88,6 +90,8 @@ class Place(AbstractPage):
     types = models.ManyToManyField(PlaceType, blank=True)
     links = models.ManyToManyField(PlaceLink, blank=True)
 
+    owns = models.OneToOneField(PlaceOwns, on_delete=models.CASCADE, null=True, blank=True)
+
     owners = models.ManyToManyField(UserProfile, blank=True, related_name='places_owner')
     contributors = models.ManyToManyField(UserProfile, blank=True, related_name='places_contributor')
     author = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='places_author')
@@ -98,6 +102,14 @@ def create_place_local_classes(sender, instance, created, **kwargs):
     if created:
         local_classes = PlaceLocalClasses.objects.create(place=instance)
         instance.local_classes = local_classes
+        instance.save()
+
+
+@receiver(post_save, sender=Place)
+def create_place_owns(sender, instance, created, **kwargs):
+    if created:
+        owns = PlaceOwns.objects.create(place=instance)
+        instance.owns = owns
         instance.save()
 
 
@@ -124,7 +136,7 @@ class School(EmployersPage):
     links = models.ManyToManyField(SchoolLink, blank=True)
     contacts = models.OneToOneField(SchoolContacts, on_delete=models.CASCADE, null=True, blank=True)
 
-    # events = models.ManyToManyField(AbstractEvent, blank=True)
+    owns = models.OneToOneField(SchoolOwns, on_delete=models.CASCADE, null=True, blank=True)
 
     owners = models.ManyToManyField(UserProfile, blank=True, related_name='schools_owner')
     contributors = models.ManyToManyField(UserProfile, blank=True, related_name='schools_contributor')
@@ -147,6 +159,14 @@ def create_school_contacts(sender, instance, created, **kwargs):
         instance.save()
 
 
+@receiver(post_save, sender=School)
+def create_school_owns(sender, instance, created, **kwargs):
+    if created:
+        owns = SchoolOwns.objects.create(school=instance)
+        instance.owns = owns
+        instance.save()
+
+
 class Organization(EmployersPage):
     local_classes = models.OneToOneField(OrganizationLocalClasses, on_delete=models.CASCADE, null=True)
 
@@ -156,7 +176,7 @@ class Organization(EmployersPage):
     links = models.ManyToManyField(OrganizationLink, blank=True)
     contacts = models.OneToOneField(OrganizationContacts, on_delete=models.CASCADE, null=True, blank=True)
 
-    # events = models.ManyToManyField(AbstractEvent, blank=True)
+    owns = models.OneToOneField(OrganizationOwns, on_delete=models.CASCADE, null=True, blank=True)
 
     owners = models.ManyToManyField(UserProfile, blank=True, related_name='organizations_owner')
     contributors = models.ManyToManyField(UserProfile, blank=True, related_name='organizations_contributor')
@@ -179,6 +199,14 @@ def create_organization_contacts(sender, instance, created, **kwargs):
         instance.save()
 
 
+@receiver(post_save, sender=Organization)
+def create_organization_owns(sender, instance, created, **kwargs):
+    if created:
+        owns = OrganizationOwns.objects.create(organization=instance)
+        instance.owns = owns
+        instance.save()
+
+
 class Teacher(EmployeesPage):
     local_classes = models.OneToOneField(TeacherLocalClasses, on_delete=models.CASCADE, null=True)
 
@@ -187,7 +215,7 @@ class Teacher(EmployeesPage):
     links = models.ManyToManyField(TeacherLink, blank=True)
     contacts = models.OneToOneField(TeacherContacts, on_delete=models.CASCADE, null=True, blank=True)
 
-    # events = models.ManyToManyField(AbstractEvent, blank=True)
+    owns = models.OneToOneField(TeacherOwns, on_delete=models.CASCADE, null=True, blank=True)
 
     owners = models.ManyToManyField(UserProfile, blank=True, related_name='teachers_owner')
     contributors = models.ManyToManyField(UserProfile, blank=True, related_name='teachers_contributor')
@@ -210,6 +238,14 @@ def create_teacher_contacts(sender, instance, created, **kwargs):
         instance.save()
 
 
+@receiver(post_save, sender=Teacher)
+def create_teacher_owns(sender, instance, created, **kwargs):
+    if created:
+        owns = TeacherOwns.objects.create(teacher=instance)
+        instance.owns = owns
+        instance.save()
+
+
 class Person(EmployeesPage):
     local_classes = models.OneToOneField(PersonLocalClasses, on_delete=models.CASCADE, null=True)
 
@@ -218,7 +254,7 @@ class Person(EmployeesPage):
     links = models.ManyToManyField(PersonLink, blank=True)
     contacts = models.OneToOneField(PersonContacts, on_delete=models.CASCADE, null=True, blank=True)
 
-    # events = models.ManyToManyField(AbstractEvent, blank=True)
+    owns = models.OneToOneField(PersonOwns, on_delete=models.CASCADE, null=True, blank=True)
 
     owners = models.ManyToManyField(UserProfile, blank=True, related_name='persons_owner')
     contributors = models.ManyToManyField(UserProfile, blank=True, related_name='persons_contributor')
@@ -241,6 +277,14 @@ def create_person_contacts(sender, instance, created, **kwargs):
         instance.save()
 
 
+@receiver(post_save, sender=Person)
+def create_person_owns(sender, instance, created, **kwargs):
+    if created:
+        owns = PersonOwns.objects.create(person=instance)
+        instance.owns = owns
+        instance.save()
+
+
 class Shop(EmployersPage):
     types = models.ManyToManyField(ShopType, blank=True)
 
@@ -250,7 +294,7 @@ class Shop(EmployersPage):
     links = models.ManyToManyField(ShopLink, blank=True)
     contacts = models.OneToOneField(ShopContacts, on_delete=models.CASCADE, null=True, blank=True)
 
-    # events = models.ManyToManyField(AbstractEvent, blank=True)
+    owns = models.OneToOneField(ShopOwns, on_delete=models.CASCADE, null=True, blank=True)
 
     owners = models.ManyToManyField(UserProfile, blank=True, related_name='shops_owner')
     contributors = models.ManyToManyField(UserProfile, blank=True, related_name='shops_contributor')
@@ -265,6 +309,14 @@ def create_shop_contacts(sender, instance, created, **kwargs):
         instance.save()
 
 
+@receiver(post_save, sender=Shop)
+def create_shop_owns(sender, instance, created, **kwargs):
+    if created:
+        owns = ShopOwns.objects.create(shop=instance)
+        instance.owns = owns
+        instance.save()
+
+
 class CustomerServices(EmployersPage):
     types = models.ManyToManyField(CustomerServicesType, blank=True)
 
@@ -274,7 +326,7 @@ class CustomerServices(EmployersPage):
     links = models.ManyToManyField(CustomerServicesLink, blank=True)
     contacts = models.OneToOneField(CustomerServicesContacts, on_delete=models.CASCADE, null=True, blank=True)
 
-    # events = models.ManyToManyField(AbstractEvent, blank=True)
+    owns = models.OneToOneField(CustomerServicesOwns, on_delete=models.CASCADE, null=True, blank=True)
 
     owners = models.ManyToManyField(UserProfile, blank=True, related_name='customer_services_owner')
     contributors = models.ManyToManyField(UserProfile, blank=True, related_name='customer_services_contributor')
@@ -289,6 +341,14 @@ def create_customer_services_contacts(sender, instance, created, **kwargs):
         instance.save()
 
 
+@receiver(post_save, sender=CustomerServices)
+def create_customer_services_owns(sender, instance, created, **kwargs):
+    if created:
+        owns = CustomerServicesOwns.objects.create(customerservices=instance)
+        instance.owns = owns
+        instance.save()
+
+
 class Hall(EmployersPage):
     locations = models.ManyToManyField(HallLocation, blank=True)
     employees = models.ManyToManyField(EmployeesPage, blank=True)
@@ -297,6 +357,8 @@ class Hall(EmployersPage):
     contacts = models.OneToOneField(HallContacts, on_delete=models.CASCADE, null=True, blank=True)
 
     # photos = models.ManyToManyField(HallPhoto, blank=True)
+
+    owns = models.OneToOneField(HallOwns, on_delete=models.CASCADE, null=True, blank=True)
 
     owners = models.ManyToManyField(UserProfile, blank=True, related_name='halls_owner')
     contributors = models.ManyToManyField(UserProfile, blank=True, related_name='halls_contributor')
@@ -311,11 +373,21 @@ def create_hall_contacts(sender, instance, created, **kwargs):
         instance.save()
 
 
+@receiver(post_save, sender=Hall)
+def create_hall_owns(sender, instance, created, **kwargs):
+    if created:
+        owns = HallOwns.objects.create(hall=instance)
+        instance.owns = owns
+        instance.save()
+
+
 class Resource(EmployersPage):
     employees = models.ManyToManyField(EmployeesPage, blank=True)
 
     links = models.ManyToManyField(ResourceLink, blank=True)
     contacts = models.OneToOneField(ResourceContacts, on_delete=models.CASCADE, null=True, blank=True)
+
+    owns = models.OneToOneField(ResourceOwns, on_delete=models.CASCADE, null=True, blank=True)
 
     owners = models.ManyToManyField(UserProfile, blank=True, related_name='resources_owner')
     contributors = models.ManyToManyField(UserProfile, blank=True, related_name='resources_contributor')
@@ -327,4 +399,12 @@ def create_resource_contacts(sender, instance, created, **kwargs):
     if created:
         contacts = ResourceContacts.objects.create(resource=instance, author_id=instance.author_id)
         instance.contacts = contacts
+        instance.save()
+
+
+@receiver(post_save, sender=Resource)
+def create_resource_owns(sender, instance, created, **kwargs):
+    if created:
+        owns = ResourceOwns.objects.create(resource=instance)
+        instance.owns = owns
         instance.save()

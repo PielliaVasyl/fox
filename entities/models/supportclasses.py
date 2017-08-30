@@ -223,6 +223,3 @@ class PersonLocalClasses(models.Model):
 
     class Meta:
         ordering = ('updated',)
-
-# class EventOrganizers(models.Model):
-#     pass
