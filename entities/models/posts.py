@@ -34,7 +34,7 @@ class AbstractPostGroup(models.Model):
 
     def get_contributors(self):
         if self.contributors.all():
-            return "\n".join([p.title for p in self.contributors.all()])
+            return "\n".join([p.user.username for p in self.contributors.all()])
         return ''
 
     class Meta:
@@ -134,7 +134,7 @@ class AbstractPost(models.Model):
 
     def get_contributors(self):
         if self.contributors.all():
-            return "\n".join([p.title for p in self.contributors.all()])
+            return "\n".join([p.user.username for p in self.contributors.all()])
         return ''
 
     def __str__(self):
