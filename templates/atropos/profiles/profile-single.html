@@ -138,141 +138,138 @@ tabcontent = document.getElementsByClassName("tabcontent");
 						<button class="tablinks" onclick="openTab(event, 'Services')">Услуги ({{ instance.customer_services|length }})</button>
 						<button class="tablinks" onclick="openTab(event, 'Halls')">Залы ({{ instance.halls|length }})</button>
 						<button class="tablinks" onclick="openTab(event, 'Events')">Мероприятия ({{ instance.events|length }})</button>
-						<button class="tablinks" onclick="openTab(event, 'PromoActions')">Акции ({{ instance.promo_action|length }})</button>
+						<button class="tablinks" onclick="openTab(event, 'PromoActions')">Акции ({{ instance.promo_actions|length }})</button>
 					</div>
 
 					<div id="Articles" class="tabcontent">
-					    <h3>Статьи</h3>
+
+						<h3>Статьи</h3>
 						{% for article in instance.articles %}
-
-					    <p>{{ article.pk }}</p>
-
+						{% include 'profiles/snippets/article_snippet.html' with instance=article only %}
+						<hr class="half-margins" />
 						{% endfor %}
+
 					</div>
 
 					<div id="Photos" class="tabcontent">
 					  <h3>Фото</h3>
-						{% for photo in instance.abstractpost_set.all %}
-						{% if photo.photo %}
-					    <p>{{ photo.photo }}</p>
-						{% endif %}
+						{% for photo in instance.photos %}
+					    	{% include 'profiles/snippets/photo_snippet.html' with instance=photo %}
+							<hr class="half-margins" />
 						{% endfor %}
 					</div>
 
 					<div id="Videos" class="tabcontent">
 					  <h3>Видео</h3>
-						{% for video in instance.abstractpost_set.all %}
-						{% if video.video %}
-					    <p>{{ video.video }}</p>
-						{% endif %}
+						{% for video in instance.videos %}
+							{% include 'profiles/snippets/article_snippet.html' with instance=video %}
+							<hr class="half-margins" />
 						{% endfor %}
 					</div>
 
 					<div id="Audios" class="tabcontent">
 					  <h3>Аудио</h3>
-						{% for audio in instance.abstractpost_set.all %}
-						{% if audio.audio %}
-					    <p>{{ audio.audio }}</p>
-						{% endif %}
+						{% for audio in instance.audios %}
+							{% include 'profiles/snippets/article_snippet.html' with instance=audio %}
+							<hr class="half-margins" />
 						{% endfor %}
 					</div>
 
 					<div id="Links" class="tabcontent">
 					  <h3>Ссылки</h3>
-						{% for resource in instance.abstractpost_set.all %}
-						{% if resource.resource %}
-					    <p>{{ resource.resource }}</p>
-						{% endif %}
+						{% for resource in instance.resources %}
+							{% include 'profiles/snippets/article_snippet.html' with instance=resource %}
+							<hr class="half-margins" />
 						{% endfor %}
 					</div>
 
 					<div id="Places" class="tabcontent">
 					  <h3>Места</h3>
-						{% for place in instance.abstractpage_set.all %}
-						{% if place.place %}
-					    <p>{{ place.place }}</p>
-						{% endif %}
+						{% for place in instance.places %}
+
+					    <p>{{ place.pk }}</p>
+
 						{% endfor %}
 					</div>
 
 					<div id="Organizations" class="tabcontent">
 					  <h3>Организации</h3>
-						{% for organization in instance.abstractpage_set.all %}
-						{% if organization.organization %}
-					    <p>{{ organization.organization }}</p>
-						{% endif %}
+						{% for organization in instance.organizations %}
+
+					    <p>{{ organization.pk }}</p>
+
 						{% endfor %}
 					</div>
 
 					<div id="Persons" class="tabcontent">
 					  <h3>Персоны</h3>
-						{% for person in instance.abstractpage_set.all %}
-						{% if person.person %}
-					    <p>{{ person.person }}</p>
-						{% endif %}
+						{% for person in instance.persons %}
+
+					    <p>{{ person.pk }}</p>
+
 						{% endfor %}
 					</div>
 
 					<div id="Schools" class="tabcontent">
 					  <h3>Школы</h3>
-						{% for school in instance.abstractpage_set.all %}
-						{% if school.school %}
-					    <p>{{ school.school }}</p>
-						{% endif %}
+						{% for school in instance.schools %}
+
+					    <p>{{ school.pk }}</p>
+
 						{% endfor %}
 					</div>
 
 					<div id="Teachers" class="tabcontent">
 					  <h3>Учителя</h3>
-						{% for teacher in instance.abstractpage_set.all %}
-						{% if teacher.teacher %}
-					    <p>{{ teacher.teacher }}</p>
-						{% endif %}
+						{% for teacher in instance.teachers %}
+
+					    <p>{{ teacher.pk }}</p>
+
 						{% endfor %}
 					</div>
 
 					<div id="Shops" class="tabcontent">
 					  <h3>Магазины</h3>
-						{% for shop in instance.abstractpage_set.all %}
-						{% if shop.shop %}
-					    <p>{{ shop.shop }}</p>
-						{% endif %}
+						{% for shop in instance.shops %}
+
+					    <p>{{ shop.pk }}</p>
+
 						{% endfor %}
 					</div>
 
 					<div id="Services" class="tabcontent">
 					  <h3>Услуги</h3>
-						{% for customerservices in instance.abstractpage_set.all %}
-						{% if customerservices.customerservices %}
-					    <p>{{ customerservices.customerservices }}</p>
-						{% endif %}
+						{% for customerservices in instance.customer_services %}
+
+					    <p>{{ customerservices.pk }}</p>
+
 						{% endfor %}
 					</div>
 
 					<div id="Halls" class="tabcontent">
 					  <h3>Залы</h3>
-						{% for hall in instance.abstractpage_set.all %}
-						{% if hall.hall %}
-					    <p>{{ hall.hall }}</p>
-						{% endif %}
+						{% for hall in instance.halls %}
+
+					    <p>{{ hall.pk }}</p>
+
 						{% endfor %}
 					</div>
 
 					<div id="Events" class="tabcontent">
 					  <h3>Мероприятия</h3>
-						{% for event in instance.abstractevent_set.all %}
-						{% if event.event %}
-					    <p>{{ event.event }}</p>
-						{% endif %}
+						{% for event in instance.events %}
+
+					    <p>{{ event.pk }}</p>
+
 						{% endfor %}
 					</div>
 
 					<div id="PromoActions" class="tabcontent">
 					  <h3>Акции</h3>
-						{% for promoaction in instance.abstractevent_set.all %}
-						{% if promoaction.promoaction %}
-					    <p>{{ promoaction.promoaction }}</p>
-						{% endif %}
+						{% for promoaction in instance.promo_actions %}
+
+					    <p>{{ promoaction.pk }}</p>
+
 						{% endfor %}
 					</div>
 				</div>

@@ -15,6 +15,52 @@ class UserProfile(models.Model):
     def articles(self):
         return set(self.articles_contributor.all()) | set(self.articles_owner.all()) | set(self.articles_author.all())
 
+    def photos(self):
+        return set(self.photos_contributor.all()) | set(self.photos_owner.all()) | set(self.photos_author.all())
+
+    def videos(self):
+        return set(self.videos_contributor.all()) | set(self.videos_owner.all()) | set(self.videos_author.all())
+
+    def audios(self):
+        return set(self.audios_contributor.all()) | set(self.audios_owner.all()) | set(self.audios_author.all())
+
+    def resources(self):
+        return set(self.resources_contributor.all()) | set(self.resources_owner.all()) \
+               | set(self.resources_author.all())
+
+    def places(self):
+        return set(self.places_contributor.all()) | set(self.places_owner.all()) | set(self.places_author.all())
+
+    def organizations(self):
+        return set(self.organizations_contributor.all()) | set(self.organizations_owner.all()) \
+               | set(self.organizations_author.all())
+
+    def persons(self):
+        return set(self.persons_contributor.all()) | set(self.persons_owner.all()) | set(self.persons_author.all())
+
+    def schools(self):
+        return set(self.schools_contributor.all()) | set(self.schools_owner.all()) | set(self.schools_author.all())
+
+    def teachers(self):
+        return set(self.teachers_contributor.all()) | set(self.teachers_owner.all()) | set(self.teachers_author.all())
+
+    def shops(self):
+        return set(self.shops_contributor.all()) | set(self.shops_owner.all()) | set(self.shops_author.all())
+
+    def customer_services(self):
+        return set(self.customer_services_contributor.all()) | set(self.customer_services_owner.all()) \
+               | set(self.customer_services_author.all())
+
+    def halls(self):
+        return set(self.halls_contributor.all()) | set(self.halls_owner.all()) | set(self.halls_author.all())
+
+    def events(self):
+        return set(self.events_contributor.all()) | set(self.events_owner.all()) | set(self.events_author.all())
+
+    def promo_actions(self):
+        return set(self.promo_actions_contributor.all()) | set(self.promo_actions_owner.all()) \
+               | set(self.promo_actions_author.all())
+
     def name(self):
         return self.user.name
 
