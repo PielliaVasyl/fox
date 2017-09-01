@@ -90,7 +90,7 @@ tabcontent = document.getElementsByClassName("tabcontent");
 				<article class="row">
 					<div class="col-md-3">
 						{% if instance.image %}
-						<img class="img-responsive" src="{{ instance.image.url }}" style="max-width:200px; max-height=400px" alt="">
+						<img class="img-responsive" src="{{ instance.image.url }}" style="max-width:200px; max-height:400px" alt="">
 						{% endif %}
 					</div>
 					<div class="col-md-9">
@@ -145,41 +145,41 @@ tabcontent = document.getElementsByClassName("tabcontent");
 
 						<h3>Статьи</h3>
 						{% for article in instance.articles %}
-						{% include 'profiles/snippets/article_snippet.html' with instance=article only %}
-						<hr class="half-margins" />
-						{% endfor %}
+                            {% include 'profiles/snippets/article_snippet.html' with instance=article only %}
+                        	{% if not forloop.last %}<hr class="half-margins" /><!-- separator -->{% endif %}
+                        {% endfor %}
 
 					</div>
 
 					<div id="Photos" class="tabcontent">
 					  <h3>Фото</h3>
 						{% for photo in instance.photos %}
-					    	{% include 'profiles/snippets/photo_snippet.html' with instance=photo %}
-							<hr class="half-margins" />
-						{% endfor %}
+					    	{% include 'profiles/snippets/photo_snippet.html' with instance=photo only %}
+							{% if not forloop.last %}<hr class="half-margins" /><!-- separator -->{% endif %}
+                        {% endfor %}
 					</div>
 
 					<div id="Videos" class="tabcontent">
 					  <h3>Видео</h3>
 						{% for video in instance.videos %}
-							{% include 'profiles/snippets/article_snippet.html' with instance=video %}
-							<hr class="half-margins" />
-						{% endfor %}
+							{% include 'profiles/snippets/video_snippet.html' with instance=video only %}
+						    {% if not forloop.last %}<hr class="half-margins" /><!-- separator -->{% endif %}
+                        {% endfor %}
 					</div>
 
 					<div id="Audios" class="tabcontent">
 					  <h3>Аудио</h3>
 						{% for audio in instance.audios %}
-							{% include 'profiles/snippets/article_snippet.html' with instance=audio %}
-							<hr class="half-margins" />
-						{% endfor %}
+							{% include 'profiles/snippets/audio_snippet.html' with instance=audio only %}
+						    {% if not forloop.last %}<hr class="half-margins" /><!-- separator -->{% endif %}
+                        {% endfor %}
 					</div>
 
 					<div id="Links" class="tabcontent">
 					  <h3>Ссылки</h3>
 						{% for resource in instance.resources %}
-							{% include 'profiles/snippets/article_snippet.html' with instance=resource %}
-							<hr class="half-margins" />
+							{% include 'profiles/snippets/resource_snippet.html' with instance=resource only %}
+                            {% if not forloop.last %}<hr class="half-margins" /><!-- separator -->{% endif %}
 						{% endfor %}
 					</div>
 
@@ -187,7 +187,8 @@ tabcontent = document.getElementsByClassName("tabcontent");
 					  <h3>Места</h3>
 						{% for place in instance.places %}
 
-					    <p>{{ place.pk }}</p>
+					        {% include 'profiles/snippets/place_snippet.html' with instance=place only %}
+                            {% if not forloop.last %}<hr class="half-margins" /><!-- separator -->{% endif %}
 
 						{% endfor %}
 					</div>
@@ -196,7 +197,9 @@ tabcontent = document.getElementsByClassName("tabcontent");
 					  <h3>Организации</h3>
 						{% for organization in instance.organizations %}
 
-					    <p>{{ organization.pk }}</p>
+    					    {% include 'profiles/snippets/organization_snippet.html' with instance=organization only %}
+                            {% if not forloop.last %}<hr class="half-margins" /><!-- separator -->{% endif %}
+
 
 						{% endfor %}
 					</div>
@@ -205,7 +208,8 @@ tabcontent = document.getElementsByClassName("tabcontent");
 					  <h3>Персоны</h3>
 						{% for person in instance.persons %}
 
-					    <p>{{ person.pk }}</p>
+    					    {% include 'profiles/snippets/person_snippet.html' with instance=person only %}
+                            {% if not forloop.last %}<hr class="half-margins" /><!-- separator -->{% endif %}
 
 						{% endfor %}
 					</div>
@@ -214,7 +218,8 @@ tabcontent = document.getElementsByClassName("tabcontent");
 					  <h3>Школы</h3>
 						{% for school in instance.schools %}
 
-					    <p>{{ school.pk }}</p>
+    					    {% include 'profiles/snippets/school_snippet.html' with instance=school only %}
+                            {% if not forloop.last %}<hr class="half-margins" /><!-- separator -->{% endif %}
 
 						{% endfor %}
 					</div>
@@ -223,7 +228,8 @@ tabcontent = document.getElementsByClassName("tabcontent");
 					  <h3>Учителя</h3>
 						{% for teacher in instance.teachers %}
 
-					    <p>{{ teacher.pk }}</p>
+                            {% include 'profiles/snippets/teacher_snippet.html' with instance=teacher only %}
+                            {% if not forloop.last %}<hr class="half-margins" /><!-- separator -->{% endif %}
 
 						{% endfor %}
 					</div>
@@ -232,16 +238,18 @@ tabcontent = document.getElementsByClassName("tabcontent");
 					  <h3>Магазины</h3>
 						{% for shop in instance.shops %}
 
-					    <p>{{ shop.pk }}</p>
+                            {% include 'profiles/snippets/shop_snippet.html' with instance=shop only %}
+                            {% if not forloop.last %}<hr class="half-margins" /><!-- separator -->{% endif %}
 
 						{% endfor %}
 					</div>
 
 					<div id="Services" class="tabcontent">
 					  <h3>Услуги</h3>
-						{% for customerservices in instance.customer_services %}
+						{% for customer_services in instance.customer_services %}
 
-					    <p>{{ customerservices.pk }}</p>
+                            {% include 'profiles/snippets/customer_services_snippet.html' with instance=customer_services only %}
+                            {% if not forloop.last %}<hr class="half-margins" /><!-- separator -->{% endif %}
 
 						{% endfor %}
 					</div>
@@ -250,7 +258,8 @@ tabcontent = document.getElementsByClassName("tabcontent");
 					  <h3>Залы</h3>
 						{% for hall in instance.halls %}
 
-					    <p>{{ hall.pk }}</p>
+                            {% include 'profiles/snippets/hall_snippet.html' with instance=hall only %}
+                            {% if not forloop.last %}<hr class="half-margins" /><!-- separator -->{% endif %}
 
 						{% endfor %}
 					</div>
@@ -259,16 +268,18 @@ tabcontent = document.getElementsByClassName("tabcontent");
 					  <h3>Мероприятия</h3>
 						{% for event in instance.events %}
 
-					    <p>{{ event.pk }}</p>
+                            {% include 'profiles/snippets/event_snippet.html' with instance=event only %}
+                            {% if not forloop.last %}<hr class="half-margins" /><!-- separator -->{% endif %}
 
 						{% endfor %}
 					</div>
 
 					<div id="PromoActions" class="tabcontent">
 					  <h3>Акции</h3>
-						{% for promoaction in instance.promo_actions %}
+						{% for promo_action in instance.promo_actions %}
 
-					    <p>{{ promoaction.pk }}</p>
+                            {% include 'profiles/snippets/promo_action_snippet.html' with instance=promo_action only %}
+                            {% if not forloop.last %}<hr class="half-margins" /><!-- separator -->{% endif %}
 
 						{% endfor %}
 					</div>
