@@ -24,7 +24,6 @@ from events import views as events_views
 from map import views as map_views
 from entities.views import common as common_views
 from feed import views as feed_views
-from profiles import views as profiles_views
 from create import views as create_views
 
 urlpatterns = [
@@ -50,14 +49,6 @@ urlpatterns = [
             url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', feed_views.articles,
                 name='feed_articles_city'),
 
-            url(r'^(?:article-(?P<article_id>\d+)/)', include([
-                url(r'^$', feed_views.article),
-                url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
-                    url(r'^$', feed_views.article),
-                    url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', feed_views.article),
-                ])),
-                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', feed_views.article),
-            ])),
         ])),
 
         url(r'^videos/', include([
@@ -122,14 +113,6 @@ urlpatterns = [
             ])),
             url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', feed_views.dance_styles),
 
-            url(r'^(?:dance-style-(?P<dance_style_id>\d+)/)', include([
-                url(r'^$', feed_views.dance_style),
-                url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
-                    url(r'^$', feed_views.dance_style),
-                    url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', feed_views.dance_style),
-                ])),
-                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', feed_views.dance_style),
-            ])),
         ])),
 
         url(r'^$', RedirectView.as_view(pattern_name='feed_articles', permanent=True)),
@@ -308,15 +291,6 @@ urlpatterns = [
         ])),
         url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', create_views.create),
 
-    ])),
-
-    url(r'^(?:profile-(?P<profile_id>\d+)/)', include([
-        url(r'^$', profiles_views.profile, name='profiles_profile'),
-        url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
-            url(r'^$', profiles_views.profile),
-            url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', profiles_views.profile),
-        ])),
-        url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', profiles_views.profile),
     ])),
 
     url(r'^(?P<entity>[\w-]+)-(?P<instance_id>\d+)/', include([

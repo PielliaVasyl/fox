@@ -15,16 +15,6 @@ def articles(request, city_title=None, direction_title=None):
     return render(request, 'feed/articles.html', context)
 
 
-def article(request, article_id, city_title=None, direction_title=None):
-    current_article = get_object_or_404(Article, pk=article_id)
-    title = '%s' % (current_article.title,)
-    context = {
-        'title': title,
-        'article': current_article
-    }
-    return render(request, 'feed/article-single.html', context)
-
-
 def links(request, city_title=None, direction_title=None):
     title = 'Полезные ссылки'
 
@@ -87,15 +77,3 @@ def dance_styles(request, city_title=None, direction_title=None):
         'form': form,
     }
     return render(request, 'feed/dance-styles.html', context)
-
-
-def dance_style(request, dance_style_id, city_title=None, direction_title=None):
-    current_dance_style = get_object_or_404(DanceStyle, pk=dance_style_id)
-    title = '%s' % (current_dance_style.title,)
-    form = DanceStyleFilterForm(request.POST or None)
-    context = {
-        'title': title,
-        'instance': current_dance_style,
-        'form': form
-    }
-    return render(request, 'feed/dance-style-single.html', context)

@@ -63,11 +63,11 @@
 			</ul>
 			{% endif %}
 
-			{% if request.path|startswith:'/profiles/' %}
+			{% if request.path|startswith:'/profile-' %}
 			<ul class="nav" id="profiles">
-				<li><a href="/profiles/{{ request.path|get_direction_city_url }}">Моя страница</a></li>
-				<li><a href="/profiles/edit/{{ request.path|get_direction_city_url }}">Редактировать</a></li>
-				<li><a href="/profiles/settings/{{ request.path|get_direction_city_url }}">Настройки</a></li>
+				<li><a href="/profile-{{ instance.pk }}/{{ request.path|get_direction_city_url }}">Моя страница</a></li>
+				<li><a href="/profile-{{ instance.pk }}/edit/{{ request.path|get_direction_city_url }}">Редактировать</a></li>
+				<!--<li><a href="/profile-{{ instance.pk }}/settings/{{ request.path|get_direction_city_url }}">Настройки</a></li>-->
 			</ul>
 			{% endif %}
 		</div>

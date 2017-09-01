@@ -1,0 +1,292 @@
+{% extends "base.html" %}
+{% load get_direction_city_url %}
+
+{% block title %}{{ title }} - {% endblock %}
+
+{% block wrapper %}
+<style>
+	/* Style the tab */
+div.tab {
+    float: left;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+    width: 20%;
+    height: 600px;
+}
+
+/* Style the buttons inside the tab */
+div.tab button {
+    display: block;
+    background-color: inherit;
+    color: black;
+    padding: 5px 16px;
+    width: 100%;
+    border: none;
+    outline: none;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+div.tab button:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current "tab button" class */
+div.tab button.active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    float: left;
+    padding: 0px 12px;
+    border: 1px solid #ccc;
+    width: 80%;
+    border-left: none;
+    height: 600px;
+}
+</style>
+<script>
+window.onload = function(){
+var i, tabcontent, tablinks;
+tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    document.getElementById('Articles').style.display = "block";
+    document.getElementById('Articles').className += " active";
+}
+	function openTab(evt, cityName) {
+	console.log(evt.currentTarget.className)
+    // Declare all variables
+    var i, tabcontent, tablinks;
+
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the link that opened the tab
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+
+}
+</script>
+
+		<!-- WRAPPER -->
+		<div id="wrapper" style="padding-top:10px">
+			<section class="container">
+
+				<!-- Who Am I -->
+				<article class="row">
+					<div class="col-md-3">
+						{% if instance.image %}
+						<img class="img-responsive" src="{{ instance.image.url }}" style="max-width:200px; max-height:400px" alt="">
+						{% endif %}
+					</div>
+					<div class="col-md-9">
+						<div class="col-md-9">
+						<h3>{{ instance.user.username }}</h3>
+						</div>
+						<div class="col-md-3">
+							<a href="/create/{{ request.path|get_direction_city_url }}" type="button" class="btn btn-primary">
+								<i class="fa fa-plus" aria-hidden="true"></i> Добавить информацию
+							</a>
+						</div>
+
+						<hr />
+						{{ instance.description|linebreaks }}
+
+						<!--<ul class="list-icon star-o">-->
+							<!--<li>Fully responsive so content looks great</li>-->
+							<!--<li>Awesome sliders to showcase content</li>-->
+							<!--<li>Amazing shortcodes loaded with options</li>-->
+						<!--</ul>-->
+
+					</div>
+				</article>
+				<!-- /Who Am I -->
+
+				<!--<div class="divider">&lt;!&ndash; divider &ndash;&gt;-->
+					<!--<i class="fa fa-star"></i>-->
+				<!--</div>-->
+
+				<!-- SKILLS -->
+				<div class="row" style="padding-top:10px">
+					<div class="tab">
+					    <button class="tablinks" onclick="openTab(event, 'Articles')">Статьи ({{ instance.articles|length }})</button>
+					    <button class="tablinks" onclick="openTab(event, 'Photos')">Фото ({{ instance.photos|length }})</button>
+					    <button class="tablinks" onclick="openTab(event, 'Videos')">Видео ({{ instance.videos|length }})</button>
+						<button class="tablinks" onclick="openTab(event, 'Audios')">Аудио ({{ instance.audios|length }})</button>
+						<button class="tablinks" onclick="openTab(event, 'Links')">Ссылки ({{ instance.resources|length }})</button>
+						<button class="tablinks" onclick="openTab(event, 'Places')">Места ({{ instance.places|length }})</button>
+						<button class="tablinks" onclick="openTab(event, 'Organizations')">Организации ({{ instance.organizations|length }})</button>
+						<button class="tablinks" onclick="openTab(event, 'Persons')">Персоны ({{ instance.persons|length }})</button>
+						<button class="tablinks" onclick="openTab(event, 'Schools')">Школы ({{ instance.schools|length }})</button>
+						<button class="tablinks" onclick="openTab(event, 'Teachers')">Учителя ({{ instance.teachers|length }})</button>
+						<button class="tablinks" onclick="openTab(event, 'Shops')">Магазины ({{ instance.shops|length }})</button>
+						<button class="tablinks" onclick="openTab(event, 'Services')">Услуги ({{ instance.customer_services|length }})</button>
+						<button class="tablinks" onclick="openTab(event, 'Halls')">Залы ({{ instance.halls|length }})</button>
+						<button class="tablinks" onclick="openTab(event, 'Events')">Мероприятия ({{ instance.events|length }})</button>
+						<button class="tablinks" onclick="openTab(event, 'PromoActions')">Акции ({{ instance.promo_actions|length }})</button>
+					</div>
+
+					<div id="Articles" class="tabcontent">
+
+						<h3>Статьи</h3>
+						{% for article in instance.articles %}
+                            {% include 'entities/profile/snippets/article_snippet.html' with instance=article only %}
+                        	{% if not forloop.last %}<hr class="half-margins" /><!-- separator -->{% endif %}
+                        {% endfor %}
+
+					</div>
+
+					<div id="Photos" class="tabcontent">
+					  <h3>Фото</h3>
+						{% for photo in instance.photos %}
+					    	{% include 'entities/profile/snippets/photo_snippet.html' with instance=photo only %}
+							{% if not forloop.last %}<hr class="half-margins" /><!-- separator -->{% endif %}
+                        {% endfor %}
+					</div>
+
+					<div id="Videos" class="tabcontent">
+					  <h3>Видео</h3>
+						{% for video in instance.videos %}
+							{% include 'entities/profile/snippets/video_snippet.html' with instance=video only %}
+						    {% if not forloop.last %}<hr class="half-margins" /><!-- separator -->{% endif %}
+                        {% endfor %}
+					</div>
+
+					<div id="Audios" class="tabcontent">
+					  <h3>Аудио</h3>
+						{% for audio in instance.audios %}
+							{% include 'entities/profile/snippets/audio_snippet.html' with instance=audio only %}
+						    {% if not forloop.last %}<hr class="half-margins" /><!-- separator -->{% endif %}
+                        {% endfor %}
+					</div>
+
+					<div id="Links" class="tabcontent">
+					  <h3>Ссылки</h3>
+						{% for resource in instance.resources %}
+							{% include 'entities/profile/snippets/resource_snippet.html' with instance=resource only %}
+                            {% if not forloop.last %}<hr class="half-margins" /><!-- separator -->{% endif %}
+						{% endfor %}
+					</div>
+
+					<div id="Places" class="tabcontent">
+					  <h3>Места</h3>
+						{% for place in instance.places %}
+
+					        {% include 'entities/profile/snippets/place_snippet.html' with instance=place only %}
+                            {% if not forloop.last %}<hr class="half-margins" /><!-- separator -->{% endif %}
+
+						{% endfor %}
+					</div>
+
+					<div id="Organizations" class="tabcontent">
+					  <h3>Организации</h3>
+						{% for organization in instance.organizations %}
+
+    					    {% include 'entities/profile/snippets/organization_snippet.html' with instance=organization only %}
+                            {% if not forloop.last %}<hr class="half-margins" /><!-- separator -->{% endif %}
+
+
+						{% endfor %}
+					</div>
+
+					<div id="Persons" class="tabcontent">
+					  <h3>Персоны</h3>
+						{% for person in instance.persons %}
+
+    					    {% include 'entities/profile/snippets/person_snippet.html' with instance=person only %}
+                            {% if not forloop.last %}<hr class="half-margins" /><!-- separator -->{% endif %}
+
+						{% endfor %}
+					</div>
+
+					<div id="Schools" class="tabcontent">
+					  <h3>Школы</h3>
+						{% for school in instance.schools %}
+
+    					    {% include 'entities/profile/snippets/school_snippet.html' with instance=school only %}
+                            {% if not forloop.last %}<hr class="half-margins" /><!-- separator -->{% endif %}
+
+						{% endfor %}
+					</div>
+
+					<div id="Teachers" class="tabcontent">
+					  <h3>Учителя</h3>
+						{% for teacher in instance.teachers %}
+
+                            {% include 'entities/profile/snippets/teacher_snippet.html' with instance=teacher only %}
+                            {% if not forloop.last %}<hr class="half-margins" /><!-- separator -->{% endif %}
+
+						{% endfor %}
+					</div>
+
+					<div id="Shops" class="tabcontent">
+					  <h3>Магазины</h3>
+						{% for shop in instance.shops %}
+
+                            {% include 'entities/profile/snippets/shop_snippet.html' with instance=shop only %}
+                            {% if not forloop.last %}<hr class="half-margins" /><!-- separator -->{% endif %}
+
+						{% endfor %}
+					</div>
+
+					<div id="Services" class="tabcontent">
+					  <h3>Услуги</h3>
+						{% for customer_services in instance.customer_services %}
+
+                            {% include 'entities/profile/snippets/customer_services_snippet.html' with instance=customer_services only %}
+                            {% if not forloop.last %}<hr class="half-margins" /><!-- separator -->{% endif %}
+
+						{% endfor %}
+					</div>
+
+					<div id="Halls" class="tabcontent">
+					  <h3>Залы</h3>
+						{% for hall in instance.halls %}
+
+                            {% include 'entities/profile/snippets/hall_snippet.html' with instance=hall only %}
+                            {% if not forloop.last %}<hr class="half-margins" /><!-- separator -->{% endif %}
+
+						{% endfor %}
+					</div>
+
+					<div id="Events" class="tabcontent">
+					  <h3>Мероприятия</h3>
+						{% for event in instance.events %}
+
+                            {% include 'entities/profile/snippets/event_snippet.html' with instance=event only %}
+                            {% if not forloop.last %}<hr class="half-margins" /><!-- separator -->{% endif %}
+
+						{% endfor %}
+					</div>
+
+					<div id="PromoActions" class="tabcontent">
+					  <h3>Акции</h3>
+						{% for promo_action in instance.promo_actions %}
+
+                            {% include 'entities/profile/snippets/promo_action_snippet.html' with instance=promo_action only %}
+                            {% if not forloop.last %}<hr class="half-margins" /><!-- separator -->{% endif %}
+
+						{% endfor %}
+					</div>
+				</div>
+				<!-- /SKILLS -->
+
+			</section>
+		</div>
+		<!-- /WRAPPER -->
+
+{% endblock %}

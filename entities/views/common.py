@@ -10,6 +10,7 @@ from entities.models import Article, Playlist, Audio, Tracklist, DanceStyle, Dan
 from entities.models import Chapter
 from entities.models import Photo
 from entities.models import Album
+from entities.models import UserProfile
 from entities.models import Video
 from entities.models.links import DanceStyleAuthorLink
 
@@ -38,6 +39,7 @@ from entities.views.photo import PHOTO_ATTRIBUTE_FORMS
 from entities.views.place import PLACE_EDIT_BUTTONS, PLACE_ATTRIBUTE_FORMS
 from entities.views.playlist import PLAYLIST_EDIT_BUTTONS
 from entities.views.playlist import PLAYLIST_ATTRIBUTE_FORMS
+from entities.views.profiles import PROFILE_EDIT_BUTTONS, PROFILE_ATTRIBUTE_FORMS
 from entities.views.promo_action import PROMO_ACTION_EDIT_BUTTONS, PROMO_ACTION_ATTRIBUTE_FORMS
 from entities.views.resource import RESOURCE_EDIT_BUTTONS, RESOURCE_ATTRIBUTE_FORMS
 from entities.views.school import SCHOOL_EDIT_BUTTONS, SCHOOL_ATTRIBUTE_FORMS
@@ -67,7 +69,8 @@ ENTITY = {
     'audio': Audio,
     'tracklist': Tracklist,
     'dance-style': DanceStyle,
-    'dance-direction': DanceDirection
+    'dance-direction': DanceDirection,
+    'profile': UserProfile
 }
 
 ENTITY_FILTER_FORM = {
@@ -104,7 +107,8 @@ EDIT_BUTTONS = {
     'audio': AUDIO_EDIT_BUTTONS,
     'tracklist': TRACKLIST_EDIT_BUTTONS,
     'dance-style': DANCE_STYLE_EDIT_BUTTONS,
-    'dance-direction': DANCE_DIRECTION_EDIT_BUTTONS
+    'dance-direction': DANCE_DIRECTION_EDIT_BUTTONS,
+    'profile': PROFILE_EDIT_BUTTONS
 }
 
 ATTRIBUTE_FORMS = {
@@ -128,7 +132,8 @@ ATTRIBUTE_FORMS = {
     'audio': AUDIO_ATTRIBUTE_FORMS,
     'tracklist': TRACKLIST_ATTRIBUTE_FORMS,
     'dance-style': DANCE_STYLE_ATTRIBUTE_FORMS,
-    'dance-direction': DANCE_DIRECTION_ATTRIBUTE_FORMS
+    'dance-direction': DANCE_DIRECTION_ATTRIBUTE_FORMS,
+    'profile': PROFILE_ATTRIBUTE_FORMS
 }
 
 CONTACTS_ENTITY = {
@@ -143,12 +148,20 @@ CONTACTS_ENTITY = {
 }
 
 
+def _get_title(current_instance):
+    if hasattr(current_instance, 'title'):
+        title = '%s' % (current_instance.title,)
+    else:
+        title = '%s' % (current_instance.user.username,)
+    return title
+
+
 def show_instance(request, entity, instance_id, direction_title=None, city_title=None):
     html_template_path = 'entities/%s/%s-single.html' % (entity.replace('-', '_'), entity)
 
     current_entity = ENTITY.get(entity, None)
     current_instance = get_object_or_404(current_entity, pk=instance_id)
-    title = '%s' % (current_instance.title,)
+    title = _get_title(current_instance)
 
     form = ENTITY_FILTER_FORM.get(entity, None)
     if form is not None:
@@ -167,7 +180,7 @@ def edit_instance(request, entity, instance_id, city_title=None, direction_title
 
     current_entity = ENTITY.get(entity, None)
     current_instance = get_object_or_404(current_entity, pk=instance_id)
-    title = '%s' % (current_instance.title,)
+    title = _get_title(current_instance)
 
     edit_buttons = EDIT_BUTTONS.get(entity, None)
 
@@ -247,6 +260,8 @@ def __get_form(entity, attribute, request, current_instance):
             form = form(request.POST or None, initial={'count_types': current_instance.count_types.all()})
         if attribute == 'dance-style-distance-types':
             form = form(request.POST or None, initial={'distance_types': current_instance.distance_types.all()})
+        if attribute == 'name' and entity == 'profile':
+            form = form(request.POST or None, initial={'username': current_instance.user.username})
     return form
 
 
@@ -338,6 +353,9 @@ def save_instance_changes(entity, form, attribute, request, current_instance):
         attr_values['count_types'] = form.cleaned_data.get('count_types')
     if attribute == 'dance-style-distance-types':
         attr_values['distance_types'] = form.cleaned_data.get('distance_types')
+    if attribute == 'name' and entity == 'profile':
+        attr_values['username'] = form.cleaned_data.get('username')
+        current_instance = current_instance.user
 
     set_attributes(current_instance, attr_values)
     current_instance.save()
@@ -367,7 +385,7 @@ def _get_socials(entity, author_id, instance_id):
 def edit_instance_attr(request, entity, instance_id, attribute=None, city_title=None, direction_title=None):
     current_entity = ENTITY.get(entity, None)
     current_instance = get_object_or_404(current_entity, pk=instance_id)
-    title = '%s' % (current_instance.title,)
+    title = _get_title(current_instance)
     html_template_path = 'entities/%s/edit/edit-%s.html' % (entity.replace('-', '_'), attribute)
 
     if '-contacts' in attribute:
