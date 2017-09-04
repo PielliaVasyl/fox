@@ -263,21 +263,22 @@ urlpatterns = [
     # ])),
 
     url(r'^create/', include([
-        url(r'^$', create_views.create),
-        url(r'^(?P<instance>[\w-]+)/', include([
-            url(r'^$', create_views.create_instance),
-            url(r'^(?P<attribute>[\w-]+)/$', create_views.create_attr)
-        ]))
+        url(r'^$', create_views.show_create_page),
+        url(r'^(?P<instance>[\w-]+)/$', create_views.create_instance),
     ])),
 
     url(r'^(?P<entity>[\w-]+)-(?P<instance_id>\d+)/', include([
-        url(r'^$', common_views.show_instance),
-        url(r'^edit/$', common_views.edit_instance),
+        url(r'^$', common_views.instance_page),
+        url(r'^edit/', include([
+            url(r'^$', common_views.edit_instance_page),
+            url(r'^(?P<attribute>[\w-]+)/$', common_views.edit_instance_attr),
+        ])),
         # url(r'^delete/$', common_views.delete_instance),
+        url(r'^create-(?P<attr_instance>[\w-]+)/$', common_views.create_attr),
+
         url(r'^(?P<attribute>[\w-]+)-(?P<attribute_id>\d+)/', include([
-            # url(r'^$', common_views.show_instance_attr),
-            url(r'^edit/$', common_views.edit_instance_attr),
-            # url(r'^delete/$', common_views.delete_instance_attr),
+            # url(r'^edit/$', common_views.edit_attr),
+            # url(r'^delete/$', common_views.delete_attr),
         ])),
     ])),
 

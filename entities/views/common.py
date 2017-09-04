@@ -3,42 +3,42 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 
-from algoritms.get_direction_city_parameter import get_direction_city_parameter
 from directions.all.forms import EventsFilterForm, PromoActionsFilterForm, PlacesFilterForm, SchoolsFilterForm, \
     ShopsFilterForm, CustomerServicesFilterForm, HallsFilterForm
-from entities.models import Article, Playlist, Audio, Tracklist, DanceStyle, DanceDirection
-from entities.models import Chapter
-from entities.models import Photo
-from entities.models import Album
-from entities.models import UserProfile
-from entities.models import Video
+from entities.forms.contacts import PhoneNumberForm
+from entities.forms.classes import DirectionForm, CityForm
+from entities.forms.links import EventLinkForm, PromoActionLinkForm, PlaceLinkForm, SchoolLinkForm, TeacherLinkForm, \
+    ShopLinkForm, CustomerServicesLinkForm, HallLinkForm, OrganizationLinkForm, PersonLinkForm, ResourceLinkForm
+from entities.forms.locations import EventLocationForm, CutPlaceLocationForm, PlaceMapCoordinatesForm, \
+    SchoolMapCoordinatesForm, CutSchoolLocationForm, OrganizationMapCoordinatesForm, CutOrganizationLocationForm, \
+    ShopMapCoordinatesForm, CutShopLocationForm, CutHallLocationForm, HallMapCoordinatesForm, \
+    CutCustomerServicesLocationForm, CustomerServicesMapCoordinatesForm
+from entities.forms.tags import ArticleTagForm, ChapterTagForm, AlbumTagForm, PlaylistTagForm, TracklistTagForm, \
+    DanceDirectionTagForm, PhotoTagForm, VideoTagForm, AudioTagForm, DanceStyleTagForm
+from entities.models.contacts import OrganizationContacts, SchoolContacts, TeacherContacts, PersonContacts, \
+    ShopContacts, CustomerServicesContacts, HallContacts, ResourceContacts, Socials
+from entities.models.events import Event, PromoAction
 from entities.models.links import DanceStyleAuthorLink
-
-from entities.models.types import ShopType, CustomerServicesType
+from entities.models.pages import Place, School, Organization, Teacher, Person, Shop, CustomerServices, Hall, Resource
+from entities.models.posts import Article, Playlist, Audio, Tracklist, DanceStyle, DanceDirection, Chapter, Photo, \
+    Album, Video
+from entities.models.types import ShopType, CustomerServicesType, DayOfTheWeek, EventType, ExperienceLevel, \
+    PlaceType, PriceType, RepeatsType
+from entities.models.userprofile import UserProfile
 from entities.views.album import ALBUM_EDIT_BUTTONS, ALBUM_ATTRIBUTE_FORMS
 from entities.views.article import ARTICLE_EDIT_BUTTONS, ARTICLE_ATTRIBUTE_FORMS
 from entities.views.audio import AUDIO_EDIT_BUTTONS, AUDIO_ATTRIBUTE_FORMS
 from entities.views.chapter import CHAPTER_EDIT_BUTTONS, CHAPTER_ATTRIBUTE_FORMS
 from entities.views.customer_services import CUSTOMER_SERVICES_EDIT_BUTTONS, CUSTOMER_SERVICES_ATTRIBUTE_FORMS
-from entities.models.types import DayOfTheWeek, EventType, ExperienceLevel, PlaceType, PriceType, RepeatsType
-from entities.models.pages import Place, School, Organization, Teacher, Person, Shop, CustomerServices, Hall, Resource
-from entities.models.contacts import OrganizationContacts, SchoolContacts, TeacherContacts, PersonContacts, \
-    ShopContacts, CustomerServicesContacts, HallContacts, ResourceContacts, Socials
-from entities.models.events import Event, PromoAction
-from entities.views.dance_direction import DANCE_DIRECTION_EDIT_BUTTONS
-from entities.views.dance_direction import DANCE_DIRECTION_ATTRIBUTE_FORMS
-from entities.views.dance_style import DANCE_STYLE_EDIT_BUTTONS
-from entities.views.dance_style import DANCE_STYLE_ATTRIBUTE_FORMS
-
+from entities.views.dance_direction import DANCE_DIRECTION_EDIT_BUTTONS, DANCE_DIRECTION_ATTRIBUTE_FORMS
+from entities.views.dance_style import DANCE_STYLE_EDIT_BUTTONS, DANCE_STYLE_ATTRIBUTE_FORMS
 from entities.views.event import EVENT_EDIT_BUTTONS, EVENT_ATTRIBUTE_FORMS
 from entities.views.hall import HALL_EDIT_BUTTONS, HALL_ATTRIBUTE_FORMS
 from entities.views.organization import ORGANIZATION_EDIT_BUTTONS, ORGANIZATION_ATTRIBUTE_FORMS
 from entities.views.person import PERSON_EDIT_BUTTONS, PERSON_ATTRIBUTE_FORMS
-from entities.views.photo import PHOTO_EDIT_BUTTONS
-from entities.views.photo import PHOTO_ATTRIBUTE_FORMS
+from entities.views.photo import PHOTO_EDIT_BUTTONS, PHOTO_ATTRIBUTE_FORMS
 from entities.views.place import PLACE_EDIT_BUTTONS, PLACE_ATTRIBUTE_FORMS
-from entities.views.playlist import PLAYLIST_EDIT_BUTTONS
-from entities.views.playlist import PLAYLIST_ATTRIBUTE_FORMS
+from entities.views.playlist import PLAYLIST_EDIT_BUTTONS, PLAYLIST_ATTRIBUTE_FORMS
 from entities.views.profiles import PROFILE_EDIT_BUTTONS, PROFILE_ATTRIBUTE_FORMS
 from entities.views.promo_action import PROMO_ACTION_EDIT_BUTTONS, PROMO_ACTION_ATTRIBUTE_FORMS
 from entities.views.resource import RESOURCE_EDIT_BUTTONS, RESOURCE_ATTRIBUTE_FORMS
@@ -156,7 +156,7 @@ def _get_title(current_instance):
     return title
 
 
-def show_instance(request, entity, instance_id, direction_title=None, city_title=None):
+def instance_page(request, entity, instance_id):
     html_template_path = 'entities/%s/%s-single.html' % (entity.replace('-', '_'), entity)
 
     current_entity = ENTITY.get(entity, None)
@@ -165,7 +165,7 @@ def show_instance(request, entity, instance_id, direction_title=None, city_title
 
     form = ENTITY_FILTER_FORM.get(entity, None)
     if form is not None:
-        form = form(request.POST or None, direction=direction_title)
+        form = form(request.POST or None)
 
     context = {
         'title': title,
@@ -175,7 +175,7 @@ def show_instance(request, entity, instance_id, direction_title=None, city_title
     return render(request, html_template_path, context)
 
 
-def edit_instance(request, entity, instance_id, city_title=None, direction_title=None):
+def edit_instance_page(request, entity, instance_id):
     html_template_path = 'entities/%s/%s-edit.html' % (entity.replace('-', '_'), entity)
 
     current_entity = ENTITY.get(entity, None)
@@ -361,10 +361,9 @@ def save_instance_changes(entity, form, attribute, request, current_instance):
     current_instance.save()
 
 
-def _get_response_redirect(entity, instance_id, city_title, direction_title):
-    return '/%s-%s/edit/%s' % (entity,
-                               instance_id,
-                               get_direction_city_parameter(city_title, direction_title))
+def _get_response_redirect(entity, instance_id):
+    return '/%s-%s/edit/' % (entity,
+                             instance_id)
 
 
 def _get_contacts(entity, author_id, instance_id):
@@ -382,11 +381,18 @@ def _get_socials(entity, author_id, instance_id):
     return socials
 
 
-def edit_instance_attr(request, entity, instance_id, attribute=None, city_title=None, direction_title=None):
+def _get_modal_window_title(attribute):
+    modal_window_title = {
+        'title': 'Изменить название'
+    }.get(attribute, '')
+    return modal_window_title
+
+
+def edit_instance_attr(request, entity, instance_id, attribute=None):
     current_entity = ENTITY.get(entity, None)
     current_instance = get_object_or_404(current_entity, pk=instance_id)
     title = _get_title(current_instance)
-    html_template_path = 'entities/%s/edit/edit-%s.html' % (entity.replace('-', '_'), attribute)
+    html_template_path = 'attrs/edit/edit-%s.html' % ('attr',)
 
     if '-contacts' in attribute:
         form_contact = __get_form(entity, 'contacts', request, current_instance)
@@ -406,7 +412,7 @@ def edit_instance_attr(request, entity, instance_id, attribute=None, city_title=
             set_attributes(current_instance, {'socials': socials})
             current_instance.save()
         if any([form_contact.is_valid(), form_socials.is_valid()]):
-            return HttpResponseRedirect(_get_response_redirect(entity, instance_id, city_title, direction_title))
+            return HttpResponseRedirect(_get_response_redirect(entity, instance_id))
 
         context = {
             'form_contact': form_contact,
@@ -426,7 +432,7 @@ def edit_instance_attr(request, entity, instance_id, attribute=None, city_title=
             set_attributes(link_to_author, {'link': form_dance_style_link.cleaned_data.get('link')})
             link_to_author.save()
         if any([form_description.is_valid(), form_dance_style_link.is_valid()]):
-            return HttpResponseRedirect(_get_response_redirect(entity, instance_id, city_title, direction_title))
+            return HttpResponseRedirect(_get_response_redirect(entity, instance_id))
 
         context = {
             'form_description': form_description,
@@ -438,13 +444,112 @@ def edit_instance_attr(request, entity, instance_id, attribute=None, city_title=
         if form.is_valid():
             save_instance_changes(entity, form, attribute, request, current_instance)
 
-            return HttpResponseRedirect(_get_response_redirect(entity, instance_id, city_title, direction_title))
+            return HttpResponseRedirect(_get_response_redirect(entity, instance_id))
 
         context = {
             'form': form
         }
 
+    context['modal_window_title'] = _get_modal_window_title(attribute)
+    context['attribute'] = attribute
+    context['entity'] = entity
     context['instance'] = current_instance
     context['title'] = title
 
+    return render(request, html_template_path, context)
+
+
+def create_attr(request, attribute=None):
+    html_template_path = 'create/attrs/create-attr-' + attribute + '.html'
+    if attribute == 'direction':
+        form = DirectionForm(request.POST or None)
+    if attribute == 'city':
+        form = CityForm(request.POST or None)
+    if attribute == 'event-link':
+        form = EventLinkForm(request.POST or None)
+    if attribute == 'place-link':
+        form = PlaceLinkForm(request.POST or None)
+    if attribute == 'school-link':
+        form = SchoolLinkForm(request.POST or None)
+    if attribute == 'organization-link':
+        form = OrganizationLinkForm(request.POST or None)
+    if attribute == 'teacher-link':
+        form = TeacherLinkForm(request.POST or None)
+    if attribute == 'person-link':
+        form = PersonLinkForm(request.POST or None)
+    if attribute == 'promo-action-link':
+        form = PromoActionLinkForm(request.POST or None)
+    if attribute == 'shop-link':
+        form = ShopLinkForm(request.POST or None)
+    if attribute == 'customer-services-link':
+        form = CustomerServicesLinkForm(request.POST or None)
+    if attribute == 'hall-link':
+        form = HallLinkForm(request.POST or None)
+    if attribute == 'resource-link':
+        form = ResourceLinkForm(request.POST or None)
+    if attribute == 'event-location':
+        form = EventLocationForm(request.POST or None)
+    if attribute in ['place-location', 'school-location', 'organization-location', 'shop-location',
+                     'customer-services-location', 'hall-location']:
+        if attribute == 'place-location':
+            form = CutPlaceLocationForm(request.POST or None)
+            form1 = PlaceMapCoordinatesForm(request.POST or None)
+        if attribute == 'school-location':
+            form = CutSchoolLocationForm(request.POST or None)
+            form1 = SchoolMapCoordinatesForm(request.POST or None)
+        if attribute == 'organization-location':
+            form = CutOrganizationLocationForm(request.POST or None)
+            form1 = OrganizationMapCoordinatesForm(request.POST or None)
+        if attribute == 'shop-location':
+            form = CutShopLocationForm(request.POST or None)
+            form1 = ShopMapCoordinatesForm(request.POST or None)
+        if attribute == 'customer-services-location':
+            form = CutCustomerServicesLocationForm(request.POST or None)
+            form1 = CustomerServicesMapCoordinatesForm(request.POST or None)
+        if attribute == 'hall-location':
+            form = CutHallLocationForm(request.POST or None)
+            form1 = HallMapCoordinatesForm(request.POST or None)
+        if form.is_valid():
+            coordinates = form1.save()
+            location = form.save(commit=False)
+            location.coordinates = coordinates
+            location.save()
+            return HttpResponseRedirect('/%s/edit/' % (request.GET.get('instance'),))
+        context = {
+            'form': form,
+            'form1': form1,
+            'incoming_instance': request.GET.get('instance')
+
+        }
+        return render(request, html_template_path, context)
+    if attribute == 'phone-number':
+        form = PhoneNumberForm(request.POST or None)
+    if attribute == 'chapter-tag':
+        form = ChapterTagForm(request.POST or None)
+    if attribute == 'album-tag':
+        form = AlbumTagForm(request.POST or None)
+    if attribute == 'playlist-tag':
+        form = PlaylistTagForm(request.POST or None)
+    if attribute == 'tracklist-tag':
+        form = TracklistTagForm(request.POST or None)
+    if attribute == 'dance-direction-tag':
+        form = DanceDirectionTagForm(request.POST or None)
+    if attribute == 'article-tag':
+        form = ArticleTagForm(request.POST or None)
+    if attribute == 'photo-tag':
+        form = PhotoTagForm(request.POST or None)
+    if attribute == 'video-tag':
+        form = VideoTagForm(request.POST or None)
+    if attribute == 'audio-tag':
+        form = AudioTagForm(request.POST or None)
+    if attribute == 'dance-style-tag':
+        form = DanceStyleTagForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return HttpResponseRedirect('/%s/edit/' % (request.GET.get('instance'), ))
+    context = {
+        'form': form,
+        'incoming_instance': request.GET.get('instance')
+
+    }
     return render(request, html_template_path, context)
