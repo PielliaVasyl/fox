@@ -251,74 +251,36 @@ urlpatterns = [
         url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', home_page_views.index),
     ])),
 
-    url(r'^profiles/', include([
-        url(r'^$', RedirectView.as_view(pattern_name='profiles_profile', permanent=True)),
-        url(r'^(?:direction-(?P<direction_title>[\w-]+)/)', include([
-            url(r'^$', RedirectView.as_view(pattern_name='profiles_profile_direction', permanent=True)),
-            url(r'^(?:city-(?P<city_title>[\w-]+)/)$',
-                RedirectView.as_view(pattern_name='profiles_profile_direction_city', permanent=True)),
-        ])),
-        url(r'^(?:city-(?P<city_title>[\w-]+)/)?$',
-            RedirectView.as_view(pattern_name='profiles_profile_city', permanent=True)),
-    ])),
+    # url(r'^profiles/', include([
+    #     url(r'^$', RedirectView.as_view(pattern_name='profiles_profile', permanent=True)),
+    #     url(r'^(?:direction-(?P<direction_title>[\w-]+)/)', include([
+    #         url(r'^$', RedirectView.as_view(pattern_name='profiles_profile_direction', permanent=True)),
+    #         url(r'^(?:city-(?P<city_title>[\w-]+)/)$',
+    #             RedirectView.as_view(pattern_name='profiles_profile_direction_city', permanent=True)),
+    #     ])),
+    #     url(r'^(?:city-(?P<city_title>[\w-]+)/)?$',
+    #         RedirectView.as_view(pattern_name='profiles_profile_city', permanent=True)),
+    # ])),
 
     url(r'^create/', include([
-
-        url(r'^attributes/', include([
-            url(r'^create-(?P<attribute>[\w-]+)/', include([
-                url(r'^$', create_views.create_attr),
-                url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
-                    url(r'^$', create_views.create_attr),
-                    url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', create_views.create_attr),
-                ])),
-                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', create_views.create_attr),
-            ])),
-        ])),
-
-        url(r'^(?P<instance>[\w-]+)/', include([
-            url(r'^$', create_views.create_instance, name='create_instance'),
-            url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
-                url(r'^$', create_views.create_instance),
-                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', create_views.create_instance),
-            ])),
-            url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', create_views.create_instance),
-        ])),
-
         url(r'^$', create_views.create),
-        url(r'^(?:direction-(?P<direction_title>[\w-]+)/)', include([
-            url(r'^$', create_views.create),
-            url(r'^(?:city-(?P<city_title>[\w-]+)/)$', create_views.create),
-        ])),
-        url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', create_views.create),
-
+        url(r'^(?P<instance>[\w-]+)/', include([
+            url(r'^$', create_views.create_instance),
+            url(r'^(?P<attribute>[\w-]+)/$', create_views.create_attr)
+        ]))
     ])),
 
     url(r'^(?P<entity>[\w-]+)-(?P<instance_id>\d+)/', include([
         url(r'^$', common_views.show_instance),
-        url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
-            url(r'^$', common_views.show_instance),
-            url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', common_views.show_instance),
-        ])),
-        url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', common_views.show_instance),
-
-        url(r'^(?:edit/)', include([
-            url(r'^$', common_views.edit_instance),
-            url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
-                url(r'^$', common_views.edit_instance),
-                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', common_views.edit_instance),
-            ])),
-            url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', common_views.edit_instance),
-
-            url(r'^(?:edit-(?P<attribute>[\w-]+)/)?', include([
-                url(r'^$', common_views.edit_instance_attr),
-                url(r'^(?:direction-(?P<direction_title>[\w-]+)/)?', include([
-                    url(r'^$', common_views.edit_instance_attr),
-                    url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', common_views.edit_instance_attr),
-                ])),
-                url(r'^(?:city-(?P<city_title>[\w-]+)/)?$', common_views.edit_instance_attr),
-            ])),
+        url(r'^edit/$', common_views.edit_instance),
+        # url(r'^delete/$', common_views.delete_instance),
+        url(r'^(?P<attribute>[\w-]+)-(?P<attribute_id>\d+)/', include([
+            # url(r'^$', common_views.show_instance_attr),
+            url(r'^edit/$', common_views.edit_instance_attr),
+            # url(r'^delete/$', common_views.delete_instance_attr),
         ])),
     ])),
 
+
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + \
-              static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
