@@ -165,7 +165,7 @@ def instance_page(request, entity, instance_id):
 
     form = ENTITY_FILTER_FORM.get(entity, None)
     if form is not None:
-        form = form(request.POST or None)
+        form = form(request.POST or None, direction=None)
 
     context = {
         'title': title,
@@ -388,11 +388,40 @@ def _get_modal_window_title(attribute):
     return modal_window_title
 
 
+def _get_html_template_path(attribute):
+    attr_template = {
+        'cities': 'attr-2',
+        'directions': 'attr-2',
+        'event-links': 'attr-2',
+        'event-locations': 'attr-2'
+    }.get(attribute, 'attr')
+    html_template_path = 'attrs/edit/edit-%s.html' % (attr_template,)
+    return html_template_path
+
+
+def _get_create_attribute_title(attribute):
+    create_attribute_title = {
+        'cities': 'Добавить новый город',
+        'directions': 'Добавить новое направление',
+        'event-links': 'Добавить новую ссылку',
+        'event-locations': 'Добавить новое место проведения'
+    }.get(attribute, '')
+    return create_attribute_title
+
+def _get_create_attribute(attribute):
+    create_attribute = {
+        'cities': 'city',
+        'directions': 'direction',
+        'event-links': 'event-link',
+        'event-locations': 'event-location'
+    }.get(attribute, '')
+    return create_attribute
+
 def edit_instance_attr(request, entity, instance_id, attribute=None):
     current_entity = ENTITY.get(entity, None)
     current_instance = get_object_or_404(current_entity, pk=instance_id)
     title = _get_title(current_instance)
-    html_template_path = 'attrs/edit/edit-%s.html' % ('attr',)
+    html_template_path = _get_html_template_path(attribute)
 
     if '-contacts' in attribute:
         form_contact = __get_form(entity, 'contacts', request, current_instance)
@@ -450,6 +479,8 @@ def edit_instance_attr(request, entity, instance_id, attribute=None):
             'form': form
         }
 
+    context['create_attribute_title'] = _get_create_attribute_title(attribute)
+    context['create_attribute'] = _get_create_attribute(attribute)
     context['modal_window_title'] = _get_modal_window_title(attribute)
     context['attribute'] = attribute
     context['entity'] = entity

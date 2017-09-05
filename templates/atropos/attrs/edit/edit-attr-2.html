@@ -8,11 +8,20 @@
 		<form action="/{{ entity }}-{{ instance.pk }}/edit/{{ attribute }}/" method="post">
 			<!-- modal body -->
 			<div class="modal-body">
-					{% csrf_token %}
-					{{ form }}
+				<div class="row">
+					<div class="col-md-6">
+						{% csrf_token %}
+						{{ form }}
+					</div>
+					<div class="col-md-6">
+						<a 	data-toggle="modal"
+						   	href="/{{ entity }}-{{ instance.pk }}/create-{{ create_attribute }}/"
+						   	data-target="#myModal2" class="btn btn-primary">{{ create_attribute_title }}</a>
+
+					</div>
+				</div>
 			</div>
 			<!-- /modal body -->
-
 			<div class="modal-footer"><!-- modal footer -->
 				<button class="btn btn-default" data-dismiss="modal">Отмена</button>
 				<button type="submit" class="btn btn-primary">Сохранить</button>
