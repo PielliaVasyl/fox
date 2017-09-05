@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load get_direction_city_url %}
 
 {% block title %}{{ title }} - {% endblock %}
 
@@ -162,7 +161,7 @@
 									<div class="col-md-12 col-sm-6">
 
 										{% for url_entity, url_attr, title in edit_buttons %}
-										<a data-toggle="modal" href="/{{ url_entity }}-{{ instance.pk }}/edit/edit-{{ url_attr }}/{{ request.path|get_direction_city_url }}"
+										<a data-toggle="modal" href="/{{ url_entity }}-{{ instance.pk }}/edit/{{ url_attr }}/"
 										   data-target="#myModal" class="btn btn-primary">{{ title }}</a>
 										<br />
 										{% endfor %}

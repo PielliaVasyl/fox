@@ -1,12 +1,11 @@
 {% load crispy_forms_tags %}
-{% load get_direction_city_url %}
 {% load static %}
 
 		<div class="modal-header">
  	  		<button type="button" class="close" data-dismiss="modal">&times;</button>
- 	  		<h4 class="modal-title">Добавить место</h4>
+ 	  		<h4 class="modal-title">{{ create_attribute_title }}</h4>
    		</div>
-		<form action="/create/attributes/create-shop-location/{{ request.path|get_direction_city_url }}?instance={{ incoming_instance }}" method="post">
+		<form action="/{{ entity }}-{{ instance_id }}/create-{{ attribute }}/" method="post">
 			<!-- modal body -->
 			<div class="modal-body">
 					{% csrf_token %}

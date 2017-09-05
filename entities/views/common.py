@@ -384,7 +384,7 @@ def _get_socials(entity, author_id, instance_id):
 def _get_modal_window_title(attribute):
     modal_window_title = {
         'title': 'Изменить название'
-    }.get(attribute, '')
+    }.get(attribute, '!')
     return modal_window_title
 
 
@@ -393,7 +393,38 @@ def _get_html_template_path(attribute):
         'cities': 'attr-2',
         'directions': 'attr-2',
         'event-links': 'attr-2',
-        'event-locations': 'attr-2'
+        'promo-action-links': 'attr-2',
+        'place-links': 'attr-2',
+        'school-links': 'attr-2',
+        'teacher-links': 'attr-2',
+        'organization-links': 'attr-2',
+        'person-links': 'attr-2',
+        'shop-links': 'attr-2',
+        'customer-services-links': 'attr-2',
+        'hall-links': 'attr-2',
+        'resource-links': 'attr-2',
+
+        'event-locations': 'attr-2',
+        'place-locations': 'attr-2',
+        'school-locations': 'attr-2',
+        'teacher-locations': 'attr-2',
+        'organization-locations': 'attr-2',
+        'shop-locations': 'attr-2',
+        'customer-services-locations': 'attr-2',
+        'hall-locations': 'attr-2',
+
+        'employees': 'attr-3-employees',
+        'employers': 'attr-3-employers',
+
+        'school-contacts': 'attr-4-contacts',
+        'teacher-contacts': 'attr-4-contacts',
+        'organization-contacts': 'attr-4-contacts',
+        'person-contacts': 'attr-4-contacts',
+        'shop-contacts': 'attr-4-contacts',
+        'customer-services-contacts': 'attr-4-contacts',
+        'hall-contacts': 'attr-4-contacts',
+        'resource-contacts': 'attr-4-contacts',
+
     }.get(attribute, 'attr')
     html_template_path = 'attrs/edit/edit-%s.html' % (attr_template,)
     return html_template_path
@@ -402,20 +433,99 @@ def _get_html_template_path(attribute):
 def _get_create_attribute_title(attribute):
     create_attribute_title = {
         'cities': 'Добавить новый город',
+        'city': 'Добавить новый город',
         'directions': 'Добавить новое направление',
+        'direction': 'Добавить новое направление',
+        'phone-number': 'Добавить новый номер телефона',
+
         'event-links': 'Добавить новую ссылку',
-        'event-locations': 'Добавить новое место проведения'
-    }.get(attribute, '')
+        'event-link': 'Добавить новую ссылку',
+        'customer-services-links': 'Добавить новую ссылку',
+        'customer-services-link': 'Добавить новую ссылку',
+        'hall-links': 'Добавить новую ссылку',
+        'hall-link': 'Добавить новую ссылку',
+        'organization-links': 'Добавить новую ссылку',
+        'organization-link': 'Добавить новую ссылку',
+        'person-links': 'Добавить новую ссылку',
+        'person-link': 'Добавить новую ссылку',
+        'place-links': 'Добавить новую ссылку',
+        'place-link': 'Добавить новую ссылку',
+        'promo-action-links': 'Добавить новую ссылку',
+        'promo-action-link': 'Добавить новую ссылку',
+        'resource-links': 'Добавить новую ссылку',
+        'resource-link': 'Добавить новую ссылку',
+        'school-links': 'Добавить новую ссылку',
+        'school-link': 'Добавить новую ссылку',
+        'shop-links': 'Добавить новую ссылку',
+        'shop-link': 'Добавить новую ссылку',
+        'teacher-links': 'Добавить новую ссылку',
+        'teacher-link': 'Добавить новую ссылку',
+
+        'event-locations': 'Добавить новое место проведения',
+        'event-location': 'Добавить новое место проведения',
+        'customer-services-locations': 'Добавить новое место проведения',
+        'customer-services-location': 'Добавить новое место проведения',
+        'hall-locations': 'Добавить новое место проведения',
+        'hall-location': 'Добавить новое место проведения',
+        'organization-locations': 'Добавить новое место проведения',
+        'organization-location': 'Добавить новое место проведения',
+        'place-locations': 'Добавить новое место проведения',
+        'place-location': 'Добавить новое место проведения',
+        'school-locations': 'Добавить новое место проведения',
+        'school-location': 'Добавить новое место проведения',
+        'shop-locations': 'Добавить новое место проведения',
+        'shop-location': 'Добавить новое место проведения',
+
+        'album-tags': 'Добавить новый тег',
+        'album-tag': 'Добавить новый тег',
+        'article-tags': 'Добавить новый тег',
+        'article-tag': 'Добавить новый тег',
+        'audio-tags': 'Добавить новый тег',
+        'audio-tag': 'Добавить новый тег',
+        'chapter-tags': 'Добавить новый тег',
+        'chapter-tag': 'Добавить новый тег',
+        'dance-direction-tags': 'Добавить новый тег',
+        'dance-direction-tag': 'Добавить новый тег',
+        'dance-style-tags': 'Добавить новый тег',
+        'dance-style-tag': 'Добавить новый тег',
+        'photo-tags': 'Добавить новый тег',
+        'photo-tag': 'Добавить новый тег',
+        'playlist-tags': 'Добавить новый тег',
+        'playlist-tag': 'Добавить новый тег',
+        'video-tags': 'Добавить новый тег',
+        'video-tag': 'Добавить новый тег',
+
+    }.get(attribute, '!cr_attr_title')
     return create_attribute_title
+
 
 def _get_create_attribute(attribute):
     create_attribute = {
         'cities': 'city',
         'directions': 'direction',
         'event-links': 'event-link',
-        'event-locations': 'event-location'
-    }.get(attribute, '')
+        'promo-action-links': 'promo-action-link',
+        'place-links': 'place-link',
+        'school-links': 'school-link',
+        'teacher-links': 'teacher-link',
+        'organization-links': 'organization-link',
+        'person-links': 'person-link',
+        'shop-links': 'shop-link',
+        'customer-services-links': 'customer-services-link',
+        'hall-links': 'hall-link',
+        'resource-links': 'resource-link',
+
+        'event-locations': 'event-location',
+        'place-locations': 'place-location',
+        'school-locations': 'school-location',
+        'organization-locations': 'organization-location',
+        'shop-locations': 'shop-location',
+        'customer-services-locations': 'customer-services-location',
+        'hall-locations': 'hall-location',
+
+    }.get(attribute, '!cr_attr')
     return create_attribute
+
 
 def edit_instance_attr(request, entity, instance_id, attribute=None):
     current_entity = ENTITY.get(entity, None)
@@ -484,14 +594,15 @@ def edit_instance_attr(request, entity, instance_id, attribute=None):
     context['modal_window_title'] = _get_modal_window_title(attribute)
     context['attribute'] = attribute
     context['entity'] = entity
-    context['instance'] = current_instance
+    context['instance_id'] = instance_id
     context['title'] = title
 
     return render(request, html_template_path, context)
 
 
-def create_attr(request, attribute=None):
-    html_template_path = 'create/attrs/create-attr-' + attribute + '.html'
+def create_attr(request,  entity, instance_id, attribute=None):
+    html_template_path = 'attrs/create/create-attr.html'
+    create_attribute_title = _get_create_attribute_title(attribute)
     if attribute == 'direction':
         form = DirectionForm(request.POST or None)
     if attribute == 'city':
@@ -545,12 +656,14 @@ def create_attr(request, attribute=None):
             location = form.save(commit=False)
             location.coordinates = coordinates
             location.save()
-            return HttpResponseRedirect('/%s/edit/' % (request.GET.get('instance'),))
+            return HttpResponseRedirect('/%s-%s/edit/' % (entity, instance_id))
         context = {
             'form': form,
             'form1': form1,
-            'incoming_instance': request.GET.get('instance')
-
+            'entity': entity,
+            'instance_id': instance_id,
+            'attribute': attribute,
+            'create_attribute_title': create_attribute_title
         }
         return render(request, html_template_path, context)
     if attribute == 'phone-number':
@@ -577,10 +690,12 @@ def create_attr(request, attribute=None):
         form = DanceStyleTagForm(request.POST or None)
     if form.is_valid():
         form.save()
-        return HttpResponseRedirect('/%s/edit/' % (request.GET.get('instance'), ))
+        return HttpResponseRedirect('/%s-%s/edit/' % (entity, instance_id))
     context = {
         'form': form,
-        'incoming_instance': request.GET.get('instance')
-
+        'entity': entity,
+        'instance_id': instance_id,
+        'attribute': attribute,
+        'create_attribute_title': create_attribute_title
     }
     return render(request, html_template_path, context)

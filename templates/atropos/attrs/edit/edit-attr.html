@@ -5,7 +5,7 @@
  	  		<button type="button" class="close" data-dismiss="modal">&times;</button>
  	  		<p class="modal-title">{{ modal_window_title }}</p>
    		</div>
-		<form action="/{{ entity }}-{{ instance.pk }}/edit/{{ attribute }}/" method="post"
+		<form action="/{{ entity }}-{{ instance_id }}/edit/{{ attribute }}/" method="post"
                {% if attribute == 'image' %}enctype='multipart/form-data'{% endif %}>
 			<!-- modal body -->
 			<div class="modal-body">
