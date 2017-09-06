@@ -392,7 +392,10 @@ def _get_modal_window_title(attribute):
 def _get_modal_window_add_entity(attribute):
     modal_window_add_entity = {
         'article-groups': 'chapter',
-        # ''
+        'photo-groups': 'album',
+        'video-groups': 'playlist',
+        'audio-groups': 'tracklist',
+        'dance-style-groups': 'dance-direction',
     }.get(attribute, '!mod_win_add_ent')
     return modal_window_add_entity
 
@@ -400,6 +403,10 @@ def _get_modal_window_add_entity(attribute):
 def _get_modal_window_add_entity_btn(attribute):
     modal_window_add_entity_btn = {
         'article-groups': 'Добавить новую главу',
+        'photo-groups': 'Добавить новый альбом',
+        'video-groups': 'Добавить новый плейлист',
+        'audio-groups': 'Добавить новый треклист',
+        'dance-style-groups': 'Добавить новый танцевальный стиль',
     }.get(attribute, '!mod_win_add_ent_tit')
     return modal_window_add_entity_btn
 
@@ -452,7 +459,13 @@ def _get_html_template_path(attribute):
         'hall-contacts': 'attr-4-contacts',
         'resource-contacts': 'attr-4-contacts',
 
-        'article-groups': 'attr-5-groups'
+        'article-groups': 'attr-5-groups',
+        'photo-groups': 'attr-5-groups',
+        'video-groups': 'attr-5-groups',
+        'audio-groups': 'attr-5-groups',
+        'dance-style-groups': 'attr-5-groups',
+
+        'dance-style-description': 'attr-6-dance-style'
 
     }.get(attribute, 'attr')
     html_template_path = 'attrs/edit/edit-%s.html' % (attr_template,)
@@ -598,23 +611,23 @@ def edit_instance_attr(request, entity, instance_id, attribute=None):
         }
     elif attribute == 'dance-style-description':
         form_description = __get_form(entity, 'dance-style-description', request, current_instance)
-        form_dance_style_link = __get_form(entity, 'dance-style-link', request, current_instance)
+        form_dance_style_author_link = __get_form(entity, 'dance-style-link', request, current_instance)
         if form_description.is_valid():
             attr_values = {'description': form_description.cleaned_data.get('description'),
                            'author_of_post': form_description.cleaned_data.get('author_of_post')}
             set_attributes(current_instance, attr_values)
             current_instance.save()
-        if form_dance_style_link.is_valid():
+        if form_dance_style_author_link.is_valid():
             link_to_author = DanceStyleAuthorLink.objects.get(author_id=current_instance.author_id,
                                                               dancestyle__id=instance_id)
-            set_attributes(link_to_author, {'link': form_dance_style_link.cleaned_data.get('link')})
+            set_attributes(link_to_author, {'link': form_dance_style_author_link.cleaned_data.get('link')})
             link_to_author.save()
-        if any([form_description.is_valid(), form_dance_style_link.is_valid()]):
+        if any([form_description.is_valid(), form_dance_style_author_link.is_valid()]):
             return HttpResponseRedirect(_get_response_redirect(entity, instance_id))
 
         context = {
             'form_description': form_description,
-            'form_dance_style_link': form_dance_style_link
+            'form_dance_style_author_link': form_dance_style_author_link
         }
     else:
         form = __get_form(entity, attribute, request, current_instance)

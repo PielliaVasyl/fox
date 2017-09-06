@@ -3,18 +3,19 @@
 
  	  	<div class="modal-header">
  	  		<button type="button" class="close" data-dismiss="modal">&times;</button>
- 	  		<h4 class="modal-title">Изменить права пользователей</h4>
+ 	  		<p class="modal-title">{{ modal_window_title }}</p>
    		</div>
-		<form action="/photo-{{ instance.pk }}/edit/edit-policy/" method="post">
+		<form action="/{{ entity }}-{{ instance_id }}/edit/{{ attribute }}/" method="post">
 			<!-- modal body -->
 			<div class="modal-body">
-				{% csrf_token %}
-				{{ form }}
+					{% csrf_token %}
+					{{ form_description }}
+					{{ form_dance_style_author_link }}
 			</div>
 			<!-- /modal body -->
 
 			<div class="modal-footer"><!-- modal footer -->
 				<button class="btn btn-default" data-dismiss="modal">Отмена</button>
-				<button type="submit" class="btn btn-primary">Сохранить права пользователей</button>
+				<button type="submit" class="btn btn-primary">Сохранить</button>
 			</div><!-- /modal footer -->
 		</form>
