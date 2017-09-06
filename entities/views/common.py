@@ -383,15 +383,32 @@ def _get_socials(entity, author_id, instance_id):
 
 def _get_modal_window_title(attribute):
     modal_window_title = {
-        'title': 'Изменить название'
-    }.get(attribute, '!')
+        'title': 'Изменить название',
+        'article-groups': 'Изменить список глав',
+    }.get(attribute, '!mod_win_title')
     return modal_window_title
+
+
+def _get_modal_window_add_entity(attribute):
+    modal_window_add_entity = {
+        'article-groups': 'chapter',
+        # ''
+    }.get(attribute, '!mod_win_add_ent')
+    return modal_window_add_entity
+
+
+def _get_modal_window_add_entity_btn(attribute):
+    modal_window_add_entity_btn = {
+        'article-groups': 'Добавить новую главу',
+    }.get(attribute, '!mod_win_add_ent_tit')
+    return modal_window_add_entity_btn
 
 
 def _get_html_template_path(attribute):
     attr_template = {
         'cities': 'attr-2',
         'directions': 'attr-2',
+
         'event-links': 'attr-2',
         'promo-action-links': 'attr-2',
         'place-links': 'attr-2',
@@ -413,6 +430,16 @@ def _get_html_template_path(attribute):
         'customer-services-locations': 'attr-2',
         'hall-locations': 'attr-2',
 
+        'article-tags': 'attr-2',
+        'album-tags': 'attr-2',
+        'audio-tags': 'attr-2',
+        'chapter-tags': 'attr-2',
+        'dance-direction-tags': 'attr-2',
+        'dance-style-tags': 'attr-2',
+        'photo-tags': 'attr-2',
+        'playlist-tags': 'attr-2',
+        'video-tags': 'attr-2',
+
         'employees': 'attr-3-employees',
         'employers': 'attr-3-employers',
 
@@ -424,6 +451,8 @@ def _get_html_template_path(attribute):
         'customer-services-contacts': 'attr-4-contacts',
         'hall-contacts': 'attr-4-contacts',
         'resource-contacts': 'attr-4-contacts',
+
+        'article-groups': 'attr-5-groups'
 
     }.get(attribute, 'attr')
     html_template_path = 'attrs/edit/edit-%s.html' % (attr_template,)
@@ -523,6 +552,16 @@ def _get_create_attribute(attribute):
         'customer-services-locations': 'customer-services-location',
         'hall-locations': 'hall-location',
 
+        'article-tags': 'article-tag',
+        'album-tags': 'album-tag',
+        'audio-tags': 'audio-tag',
+        'chapter-tags': 'chapter-tag',
+        'dance-direction-tags': 'dance-direction-tag',
+        'dance-style-tags': 'dance-style-tag',
+        'photo-tags': 'photo-tag',
+        'playlist-tags': 'playlist-tag',
+        'video-tags': 'video-tag',
+
     }.get(attribute, '!cr_attr')
     return create_attribute
 
@@ -588,7 +627,9 @@ def edit_instance_attr(request, entity, instance_id, attribute=None):
         context = {
             'form': form
         }
-
+    if '-groups' in attribute:
+        context['modal_window_add_entity'] = _get_modal_window_add_entity(attribute)
+        context['modal_window_add_entity_btn'] = _get_modal_window_add_entity_btn(attribute)
     context['create_attribute_title'] = _get_create_attribute_title(attribute)
     context['create_attribute'] = _get_create_attribute(attribute)
     context['modal_window_title'] = _get_modal_window_title(attribute)
