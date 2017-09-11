@@ -29,10 +29,30 @@ class CityForm(forms.ModelForm):
         fields = ['title']
 
 
+class SelectCityForm(forms.Form):
+    city = forms.ChoiceField(label="", widget=forms.Select(attrs={'onChange': 'city_direction.submit();'}))
+
+    def __init__(self, *args, **kwargs):
+        cities = City.objects.all()
+        city_choices = ((city.id, city.title) for city in cities)
+        super(SelectCityForm, self).__init__(*args, **kwargs)
+        self.fields['city'].choices = city_choices
+
+
 class DirectionForm(forms.ModelForm):
     class Meta:
         model = Direction
         fields = ['title']
+
+
+class SelectDirectionForm(forms.Form):
+    direction = forms.ChoiceField(label="", widget=forms.Select(attrs={'onChange': 'city_direction.submit();'}))
+
+    def __init__(self, *args, **kwargs):
+        directions = Direction.objects.all()
+        direction_choices = ((direction.id, direction.title) for direction in directions)
+        super(SelectDirectionForm, self).__init__(*args, **kwargs)
+        self.fields['direction'].choices = direction_choices
 
 
 class AbstractLocalClassForm(forms.ModelForm):

@@ -23,6 +23,17 @@
 				</li>
 			</ul>
 			<div class="right-part">
+                <form name="city_direction" method="post" action="/">
+                    {% csrf_token %}
+                    {{ select_city_form }}
+                    {{ select_direction_form }}
+                </form>
+{#                <label>{{ city_form.city.label }}</label>#}
+{#                <select class="chosen-select" data-placeholder="Выберите город..." id="id_city" name="city" style="min-width: 172px; width: 100%;" tabindex="0" required="">#}
+{#                    {% for x,y in city_form.fields.city.choices %}#}
+{#                        <option value="{{ x }}" {% if x == city_num %} selected{% endif %}>{{ y }}</option>#}
+{#                    {% endfor %}#}
+{#                </select>#}
 				<form method="get" action="#" class="search" style="width:200px">
 					<input type="text" name="k" id="k" value="" placeholder="Поиск" style="width:200px">
 				</form>
