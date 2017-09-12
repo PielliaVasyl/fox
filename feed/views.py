@@ -1,5 +1,7 @@
-from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
 
+from algoritms.Util import get_is_direction_city_changed
 from algoritms.instances_directions import instances_directions
 from directions.dance.forms import DanceStyleFilterForm
 from entities.models.posts import Article, DanceStyle
@@ -7,11 +9,16 @@ from entities.models.posts import Article, DanceStyle
 
 def articles(request, city_title=None, direction_title=None):
     title = 'Статьи'
+
+    direction_city_changed, context = get_is_direction_city_changed(request, city_title, direction_title)
+
+    if direction_city_changed:
+        return HttpResponseRedirect('/feed/articles/' + direction_city_changed)
+
     current_articles = Article.objects.all()
-    context = {
-        'title': title,
-        'articles': current_articles
-    }
+
+    context['title'] = title
+    context['articles'] = current_articles
     return render(request, 'feed/articles.html', context)
 
 
