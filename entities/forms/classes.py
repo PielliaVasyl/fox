@@ -30,11 +30,14 @@ class CityForm(forms.ModelForm):
 
 
 class SelectCityForm(forms.Form):
-    city = forms.ChoiceField(label="", widget=forms.Select(attrs={'onChange': 'city_direction.submit();'}))
+    city = forms.ChoiceField(label="", widget=forms.Select(attrs={'onChange': 'city_direction.submit();',
+                                                                  'style': 'min-width: 172px; width: 50%;',
+                                                                  'tabindex': '0'}))
 
     def __init__(self, *args, **kwargs):
         cities = City.objects.all()
-        city_choices = ((city.id, city.title) for city in cities)
+        city_choices = [(city.id, city.title) for city in cities]
+        city_choices.insert(0, (0, 'Все города'))
         super(SelectCityForm, self).__init__(*args, **kwargs)
         self.fields['city'].choices = city_choices
 
@@ -46,11 +49,14 @@ class DirectionForm(forms.ModelForm):
 
 
 class SelectDirectionForm(forms.Form):
-    direction = forms.ChoiceField(label="", widget=forms.Select(attrs={'onChange': 'city_direction.submit();'}))
+    direction = forms.ChoiceField(label="", widget=forms.Select(attrs={'onChange': 'city_direction.submit();',
+                                                                       'style': 'min-width: 172px; width: 50%;',
+                                                                       'tabindex': '0'}))
 
     def __init__(self, *args, **kwargs):
         directions = Direction.objects.all()
-        direction_choices = ((direction.id, direction.title) for direction in directions)
+        direction_choices = [(direction.id, direction.title) for direction in directions]
+        direction_choices.insert(0, (0, 'Все направления'))
         super(SelectDirectionForm, self).__init__(*args, **kwargs)
         self.fields['direction'].choices = direction_choices
 
