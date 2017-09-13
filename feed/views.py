@@ -11,7 +11,6 @@ def articles(request, city_title=None, direction_title=None):
     title = 'Статьи'
 
     direction_city_changed, context = get_is_direction_city_changed(request, city_title, direction_title)
-
     if direction_city_changed:
         return HttpResponseRedirect('/feed/articles/' + direction_city_changed)
 
@@ -25,32 +24,42 @@ def articles(request, city_title=None, direction_title=None):
 def links(request, city_title=None, direction_title=None):
     title = 'Полезные ссылки'
 
-    context = {
-        'title': title,
-    }
+    direction_city_changed, context = get_is_direction_city_changed(request, city_title, direction_title)
+    if direction_city_changed:
+        return HttpResponseRedirect('/feed/links/' + direction_city_changed)
+
+    context['title'] = title
     return render(request, 'feed/links.html', context)
 
 
 def organizations(request, city_title=None, direction_title=None):
     title = 'Организации и компании'
 
-    context = {
-        'title': title,
-    }
+    direction_city_changed, context = get_is_direction_city_changed(request, city_title, direction_title)
+    if direction_city_changed:
+        return HttpResponseRedirect('/feed/organizations/' + direction_city_changed)
+
+    context['title'] = title
     return render(request, 'feed/organizations.html', context)
 
 
 def persons(request, city_title=None, direction_title=None):
     title = 'Персоны и личности'
 
-    context = {
-        'title': title,
-    }
+    direction_city_changed, context = get_is_direction_city_changed(request, city_title, direction_title)
+    if direction_city_changed:
+        return HttpResponseRedirect('/feed/persons/' + direction_city_changed)
+
+    context['title'] = title
     return render(request, 'feed/persons.html', context)
 
 
 def dance_styles(request, city_title=None, direction_title=None):
     title = 'Танцевальные стили'
+
+    direction_city_changed, context = get_is_direction_city_changed(request, city_title, direction_title)
+    if direction_city_changed:
+        return HttpResponseRedirect('/feed/dance-styles/' + direction_city_changed)
 
     filters = None
     form = DanceStyleFilterForm(request.POST or None)
@@ -75,12 +84,10 @@ def dance_styles(request, city_title=None, direction_title=None):
             #     filters['average_prices'] = average_prices
             # if attendee_ages:
             #     filters['attendee_ages'] = attendee_ages
-    #
+
     styles_directions = instances_directions(DanceStyle, filters=filters)
 
-    context = {
-        'title': title,
-        'styles_directions': styles_directions,
-        'form': form,
-    }
+    context['title'] = title
+    context['styles_directions'] = styles_directions
+    context['form'] = form
     return render(request, 'feed/dance-styles.html', context)

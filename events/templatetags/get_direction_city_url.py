@@ -17,3 +17,5 @@ def get_direction_city_url(text):
         result = result[1:]
 
     return result
+
+

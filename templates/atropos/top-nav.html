@@ -1,31 +1,32 @@
 {% load static %}
 {% load startswith %}
 {% load get_direction_city_url %}
+{% load rm_direction_city_url %}
 
 		<header id="mainHeader">
 			<ul>
 				<li class="logo">
-					<a style='list-style: none !important;' href="/">
+					<a style='list-style: none !important;' href="/{{ request.path|get_direction_city_url }}">
 						<img src="{% static 'images/logo.png' %}" alt="Fox Knows" />
 					</a>
 				</li>
 				<li>
-					<a href="/feed/" {% if request.path|startswith:'/feed/' %}class="active"{% endif %}>Лента</a>
+					<a href="/feed/{{ request.path|get_direction_city_url }}" {% if request.path|startswith:'/feed/' %}class="active"{% endif %}>Лента</a>
 				</li>
 				<li>
-					<a href="/map/" {% if request.path|startswith:'/map/' %}class="active"{% endif %}>Карта</a>
+					<a href="/map/{{ request.path|get_direction_city_url }}" {% if request.path|startswith:'/map/' %}class="active"{% endif %}>Карта</a>
 				</li>
 				<li>
-					<a href="/events/upcoming/" {% if request.path|startswith:'/events/' %}class="active"{% endif %}>Мероприятия</a>
+					<a href="/events/upcoming/{{ request.path|get_direction_city_url }}" {% if request.path|startswith:'/events/' %}class="active"{% endif %}>Мероприятия</a>
 				</li>
 				<li>
-					<a href="/ratings/" {% if request.path|startswith:'/ratings/' %}class="active"{% endif %}>Рейтинги</a>
+					<a href="/ratings/{{ request.path|get_direction_city_url }}" {% if request.path|startswith:'/ratings/' %}class="active"{% endif %}>Рейтинги</a>
 				</li>
 			</ul>
 			<div class="right-part">
 				<div class="row">
 					<div class="col-md-6">
-						<form name="city_direction" method="post" action="{{ request.path }}">
+						<form name="city_direction" method="post" action="{{ request.path|rm_direction_city_url }}">
 							{% csrf_token %}
 							{{ select_city_form }}
 							{{ select_direction_form }}

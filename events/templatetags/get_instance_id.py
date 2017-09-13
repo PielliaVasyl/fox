@@ -1,5 +1,4 @@
 from django import template
-from pyparsing import basestring
 
 register = template.Library()
 
