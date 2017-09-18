@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
-from algoritms.Util import get_is_direction_city_changed
+from algoritms.Util import get_is_direction_city_changed, get_session_direction_city_id
 from algoritms.instances_directions import instances_directions
 from directions.dance.forms import DanceStyleFilterForm
 from entities.models.posts import Article, DanceStyle
@@ -9,7 +9,8 @@ from entities.models.posts import Article, DanceStyle
 
 def articles(request, city_title=None, direction_title=None):
     title = 'Статьи'
-
+    request.session['direction_id'], request.session['city_id'] = \
+        get_session_direction_city_id(direction_title, city_title)
     direction_city_changed, context = get_is_direction_city_changed(request, city_title, direction_title)
     if direction_city_changed:
         return HttpResponseRedirect('/feed/articles/' + direction_city_changed)
@@ -23,7 +24,8 @@ def articles(request, city_title=None, direction_title=None):
 
 def links(request, city_title=None, direction_title=None):
     title = 'Полезные ссылки'
-
+    request.session['direction_id'], request.session['city_id'] = \
+        get_session_direction_city_id(direction_title, city_title)
     direction_city_changed, context = get_is_direction_city_changed(request, city_title, direction_title)
     if direction_city_changed:
         return HttpResponseRedirect('/feed/links/' + direction_city_changed)
@@ -34,7 +36,8 @@ def links(request, city_title=None, direction_title=None):
 
 def organizations(request, city_title=None, direction_title=None):
     title = 'Организации и компании'
-
+    request.session['direction_id'], request.session['city_id'] = \
+        get_session_direction_city_id(direction_title, city_title)
     direction_city_changed, context = get_is_direction_city_changed(request, city_title, direction_title)
     if direction_city_changed:
         return HttpResponseRedirect('/feed/organizations/' + direction_city_changed)
@@ -45,7 +48,8 @@ def organizations(request, city_title=None, direction_title=None):
 
 def persons(request, city_title=None, direction_title=None):
     title = 'Персоны и личности'
-
+    request.session['direction_id'], request.session['city_id'] = \
+        get_session_direction_city_id(direction_title, city_title)
     direction_city_changed, context = get_is_direction_city_changed(request, city_title, direction_title)
     if direction_city_changed:
         return HttpResponseRedirect('/feed/persons/' + direction_city_changed)
@@ -56,7 +60,8 @@ def persons(request, city_title=None, direction_title=None):
 
 def dance_styles(request, city_title=None, direction_title=None):
     title = 'Танцевальные стили'
-
+    request.session['direction_id'], request.session['city_id'] = \
+        get_session_direction_city_id(direction_title, city_title)
     direction_city_changed, context = get_is_direction_city_changed(request, city_title, direction_title)
     if direction_city_changed:
         return HttpResponseRedirect('/feed/dance-styles/' + direction_city_changed)

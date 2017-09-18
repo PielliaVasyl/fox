@@ -19,14 +19,14 @@
 						<!-- article summary -->
 						<div class="row">
 							<div class="col-md-4 text-center">
-								<a href="{% if not article.is_linked_article %}/feed/articles/article-{{ article.id }}{% else %}{{ article.article_link }}{% endif %}">
+								<a href="{% if not article.is_linked_article %}/article-{{ article.id }}{% else %}{{ article.article_link }}{% endif %}">
 									{% if article.image %}
 									<img alt="" class="img-responsive" src="{{ article.image.url }}" />
 									{% endif %}
 								</a>
 							</div>
 							<div class="col-md-8 my_article">
-								<h4><a class="styleColor" href="{% if not article.is_linked_article %}/feed/articles/article-{{ article.id }}{% else %}{{ article.article_link }}{% endif %}"><b>{{ article.title }}</b></a></h4>
+								<h4><a class="styleColor" href="{% if not article.is_linked_article %}/article-{{ article.id }}{% else %}{{ article.article_link }}{% endif %}"><b>{{ article.title }}</b></a></h4>
 
 									{{ article.description|linebreaks|truncatechars:400 }}
 								<p>

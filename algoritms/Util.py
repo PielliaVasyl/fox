@@ -45,3 +45,14 @@ def get_is_direction_city_changed(request, city_title, direction_title):
         return direction_city_changed, context
 
     return direction_city_changed, context
+
+
+def get_session_direction_city_id(direction_title, city_title):
+    direction_id, city_id = 0, 0
+    direction = Direction.objects.filter(title=direction_title).first()
+    if direction:
+        direction_id = direction.id
+    city = City.objects.filter(title=city_title).first()
+    if city:
+        city_id = city.id
+    return direction_id, city_id
