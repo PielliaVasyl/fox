@@ -24,6 +24,7 @@
 				</li>
 			</ul>
 			<div class="right-part">
+				{% if select_city_form or select_direction_form %}
 				<div class="row">
 					<div class="col-md-6">
 						<form name="city_direction" method="post" action="{{ request.path|rm_direction_city_url }}">
@@ -34,12 +35,17 @@
 					</div>
 					<div class="col-md-6">
 						<form method="get" action="#" class="search" style="width:200px">
-							<input type="text" name="k" id="k" value="" placeholder="Поиск" style="width:200px">
+							<input type="text" name="k" value="" placeholder="Поиск" style="width:200px">
 						</form>
-						<a id="loginLink" href="/profiles/profile-1/">Вход и регистрация</a>
+						<a href="/profiles/profile-1/">Вход и регистрация</a>
 					</div>
-
 				</div>
+				{% else %}
+				<form method="get" action="#" class="search" style="width:200px">
+					<input type="text" name="k" value="" placeholder="Поиск" style="width:200px">
+				</form>
+				<a href="/profiles/profile-1/">Вход и регистрация</a>
+				{% endif %}
 			</div>
 		</header>
 
@@ -80,7 +86,7 @@
 			<ul class="nav" id="profiles">
 				<li><a href="/profile-{{ instance.pk }}/">Моя страница</a></li>
 				<li><a href="/profile-{{ instance.pk }}/edit/">Редактировать</a></li>
-				<!--<li><a href="/profile-{{ instance.pk }}/settings/">Настройки</a></li>-->
+				<li><a href="/profile-{{ instance.pk }}/settings/">Настройки</a></li>
 			</ul>
 			{% endif %}
 		</div>

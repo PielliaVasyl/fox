@@ -23,6 +23,7 @@ from home_page import views as home_page_views
 from events import views as events_views
 from map import views as map_views
 from entities.views import common as common_views
+from entities.views import  profiles as profiles_views
 from feed import views as feed_views
 from create import views as create_views
 
@@ -266,6 +267,8 @@ urlpatterns = [
         url(r'^$', create_views.show_create_page),
         url(r'^(?P<instance>[\w-]+)/$', create_views.create_instance),
     ])),
+
+    url(r'^profile-(?P<instance_id>\d+)/settings/$', profiles_views.settings),
 
     url(r'^(?P<entity>[\w-]+)-(?P<instance_id>\d+)/', include([
         url(r'^$', common_views.instance_page),

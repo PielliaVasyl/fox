@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     # 3d party libraries
     'crispy_forms',
+    'widget_tweaks',
 
     # my app
     'entities',
