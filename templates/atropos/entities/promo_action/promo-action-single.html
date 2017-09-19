@@ -132,7 +132,7 @@
 
 					<!-- side column -->
 					<div class="col-md-3">
-						<form method="post" class="white-row" action="/events/upcoming/{{ request.path|get_direction_city_url }}">
+						<form method="post" class="white-row" action="/events/upcoming/{{ request.session|get_direction_city_url }}">
 							{% csrf_token %}
 							<!-- FILTER / SEARCH -->
 							<h3 class="page-header nomargin-top margin-bottom40">

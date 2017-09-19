@@ -1,20 +1,23 @@
 from django import template
-# from pyparsing import basestring
+from entities.models import Direction, City
 
 register = template.Library()
 
 
 @register.filter('get_direction_city_url')
-def get_direction_city_url(text):
+def get_direction_city_url(session):
     result = ''
-    if '/direction-' in text:
-        result += text[text.find('/direction-'):text.find('/', text.find('/direction-')+1)+1]
-    if '/city-' in text:
-        result += text[text.find('/city-'):text.find('/', text.find('/city-')+1)+1]
-    if '//' in result:
-        result = result[:result.find('//')] + result[result.find('//')+1:]
-    if result.find('/') == 0:
-        result = result[1:]
+    direction_id = session.get('direction_id', 0)
+    if direction_id:
+        direction = Direction.objects.filter(id=direction_id).first()
+        if direction:
+            result += 'direction-%s/' % direction.title
+
+    city_id = session.get('city_id', 0)
+    if city_id:
+        city = City.objects.filter(id=city_id).first()
+        if city:
+            result += 'city-%s/' % city.title
 
     return result
 

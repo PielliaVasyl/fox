@@ -6,21 +6,21 @@
 		<header id="mainHeader">
 			<ul>
 				<li class="logo">
-					<a style='list-style: none !important;' href="/{{ request.path|get_direction_city_url }}">
+					<a style='list-style: none !important;' href="/{{ request.session|get_direction_city_url }}">
 						<img src="{% static 'images/logo.png' %}" alt="Fox Knows" />
 					</a>
 				</li>
 				<li>
-					<a href="/feed/{{ request.path|get_direction_city_url }}" {% if request.path|startswith:'/feed/' %}class="active"{% endif %}>Лента</a>
+					<a href="/feed/{{ request.session|get_direction_city_url }}" {% if request.path|startswith:'/feed/' %}class="active"{% endif %}>Лента</a>
 				</li>
 				<li>
-					<a href="/map/{{ request.path|get_direction_city_url }}" {% if request.path|startswith:'/map/' %}class="active"{% endif %}>Карта</a>
+					<a href="/map/{{ request.session|get_direction_city_url }}" {% if request.path|startswith:'/map/' %}class="active"{% endif %}>Карта</a>
 				</li>
 				<li>
-					<a href="/events/upcoming/{{ request.path|get_direction_city_url }}" {% if request.path|startswith:'/events/' %}class="active"{% endif %}>Мероприятия</a>
+					<a href="/events/upcoming/{{ request.session|get_direction_city_url }}" {% if request.path|startswith:'/events/' %}class="active"{% endif %}>Мероприятия</a>
 				</li>
 				<li>
-					<a href="/ratings/{{ request.path|get_direction_city_url }}" {% if request.path|startswith:'/ratings/' %}class="active"{% endif %}>Рейтинги</a>
+					<a href="/ratings/{{ request.session|get_direction_city_url }}" {% if request.path|startswith:'/ratings/' %}class="active"{% endif %}>Рейтинги</a>
 				</li>
 			</ul>
 			<div class="right-part">
@@ -46,41 +46,41 @@
 		<div id="secondHeader">
 			{% if request.path|startswith:'/feed/' %}
 			<ul class="nav" id="feed">
-				<li><a href="/feed/articles/{{ request.path|get_direction_city_url }}">Статьи</a></li>
-				<li><a href="/feed/videos/{{ request.path|get_direction_city_url }}">Видео</a></li>
-				<li><a href="/feed/audios/{{ request.path|get_direction_city_url }}">Аудио</a></li>
-				<li><a href="/feed/photos/{{ request.path|get_direction_city_url }}">Фото</a></li>
-				<li><a href="/feed/links/{{ request.path|get_direction_city_url }}">Ссылки</a></li>
-				<li><a href="/feed/organizations/{{ request.path|get_direction_city_url }}">Организации</a></li>
-				<li><a href="/feed/persons/{{ request.path|get_direction_city_url }}">Персоны</a></li>
-				{% if '/direction-dance/' in request.path %}<li><a href="/feed/dance-styles/{{ request.path|get_direction_city_url }}">Стили танцев</a></li>{% endif %}
+				<li><a href="/feed/articles/{{ request.session|get_direction_city_url }}">Статьи</a></li>
+				<li><a href="/feed/videos/{{ request.session|get_direction_city_url }}">Видео</a></li>
+				<li><a href="/feed/audios/{{ request.session|get_direction_city_url }}">Аудио</a></li>
+				<li><a href="/feed/photos/{{ request.session|get_direction_city_url }}">Фото</a></li>
+				<li><a href="/feed/links/{{ request.session|get_direction_city_url }}">Ссылки</a></li>
+				<li><a href="/feed/organizations/{{ request.session|get_direction_city_url }}">Организации</a></li>
+				<li><a href="/feed/persons/{{ request.session|get_direction_city_url }}">Персоны</a></li>
+				{% if '/direction-dance/' in request.path %}<li><a href="/feed/dance-styles/{{ request.session|get_direction_city_url }}">Стили танцев</a></li>{% endif %}
 			</ul>
 			{% endif %}
 
 			{% if request.path|startswith:'/map/' %}
 			<ul class="nav" id="map">
-				<li><a href="/map/places/{{ request.path|get_direction_city_url }}">Места</a></li>
-				<li><a href="/map/schools/{{ request.path|get_direction_city_url }}">Школы</a></li>
-				<li><a href="/map/shops/{{ request.path|get_direction_city_url }}">Магазины</a></li>
-				<li><a href="/map/services/{{ request.path|get_direction_city_url }}">Услуги</a></li>
-				<li><a href="/map/halls/{{ request.path|get_direction_city_url }}">Залы для аренды</a></li>
+				<li><a href="/map/places/{{ request.session|get_direction_city_url }}">Места</a></li>
+				<li><a href="/map/schools/{{ request.session|get_direction_city_url }}">Школы</a></li>
+				<li><a href="/map/shops/{{ request.session|get_direction_city_url }}">Магазины</a></li>
+				<li><a href="/map/services/{{ request.session|get_direction_city_url }}">Услуги</a></li>
+				<li><a href="/map/halls/{{ request.session|get_direction_city_url }}">Залы для аренды</a></li>
 			</ul>
 			{% endif %}
 
 			{% if request.path|startswith:'/events/' %}
 			<ul class="nav" id="events">
-				<li><a href="/events/upcoming/{{ request.path|get_direction_city_url }}">Предстоящие</a></li>
-				<li><a href="/events/calendar/{{ request.path|get_direction_city_url }}">Календарь</a></li>
-				<li><a href="/events/promo-actions/{{ request.path|get_direction_city_url }}">Акции и розыгрыши</a></li>
-				<li><a href="/events/past/{{ request.path|get_direction_city_url }}">Прошедшие</a></li>
+				<li><a href="/events/upcoming/{{ request.session|get_direction_city_url }}">Предстоящие</a></li>
+				<li><a href="/events/calendar/{{ request.session|get_direction_city_url }}">Календарь</a></li>
+				<li><a href="/events/promo-actions/{{ request.session|get_direction_city_url }}">Акции и розыгрыши</a></li>
+				<li><a href="/events/past/{{ request.session|get_direction_city_url }}">Прошедшие</a></li>
 			</ul>
 			{% endif %}
 
 			{% if request.path|startswith:'/profile-' %}
 			<ul class="nav" id="profiles">
-				<li><a href="/profile-{{ instance.pk }}/{{ request.path|get_direction_city_url }}">Моя страница</a></li>
-				<li><a href="/profile-{{ instance.pk }}/edit/{{ request.path|get_direction_city_url }}">Редактировать</a></li>
-				<!--<li><a href="/profile-{{ instance.pk }}/settings/{{ request.path|get_direction_city_url }}">Настройки</a></li>-->
+				<li><a href="/profile-{{ instance.pk }}/">Моя страница</a></li>
+				<li><a href="/profile-{{ instance.pk }}/edit/">Редактировать</a></li>
+				<!--<li><a href="/profile-{{ instance.pk }}/settings/">Настройки</a></li>-->
 			</ul>
 			{% endif %}
 		</div>
