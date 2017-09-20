@@ -23,14 +23,12 @@
 
 			<section class="container">
 				<div class="row">
-
 					<div class="col-md-12">
 						<div class="white-row">
 							<form name="city_direction" method="post" action="{{ request.path|rm_direction_city_url }}">
 								{% csrf_token %}
-								{{ select_city_form.city|attr:"onChange:" }}
-								{{ select_direction_form.direction|attr:"onChange:" }}
-
+								{{ select_city_form1.city|attr:"onChange:" }}
+								{{ select_direction_form1.direction|attr:"onChange:" }}
 								<input type="submit" value="Сохранить">
 							</form>
 						</div>

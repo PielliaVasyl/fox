@@ -17,9 +17,9 @@ def _get_local_class_title(direction_title):
 def upcoming(request, city_title=None, direction_title=None):
     title = 'Мероприятия'
     request.session['direction_id'], request.session['city_id'] = \
-        get_session_direction_city_id(direction_title, city_title)
+        get_session_direction_city_id(request, direction_title, city_title)
     direction_city_changed, context = get_is_direction_city_changed(request, city_title, direction_title)
-    if direction_city_changed:
+    if direction_city_changed is not None:
         return HttpResponseRedirect('/events/upcoming/' + direction_city_changed)
 
     filters = None
@@ -48,9 +48,9 @@ def upcoming(request, city_title=None, direction_title=None):
 def past(request, city_title=None, direction_title=None):
     title = 'Мероприятия'
     request.session['direction_id'], request.session['city_id'] = \
-        get_session_direction_city_id(direction_title, city_title)
+        get_session_direction_city_id(request, direction_title, city_title)
     direction_city_changed, context = get_is_direction_city_changed(request, city_title, direction_title)
-    if direction_city_changed:
+    if direction_city_changed is not None:
         return HttpResponseRedirect('/events/past/' + direction_city_changed)
 
     filters = None

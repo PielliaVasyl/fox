@@ -29,7 +29,7 @@ def settings(request, instance_id=None):
     context = {
         'title': title,
         'instance': current_instance,
-        'select_city_form': select_city_form,
-        'select_direction_form': select_direction_form
+        'select_city_form1': select_city_form,
+        'select_direction_form1': select_direction_form
     }
     return render(request, html_template_path, context)

@@ -11,9 +11,9 @@ from entities.models.pages import Place, School, Shop, CustomerServices, Hall
 
 def places(request, city_title=None, direction_title=None):
     request.session['direction_id'], request.session['city_id'] = \
-        get_session_direction_city_id(direction_title, city_title)
+        get_session_direction_city_id(request, direction_title, city_title)
     direction_city_changed, context = get_is_direction_city_changed(request, city_title, direction_title)
-    if direction_city_changed:
+    if direction_city_changed is not None:
         return HttpResponseRedirect('/map/places/' + direction_city_changed)
 
     form = PlacesFilterForm(request.POST or None, direction=direction_title)
@@ -42,9 +42,9 @@ def places(request, city_title=None, direction_title=None):
 
 def schools(request, city_title=None, direction_title=None):
     request.session['direction_id'], request.session['city_id'] = \
-        get_session_direction_city_id(direction_title, city_title)
+        get_session_direction_city_id(request, direction_title, city_title)
     direction_city_changed, context = get_is_direction_city_changed(request, city_title, direction_title)
-    if direction_city_changed:
+    if direction_city_changed is not None:
         return HttpResponseRedirect('/map/schools/' + direction_city_changed)
 
     form = SchoolsFilterForm(request.POST or None, direction=direction_title)
@@ -74,9 +74,9 @@ def schools(request, city_title=None, direction_title=None):
 
 def shops(request, city_title=None, direction_title=None):
     request.session['direction_id'], request.session['city_id'] = \
-        get_session_direction_city_id(direction_title, city_title)
+        get_session_direction_city_id(request, direction_title, city_title)
     direction_city_changed, context = get_is_direction_city_changed(request, city_title, direction_title)
-    if direction_city_changed:
+    if direction_city_changed is not None:
         return HttpResponseRedirect('/map/shops/' + direction_city_changed)
 
     form = ShopsFilterForm(request.POST or None, direction=direction_title)
@@ -106,9 +106,9 @@ def shops(request, city_title=None, direction_title=None):
 
 def services(request, city_title=None, direction_title=None):
     request.session['direction_id'], request.session['city_id'] = \
-        get_session_direction_city_id(direction_title, city_title)
+        get_session_direction_city_id(request, direction_title, city_title)
     direction_city_changed, context = get_is_direction_city_changed(request, city_title, direction_title)
-    if direction_city_changed:
+    if direction_city_changed is not None:
         return HttpResponseRedirect('/map/services/' + direction_city_changed)
 
     form = CustomerServicesFilterForm(request.POST or None, direction=direction_title)
@@ -138,9 +138,9 @@ def services(request, city_title=None, direction_title=None):
 
 def halls(request, city_title=None, direction_title=None):
     request.session['direction_id'], request.session['city_id'] = \
-        get_session_direction_city_id(direction_title, city_title)
+        get_session_direction_city_id(request, direction_title, city_title)
     direction_city_changed, context = get_is_direction_city_changed(request, city_title, direction_title)
-    if direction_city_changed:
+    if direction_city_changed is not None:
         return HttpResponseRedirect('/map/halls/' + direction_city_changed)
 
     form = HallsFilterForm(request.POST or None, direction=direction_title)

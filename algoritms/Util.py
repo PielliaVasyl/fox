@@ -25,15 +25,19 @@ def get_is_direction_city_changed(request, city_title, direction_title):
 
     city = City.objects.filter(title=city_title).first()
     direction = Direction.objects.filter(title=direction_title).first()
-    if city:
-        select_city_form = SelectCityForm(request.POST or None, initial={'city': city.pk})
-    else:
-        select_city_form = SelectCityForm(request.POST or None)
 
-    if direction:
-        select_direction_form = SelectDirectionForm(request.POST or None, initial={'direction': direction.pk})
+    if request.user.is_authenticated():
+        city_id, direction_id = request.session.get('city_id', 0), request.session.get('direction_id', 0)
     else:
-        select_direction_form = SelectDirectionForm(request.POST or None)
+        city_id, direction_id = 0, 0
+
+    if city:
+        city_id = city.id
+    if direction:
+        direction_id = direction.id
+
+    select_city_form = SelectCityForm(request.POST or None, initial={'city': city_id})
+    select_direction_form = SelectDirectionForm(request.POST or None, initial={'direction': direction_id})
 
     context['select_city_form'] = select_city_form
     context['select_direction_form'] = select_direction_form
@@ -42,12 +46,16 @@ def get_is_direction_city_changed(request, city_title, direction_title):
         city_id = request.POST['city']
         direction_id = request.POST['direction']
         direction_city_changed = '%s' % (get_direction_city_url(city_id, direction_id))
+        if request.user.is_authenticated():
+            request.user.userprofile.settings.city = City.objects.filter(id=city_id).first()
+            request.user.userprofile.settings.direction = Direction.objects.filter(id=direction_id).first()
+            request.user.userprofile.settings.save()
         return direction_city_changed, context
 
     return direction_city_changed, context
 
 
-def get_session_direction_city_id(direction_title, city_title):
+def get_session_direction_city_id(request, direction_title, city_title):
     direction_id, city_id = 0, 0
     direction = Direction.objects.filter(title=direction_title).first()
     if direction:
@@ -55,4 +63,15 @@ def get_session_direction_city_id(direction_title, city_title):
     city = City.objects.filter(title=city_title).first()
     if city:
         city_id = city.id
+
+    if direction_title is None and city_title is None and request.user.is_authenticated():
+        if request.user.userprofile.settings.direction:
+            direction_id = request.user.userprofile.settings.direction.id
+        else:
+            direction_id = 0
+        if request.user.userprofile.settings.city:
+            city_id = request.user.userprofile.settings.city.id
+        else:
+            city_id = 0
+
     return direction_id, city_id

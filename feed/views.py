@@ -10,9 +10,9 @@ from entities.models.posts import Article, DanceStyle
 def articles(request, city_title=None, direction_title=None):
     title = 'Статьи'
     request.session['direction_id'], request.session['city_id'] = \
-        get_session_direction_city_id(direction_title, city_title)
+        get_session_direction_city_id(request, direction_title, city_title)
     direction_city_changed, context = get_is_direction_city_changed(request, city_title, direction_title)
-    if direction_city_changed:
+    if direction_city_changed is not None:
         return HttpResponseRedirect('/feed/articles/' + direction_city_changed)
 
     current_articles = Article.objects.all()
@@ -25,9 +25,9 @@ def articles(request, city_title=None, direction_title=None):
 def links(request, city_title=None, direction_title=None):
     title = 'Полезные ссылки'
     request.session['direction_id'], request.session['city_id'] = \
-        get_session_direction_city_id(direction_title, city_title)
+        get_session_direction_city_id(request, direction_title, city_title)
     direction_city_changed, context = get_is_direction_city_changed(request, city_title, direction_title)
-    if direction_city_changed:
+    if direction_city_changed is not None:
         return HttpResponseRedirect('/feed/links/' + direction_city_changed)
 
     context['title'] = title
@@ -37,9 +37,9 @@ def links(request, city_title=None, direction_title=None):
 def organizations(request, city_title=None, direction_title=None):
     title = 'Организации и компании'
     request.session['direction_id'], request.session['city_id'] = \
-        get_session_direction_city_id(direction_title, city_title)
+        get_session_direction_city_id(request, direction_title, city_title)
     direction_city_changed, context = get_is_direction_city_changed(request, city_title, direction_title)
-    if direction_city_changed:
+    if direction_city_changed is not None:
         return HttpResponseRedirect('/feed/organizations/' + direction_city_changed)
 
     context['title'] = title
@@ -49,9 +49,9 @@ def organizations(request, city_title=None, direction_title=None):
 def persons(request, city_title=None, direction_title=None):
     title = 'Персоны и личности'
     request.session['direction_id'], request.session['city_id'] = \
-        get_session_direction_city_id(direction_title, city_title)
+        get_session_direction_city_id(request, direction_title, city_title)
     direction_city_changed, context = get_is_direction_city_changed(request, city_title, direction_title)
-    if direction_city_changed:
+    if direction_city_changed is not None:
         return HttpResponseRedirect('/feed/persons/' + direction_city_changed)
 
     context['title'] = title
@@ -61,9 +61,9 @@ def persons(request, city_title=None, direction_title=None):
 def dance_styles(request, city_title=None, direction_title=None):
     title = 'Танцевальные стили'
     request.session['direction_id'], request.session['city_id'] = \
-        get_session_direction_city_id(direction_title, city_title)
+        get_session_direction_city_id(request, direction_title, city_title)
     direction_city_changed, context = get_is_direction_city_changed(request, city_title, direction_title)
-    if direction_city_changed:
+    if direction_city_changed is not None:
         return HttpResponseRedirect('/feed/dance-styles/' + direction_city_changed)
 
     filters = None

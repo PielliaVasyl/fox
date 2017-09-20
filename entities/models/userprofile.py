@@ -4,11 +4,26 @@ from django.contrib.auth.models import User
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 
+from entities.models.classes import City, Direction
+
+
+class UserSettings(models.Model):
+    city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True, null=True)
+    direction = models.ForeignKey(Direction, on_delete=models.CASCADE, blank=True, null=True)
+
+    created = models.DateTimeField(auto_now=False, auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True, auto_now_add=False)
+
+    class Meta:
+        ordering = ('updated',)
+
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
     description = models.TextField(blank=True)
     image = models.ImageField(blank=True)
+
+    settings = models.OneToOneField(UserSettings, on_delete=models.CASCADE, null=True, blank=True)
 
     role = models.CharField(max_length=50, blank=True)
 
@@ -66,6 +81,14 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return "%s's profile" % self.user
+
+
+@receiver(post_save, sender=UserProfile)
+def create_user_settings(sender, instance, created, **kwargs):
+    if created:
+        user_settings = UserSettings.objects.create(userprofile=instance)
+        instance.settings = user_settings
+        instance.save()
 
 
 @receiver(post_save, sender=User)
