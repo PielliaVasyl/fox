@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # 3d party libraries
     'crispy_forms',
     'widget_tweaks',
+    'django_facebook',
 
     # my app
     'entities',
@@ -71,6 +72,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django_facebook.context_processors.facebook',
             ],
             'libraries':{
                 'get_instance_id': 'events.templatetags.get_instance_id',
@@ -141,3 +143,11 @@ MEDIA_ROOT = 'media'
 
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+FACEBOOK_APP_ID = str('351042105343032')
+FACEBOOK_APP_SECRET = str('334ba57ac5ba4b0b1894d5c6987fcf47')
+
+AUTHENTICATION_BACKENDS = (
+    'django_facebook.auth_backends.FacebookBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)

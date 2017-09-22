@@ -1,6 +1,7 @@
 appdirs==1.4.3
 Django==1.10.6
 django-crispy-forms==1.6.1
+django-facebook==6.0.3
 django-widget-tweaks==1.4.1
 gunicorn==19.7.1
 olefile==0.44
@@ -9,3 +10,4 @@ Pillow==4.1.0
 pyparsing==2.2.0
 python-dateutil==2.6.0
 six==1.10.0
+Unidecode==0.4.21

@@ -29,6 +29,8 @@ from create import views as create_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^facebook/', include('django_facebook.urls')),
+    url(r'^accounts/', include('django_facebook.auth_urls')),
 
     url(r'^', include([
         url(r'^$', home_page_views.index),
