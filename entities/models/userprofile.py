@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.dispatch import receiver
 from django.db.models.signals import post_save
+from django_facebook.models import FacebookModel
 
 from entities.models.classes import City, Direction
 
@@ -18,10 +19,9 @@ class UserSettings(models.Model):
         ordering = ('updated',)
 
 
-class UserProfile(models.Model):
+class UserProfile(FacebookModel):
     user = models.OneToOneField(User)
     description = models.TextField(blank=True)
-    image = models.ImageField(blank=True)
 
     settings = models.OneToOneField(UserSettings, on_delete=models.CASCADE, null=True, blank=True)
 
@@ -94,7 +94,7 @@ def create_user_settings(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
-        UserProfile.objects.create(user=instance)
+        UserProfile.objects.get_or_create(user=instance)
 
 
 @receiver(post_save, sender=User)
