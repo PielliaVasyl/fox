@@ -21,6 +21,7 @@ class EventAdmin(admin.ModelAdmin):
                     'image', 'video', 'start_date', 'end_date', 'status', 'get_locations', 'get_price_types',
                     'get_experience_levels', 'repeats_type', 'get_schedule', 'get_links', 'get_owners',
                     'get_contributors', 'author', 'created', 'updated']
+    # search_fields = ('title',)
     form = EventForm
 
     def __init__(self, model, admin_site):

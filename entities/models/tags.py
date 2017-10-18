@@ -34,7 +34,7 @@ class LocalTag(AbstractTag):
 
 
 class DanceTag(LocalTag):
-    direction = models.ForeignKey(Direction, default=Direction.objects.get(title='dance').id, on_delete=models.CASCADE)
+    direction = models.ForeignKey(Direction, default=Direction.DANCE_ID, on_delete=models.CASCADE)
 
 
 class DanceStyleTag(DanceTag):

@@ -1,11 +1,12 @@
 from django.db import models
 
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AbstractUser
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django_facebook.models import FacebookModel
 
 from entities.models.classes import City, Direction
+from fox_knows import settings
 
 
 class UserSettings(models.Model):
@@ -19,8 +20,7 @@ class UserSettings(models.Model):
         ordering = ('updated',)
 
 
-class UserProfile(FacebookModel):
-    user = models.OneToOneField(User)
+class UserProfile(AbstractUser, FacebookModel):
     description = models.TextField(blank=True)
 
     settings = models.OneToOneField(UserSettings, on_delete=models.CASCADE, null=True, blank=True)
@@ -77,10 +77,10 @@ class UserProfile(FacebookModel):
                | set(self.promo_actions_author.all())
 
     def name(self):
-        return self.user.name
+        return self.username
 
     def __str__(self):
-        return "%s's profile" % self.user
+        return "%s's profile" % self.username
 
 
 @receiver(post_save, sender=UserProfile)

@@ -88,7 +88,7 @@ class Tracklist(AbstractPostGroup):
 
 
 class DanceDirection(AbstractPostGroup):
-    direction = models.ForeignKey(Direction, default=Direction.objects.get(title='dance').id, on_delete=models.CASCADE)
+    direction = models.ForeignKey(Direction, default=Direction.DANCE_ID, on_delete=models.CASCADE)
     tags = models.ManyToManyField(DanceDirectionTag, blank=True)
 
     owners = models.ManyToManyField(UserProfile, blank=True, related_name='dance_direction_owners')
@@ -226,7 +226,7 @@ def create_audio_link(sender, instance, created, **kwargs):
 
 
 class DanceStyle(AbstractPost):
-    direction = models.ForeignKey(Direction, default=Direction.objects.get(title='dance').id, on_delete=models.CASCADE)
+    direction = models.ForeignKey(Direction, default=Direction.DANCE_ID, on_delete=models.CASCADE)
     tags = models.ManyToManyField(DanceStyleTag, blank=True)
     image = models.ImageField(blank=True)
     author_of_post = models.CharField(max_length=100, blank=True)

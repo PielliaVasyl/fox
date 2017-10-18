@@ -30,7 +30,7 @@ class City(AbstractGlobalClass):
 
 
 class Direction(AbstractGlobalClass):
-    pass
+    DANCE_ID = 1
 
 
 class AbstractLocalClass(AbstractClass):

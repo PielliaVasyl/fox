@@ -24,32 +24,40 @@
 				</li>
 			</ul>
 			<div class="right-part">
-				{% if select_city_form or select_direction_form %}
-				<div class="row">
-					<div class="col-md-6">
-						<form name="city_direction" method="post" action="{{ request.path|rm_direction_city_url }}">
-							{% csrf_token %}
-							{{ select_city_form }}
-							{{ select_direction_form }}
-						</form>
-					</div>
-					<div class="col-md-6">
-						<form method="get" action="#" class="search" style="width:200px">
-							<input type="text" name="k" value="" placeholder="Поиск" style="width:200px">
-						</form>
-{#						<a href="/profiles/profile-1/">Вход и регистрация</a>#}
-                        <div class="fb-login-button" data-max-rows="1" data-size="medium"
-                             data-button-type="login_with" data-show-faces="false" data-auto-logout-link="true"
-                             data-use-continue-as="true">
+                <div style="display: inline; float: right">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'auth_logout' %}?next={{ request.path|urlencode }}">logout</a><br />
+                {% else %}
+                    <form action="{% url 'facebook_connect' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" value="{{ request.path }}" name="next" />
+                        <div id="facebook_login_js">
+                            <input onclick="F.connect(this.parentNode.parentNode); return false;" type="image" src="{% static "django_facebook/images/facebook_login.png"%}" /><br />
+                            (javascript popup)
                         </div>
-					</div>
-				</div>
-				{% else %}
-				<form method="get" action="#" class="search" style="width:200px">
-					<input type="text" name="k" value="" placeholder="Поиск" style="width:200px">
-				</form>
-				<a href="/profiles/profile-1/">Вход и регистрация</a>
-				{% endif %}
+{#                        <div id="facebook_login_redirect">#}
+{#                            <input type="submit" value="Войти"/><br />#}
+{#                        </div>#}
+                    </form>
+                {% endif %}
+                </div>
+                <div style="display: inline; float: right">
+                    <form name="city_direction" method="post" action="{{ request.path|rm_direction_city_url }}">
+                        {% csrf_token %}
+                        {{ select_city_form }}
+                        {{ select_direction_form }}
+                    </form>
+                </div>
+
+{#						<a href="/profiles/profile-1/">Вход и регистрация</a>#}
+{#                        <div class="fb-login-button" data-max-rows="1" data-size="medium"#}
+{#                             data-button-type="login_with" data-show-faces="false" data-auto-logout-link="true"#}
+{#                             data-use-continue-as="true">#}
+{#                        </div>#}
+{#				<form method="get" action="#" class="search" style="width:200px">#}
+{#					<input type="text" name="k" value="" placeholder="Поиск" style="width:200px">#}
+{#				</form>#}
+
 			</div>
 		</header>
 

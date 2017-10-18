@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+SITE_ID = 1
 
 # Application definition
 
@@ -35,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
@@ -151,3 +153,13 @@ AUTHENTICATION_BACKENDS = (
     'django_facebook.auth_backends.FacebookBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
+
+
+AUTH_USER_MODEL = 'entities.UserProfile'
+# EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
+# LOGIN_REDIRECT_URL = '/'
+# LOGIN_URL = '/accounts/signin/'
+# LOGOUT_URL = '/accounts/signout/'
+# ANONYMOUS_USER_ID = 1
+
+FACEBOOK_OG_SHARE_DB_TABLE = 'django_facebook_open_graph_share'

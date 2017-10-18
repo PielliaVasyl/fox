@@ -65,12 +65,12 @@ def get_session_direction_city_id(request, direction_title, city_title):
         city_id = city.id
 
     if direction_title is None and city_title is None and request.user.is_authenticated():
-        if request.user.userprofile.settings.direction:
-            direction_id = request.user.userprofile.settings.direction.id
+        if request.user.settings.direction:
+            direction_id = request.user.settings.direction.id
         else:
             direction_id = 0
-        if request.user.userprofile.settings.city:
-            city_id = request.user.userprofile.settings.city.id
+        if request.user.settings.city:
+            city_id = request.user.settings.city.id
         else:
             city_id = 0
 
