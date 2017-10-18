@@ -1,7 +1,7 @@
 {% load static %}
 <div id="fb-root"></div>
 
-{#<script src="{% static 'django_facebook/js/facebook.js'%}" type="text/javascript"></script>#}
+<script src="{% static 'django_facebook/js/facebook.js'%}" type="text/javascript"></script>
 <script>
     facebookAppId = '{{ FACEBOOK_APP_ID }}';
     facebookDefaultScope = {{ FACEBOOK_DEFAULT_SCOPE_JS }};
@@ -13,7 +13,7 @@
       xfbml      : true,
       version    : 'v2.10'
     });
-    FB.AppEvents.logPageView();
+    //FB.AppEvents.logPageView();
   };
 
   (function(d, s, id){
@@ -23,26 +23,6 @@
      js.src = "//connect.facebook.net/ru_RU/sdk.js#xfbml=1&version=v2.10&appId=351042105343032";
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
-    //F = new facebookClass(facebookAppId);
-    //F.load();
-</script>
-<script src="{% static 'django_facebook/js/facebook.js'%}" type="text/javascript"></script>
-<script>
-    facebookAppId = '{{ FACEBOOK_APP_ID }}';
-    facebookDefaultScope = {{ FACEBOOK_DEFAULT_SCOPE_JS }};
-    staticUrl = '/static/';
     F = new facebookClass(facebookAppId);
     F.load();
 </script>
-{#<script>#}
-{#    FB.getLoginStatus(function(response) {#}
-{#        statusChangeCallback(response);#}
-{#    });#}
-{#</script>#}
-
-{#<script>#}
-{#function checkLoginState() {#}
-{#  FB.getLoginStatus(function(response) {#}
-{#    statusChangeCallback(response);#}
-{#  });#}
-{#</script>#}

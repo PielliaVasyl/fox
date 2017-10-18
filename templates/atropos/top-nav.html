@@ -26,18 +26,14 @@
 			<div class="right-part">
                 <div style="display: inline; float: right">
                 {% if user.is_authenticated %}
-                    <a href="{% url 'auth_logout' %}?next={{ request.path|urlencode }}">logout</a><br />
+                    <a href="{% url 'auth_logout' %}?next={{ request.path|urlencode }}">Выйти</a><br />
                 {% else %}
                     <form action="{% url 'facebook_connect' %}" method="post">
                         {% csrf_token %}
                         <input type="hidden" value="{{ request.path }}" name="next" />
                         <div id="facebook_login_js">
-                            <input onclick="F.connect(this.parentNode.parentNode); return false;" type="image" src="{% static "django_facebook/images/facebook_login.png"%}" /><br />
-                            (javascript popup)
+                            <input onclick="F.connect(this.parentNode.parentNode); return false;" type="submit" value="Войти"/>
                         </div>
-{#                        <div id="facebook_login_redirect">#}
-{#                            <input type="submit" value="Войти"/><br />#}
-{#                        </div>#}
                     </form>
                 {% endif %}
                 </div>
@@ -48,15 +44,6 @@
                         {{ select_direction_form }}
                     </form>
                 </div>
-
-{#						<a href="/profiles/profile-1/">Вход и регистрация</a>#}
-{#                        <div class="fb-login-button" data-max-rows="1" data-size="medium"#}
-{#                             data-button-type="login_with" data-show-faces="false" data-auto-logout-link="true"#}
-{#                             data-use-continue-as="true">#}
-{#                        </div>#}
-{#				<form method="get" action="#" class="search" style="width:200px">#}
-{#					<input type="text" name="k" value="" placeholder="Поиск" style="width:200px">#}
-{#				</form>#}
 
 			</div>
 		</header>
