@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% load can_edit %}
+{% load can_delete %}
 {% load get_direction_city_url %}
 
 {% block title %}{{ title }} - {% endblock %}
@@ -81,7 +83,7 @@ tabcontent = document.getElementsByClassName("tabcontent");
 
 }
 </script>
-
+{% include 'modal-style.html' %}
 		<!-- WRAPPER -->
 		<div id="wrapper" style="padding-top:10px">
 			<section class="container">
@@ -103,6 +105,11 @@ tabcontent = document.getElementsByClassName("tabcontent");
 							</a>
 						</div>
 
+						<a href="/profiles/" class="btn btn-primary">Список профилей</a>
+						{% if user|can_edit:instance %}<a href="{{ request.path }}edit/" class="btn btn-primary">Изменить</a> {% endif %}
+						{% if user|can_delete:instance %}<a class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Удалить</a>{% endif %}
+
+						{% include 'entities/instance-delete.html' %}
 						<hr />
 						{{ instance.description|linebreaks }}
 

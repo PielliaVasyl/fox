@@ -21,7 +21,7 @@ def settings(request, instance_id=None):
     html_template_path = 'entities/profile/profile-settings.html'
 
     current_instance = get_object_or_404(UserProfile, pk=instance_id)
-    title = current_instance.user.username
+    title = current_instance.username
 
     select_city_form = SelectCityForm(initial={'city': request.session.get('city_id', 0)})
     select_direction_form = SelectDirectionForm(initial={'direction': request.session.get('direction_id', 0)})

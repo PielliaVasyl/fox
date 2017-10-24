@@ -1,5 +1,6 @@
 {% extends "map/map.html" %}
-{% load get_direction_city_url %}
+{% load can_edit %}
+{% load can_delete %}
 {% block title %}Магазины на карте - {% endblock %}
 
 {% block map_content %}
@@ -11,7 +12,7 @@
 					</div>
 					<div class="col-md-3">
 						<!-- AJAX MODAL -->
-						<a href="/locations/{{ request.GET.location }}-modal-ajax/" class="btn btn-default fullwidth" data-toggle="modal" data-target=".ajax_modal_container" style="overflow: hidden">
+						<a href="/create/shop/" class="btn btn-default fullwidth" data-toggle="modal" data-target=".ajax_modal_container" style="overflow: hidden">
 							<i class="fa fa-plus"></i> Добавить магазины
 						</a>
 						<div class="modal fade ajax_modal_container" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
@@ -32,21 +33,25 @@
 								{% endif %}
 							</div>
 							<div class="col-md-9">
-								 <div class="row">
-									 <div class="col-sm-5">
-									 	<h4><a class="styleColor" href="/shop-{{ instance.pk }}/">{{ instance.title }}</a></h4>
-									 </div>
-									 <div class="col-sm-4">
+								<div class="row">
+									<div class="col-sm-5">
+										<h4><a class="styleColor" href="/shop-{{ instance.pk }}/">{{ instance.title }}</a></h4>
+										{% if user|can_edit:instance %}<a class="btn btn-primary" href="/shop-{{ instance.pk }}/edit/">Изменить</a>{% endif %}
+										{% if user|can_delete:instance %}<a class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Удалить</a>{% endif %}
+
+										{% include 'entities/instance-delete.html' %}
+									</div>
+									<div class="col-sm-4">
 										 {% for address in instance.get_locations_address_list %}{{ address }} <br />{% endfor %}
-									 </div>
-									 <div class="col-sm-3">
+									</div>
+									<div class="col-sm-3">
 									 	<p><small class="block styleSecondColor fsize17">
 											{% for link in instance.get_links_list %}
 												<a href="{{ link }}">Перейти</a>
 											{% endfor %}
 										</small></p>
-									 </div>
-								 </div>
+									</div>
+								</div>
 								<div class="row">
 									<div class="col-sm-6">
 										{% for dance_style in instance.get_dance_styles_list %}{{ dance_style }}{% if not forloop.last %}, {% endif %}{% endfor %}

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+from django.http import HttpResponseForbidden
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 
@@ -152,7 +152,12 @@ def _get_title(current_instance):
     if hasattr(current_instance, 'title'):
         title = '%s' % (current_instance.title,)
     else:
-        title = '%s' % (current_instance.user.username,)
+        title = '%s' % (current_instance.username,)
+    return title
+
+
+def _get_delete_title(current_instance):
+    title = 'Вы уверены, что хотите удалить %s?' % (current_instance.title,)
     return title
 
 
@@ -177,9 +182,14 @@ def instance_page(request, entity, instance_id):
 
 def edit_instance_page(request, entity, instance_id):
     html_template_path = 'entities/%s/%s-edit.html' % (entity.replace('-', '_'), entity)
-
     current_entity = ENTITY.get(entity, None)
     current_instance = get_object_or_404(current_entity, pk=instance_id)
+    user = request.user
+
+    if user not in current_instance.owners.all() and \
+       user not in current_instance.contributors.all():
+        return HttpResponseForbidden()
+
     title = _get_title(current_instance)
 
     edit_buttons = EDIT_BUTTONS.get(entity, None)
@@ -190,6 +200,21 @@ def edit_instance_page(request, entity, instance_id):
         'edit_buttons': edit_buttons
     }
     return render(request, html_template_path, context)
+
+
+def delete_instance(request, entity, instance_id):
+    current_entity = ENTITY.get(entity, None)
+    current_instance = get_object_or_404(current_entity, pk=instance_id)
+    user = request.user
+
+    if user not in current_instance.owners.all():
+        return HttpResponseForbidden()
+
+    current_instance.delete()
+
+    return HttpResponseRedirect('/')
+
+
 
 
 def __get_form(entity, attribute, request, current_instance):
@@ -261,7 +286,7 @@ def __get_form(entity, attribute, request, current_instance):
         if attribute == 'dance-style-distance-types':
             form = form(request.POST or None, initial={'distance_types': current_instance.distance_types.all()})
         if attribute == 'name' and entity == 'profile':
-            form = form(request.POST or None, initial={'username': current_instance.user.username})
+            form = form(request.POST or None, initial={'username': current_instance.username})
     return form
 
 
@@ -355,7 +380,6 @@ def save_instance_changes(entity, form, attribute, request, current_instance):
         attr_values['distance_types'] = form.cleaned_data.get('distance_types')
     if attribute == 'name' and entity == 'profile':
         attr_values['username'] = form.cleaned_data.get('username')
-        current_instance = current_instance.user
 
     set_attributes(current_instance, attr_values)
     current_instance.save()
@@ -654,7 +678,7 @@ def edit_instance_attr(request, entity, instance_id, attribute=None):
     return render(request, html_template_path, context)
 
 
-def create_attr(request,  entity, instance_id, attribute=None):
+def create_attr(request, entity, instance_id, attribute=None):
     html_template_path = 'attrs/create/create-attr.html'
     create_attribute_title = _get_create_attribute_title(attribute)
     if attribute == 'direction':

@@ -75,6 +75,8 @@ TEMPLATES = [
             ],
             'libraries':{
                 'get_instance_id': 'events.templatetags.get_instance_id',
+                'can_edit': 'events.templatetags.can_edit',
+                'can_delete': 'events.templatetags.can_delete',
             }
         },
     },
@@ -154,3 +156,5 @@ AUTHENTICATION_BACKENDS = (
 AUTH_USER_MODEL = 'entities.UserProfile'
 
 FACEBOOK_OG_SHARE_DB_TABLE = 'django_facebook_open_graph_share'
+FACEBOOK_STORE_FRIENDS = True
+FACEBOOK_STORE_LIKES = True

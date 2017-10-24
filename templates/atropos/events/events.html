@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-{% load get_direction_city_url %}
+{% load can_edit %}
+{% load can_delete %}
 {% block title %}{{ title }} - {% endblock %}
 
 {% block wrapper %}
@@ -69,6 +70,7 @@ div.mega-price-table div .pricing.popular {
   }
 }
 </style>
+{% include 'modal-style.html' %}
 		<div style="padding-top:10px">
 			<section class="container">
                 <form method="post">
@@ -148,7 +150,8 @@ div.mega-price-table div .pricing.popular {
                                 <div class="inside pricing popular inside-full-height">
                                     <div class="dance-title inside inside-full-height{% if forloop.counter0|divisibleby:2 %} alternate{% endif %}" style="padding: 10px; color: #7e8998;">
                                         <a href="/event-{{ event.pk }}/">{{ event.title }}</a>
-
+                                        {% if user|can_edit:instance %}<a class="btn btn-primary" href="/event-{{ instance.pk }}/edit/">Изменить</a>{% endif %}
+										{% if user|can_delete:instance %}<a class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Удалить</a>{% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -224,4 +227,6 @@ div.mega-price-table div .pricing.popular {
             </section>
         </div>
         <!-- /WRAPPER -->
+        {% include 'entities/instance-delete.html' %}
+
 {% endblock %}

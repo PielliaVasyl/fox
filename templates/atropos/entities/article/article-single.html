@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% load can_edit %}
+{% load can_delete %}
 {% block title %}{{ title }} - {% endblock %}
 
 {% block wrapper %}
@@ -14,7 +16,7 @@
     color: #F07057;
 }
 </style>
-
+{% include 'modal-style.html' %}
         <!-- WRAPPER -->
 		<div id="wrapper" style="padding-top:0px">
 			<div id="blog">
@@ -25,7 +27,14 @@
 						<small class="fsize13">
 							<span class="label label-default light">{{ instance.created }}</span>
 						</small>
+
+						<a href="/feed/articles/" class="btn btn-primary">Список статей</a>
+						{% if user|can_edit:instance %}<a href="{{ request.path }}edit/" class="btn btn-primary">Изменить</a> {% endif %}
+						{% if user|can_delete:instance %}<a class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Удалить</a>{% endif %}
 					</header>
+
+					{% include 'entities/instance-delete.html' %}
+
 					{% if instance.image %}
 					<img src="{{ instance.image.url }}" class="img-responsive" alt="{{ instance.title }}" />
 					{% endif %}

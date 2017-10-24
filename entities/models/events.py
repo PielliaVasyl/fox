@@ -164,12 +164,12 @@ class AbstractEvent(models.Model):
 
     def get_owners(self):
         if self.owners.all():
-            return "\n".join([p.user.username for p in self.owners.all()])
+            return "\n".join([p.username for p in self.owners.all()])
         return ''
 
     def get_contributors(self):
         if self.contributors.all():
-            return "\n".join([p.user.username for p in self.contributors.all()])
+            return "\n".join([p.username for p in self.contributors.all()])
         return ''
 
     def __str__(self):

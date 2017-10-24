@@ -1,0 +1,19 @@
+{% load static %}
+
+ 	  	<!-- modal dialog -->
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <p class="modal-title">Удалить {{ instance.title }}</p>
+                    </div>
+                    Вы уверены, что хотите удалить {{ instance.title }}?
+
+                    <div class="modal-footer"><!-- modal footer -->
+                        <button class="btn btn-default" data-dismiss="modal">Отмена</button>
+                        <a href="{{ request.path }}delete/" class="btn btn-primary">Удалить</a>
+                    </div><!-- /modal footer -->
+                </div>
+            </div>
+        </div>

@@ -69,6 +69,8 @@ def create_instance(request, instance=None):
 
     if form.is_valid():
         my_instance = form.save()
+        my_instance.owners.add(my_instance.author)
+        my_instance.save()
         return HttpResponseRedirect('/%s-%s/edit/' % (instance, my_instance.pk))
     context = {
         'form': form,

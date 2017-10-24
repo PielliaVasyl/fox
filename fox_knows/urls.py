@@ -278,7 +278,7 @@ urlpatterns = [
             url(r'^$', common_views.edit_instance_page),
             url(r'^(?P<attribute>[\w-]+)/$', common_views.edit_instance_attr),
         ])),
-        # url(r'^delete/$', common_views.delete_instance),
+        url(r'^delete/$', common_views.delete_instance),
         url(r'^create-(?P<attribute>[\w-]+)/$', common_views.create_attr),
 
         url(r'^(?P<attribute>[\w-]+)-(?P<attribute_id>\d+)/', include([

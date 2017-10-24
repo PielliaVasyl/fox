@@ -31,6 +31,8 @@
                     <form action="{% url 'facebook_connect' %}" method="post">
                         {% csrf_token %}
                         <input type="hidden" value="{{ request.path }}" name="next" />
+						<input type="hidden" value="{{ request.path }}" name="register_next" />
+    					<input type="hidden" value="{{ request.path }}" name="error_next" />
                         <div id="facebook_login_js">
                             <input onclick="F.connect(this.parentNode.parentNode); return false;" type="submit" value="Войти"/>
                         </div>

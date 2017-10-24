@@ -1,5 +1,6 @@
 {% extends "map/map.html" %}
-{% load get_direction_city_url %}
+{% load can_edit %}
+{% load can_delete %}
 {% block title %}Танцевальные места на карте - {% endblock %}
 
 {% block map_content %}
@@ -32,9 +33,13 @@
 								{% endif %}
 							</div>
 							<div class="col-md-9">
-								 <div class="row">
-									 <div class="col-sm-5">
-									 	<h4><a class="styleColor" href="/place-{{ instance.pk }}/">{{ instance.title }}</a></h4>
+								<div class="row">
+									<div class="col-sm-5">
+										<h4><a class="styleColor" href="/place-{{ instance.pk }}/">{{ instance.title }}</a></h4>
+										{% if user|can_edit:instance %}<a class="btn btn-primary" href="/place-{{ instance.pk }}/edit/">Изменить</a>{% endif %}
+										{% if user|can_delete:instance %}<a class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Удалить</a>{% endif %}
+
+										{% include 'entities/instance-delete.html' %}
 									 </div>
 									 <div class="col-sm-4">
 										 {% for address in instance.get_locations_address_list %}{{ address }} <br />{% endfor %}

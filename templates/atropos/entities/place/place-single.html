@@ -1,10 +1,12 @@
 {% extends "base.html" %}
+{% load can_edit %}
+{% load can_delete %}
 {% load get_direction_city_url %}
 
 {% block title %}{{ title }} - {% endblock %}
 
 {% block wrapper %}
-
+{% include 'modal-style.html' %}
 		<!-- WRAPPER -->
 		<div id="wrapper" style="padding-top:0">
 			<div class="container magazine top-no-header" style="padding-top:20px">
@@ -12,7 +14,12 @@
 					<div class="col-md-12">
 						<header class="page-title">
 							<h1 style="text-align: center">{{ instance.title }}</h1>
+							<a href="/map/places/" class="btn btn-primary">Список мест</a>
+							{% if user|can_edit:instance %}<a href="{{ request.path }}edit/" class="btn btn-primary">Изменить</a> {% endif %}
+							{% if user|can_delete:instance %}<a class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Удалить</a>{% endif %}
 						</header>
+
+						{% include 'entities/instance-delete.html' %}
 
 						<div class="divider half-margins"><!-- divider -->
 							<i class="fa fa-star"></i>
